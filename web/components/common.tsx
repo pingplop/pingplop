@@ -1,5 +1,7 @@
 import { useWindowSize } from 'usehooks-ts'
 
+import { cn } from '@/utils/ui-helper'
+
 export function PageLoader() {
   return (
     <div className='absolute left-0 top-0 z-50 m-0 h-screen w-full bg-gray-900/80 p-0'>
@@ -47,9 +49,14 @@ export function ScreenSizeIndicator({ withScreenSize = false }: { withScreenSize
   )
 }
 
-export function EmptySlot() {
+export function EmptySlot({ className }: { className?: string }) {
   return (
-    <div className='relative h-[576px] overflow-hidden rounded-xl border border-dashed border-gray-400 opacity-75'>
+    <div
+      className={cn(
+        'relative h-[576px] overflow-hidden rounded-xl border border-dashed border-gray-400 opacity-75',
+        className
+      )}
+    >
       <svg className='absolute inset-0 h-full w-full stroke-gray-900/10' fill='none'>
         <defs>
           <pattern

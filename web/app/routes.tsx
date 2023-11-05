@@ -19,6 +19,7 @@ const AppRoutes = ({ basename }: { basename?: string }) => {
         { path: '/incidents', element: <EmptySlot /> },
         { path: '/status-page', element: <EmptySlot /> },
         { path: '/integrations', element: <EmptySlot /> },
+        { path: '/account/billing', element: <EmptySlot /> },
       ],
     },
   ]

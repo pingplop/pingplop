@@ -16,7 +16,7 @@ type config struct {
 		Driver      string `env:"DATABASE_DRIVER,default=sqlite,strict"` // possible values: sqlite, libsql
 		AuthToken   string `env:"DATABASE_AUTH_TOKEN"`
 		URL         string `env:"DATABASE_URL,required"`
-		AutoMigrate bool   `env:"DATABASE_AUTO_MIGRATE,default=true"`
+		AutoMigrate bool   `env:"DATABASE_AUTO_MIGRATE,default=false"`
 	}
 	Email struct {
 		Provider     string `env:"EMAIL_PROVIDER"` // possible values: smtp, postmark, awsses

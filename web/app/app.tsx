@@ -5,7 +5,7 @@ import AppRoutes from './routes'
 
 export function App() {
   return (
-    <div className={cn('disable-select', 'h-full min-h-screen')}>
+    <div className={cn('disable-select', 'h-full min-h-screen bg-gray-50')}>
       <AppRoutes basename='/' />
       <ScreenSizeIndicator withScreenSize />
     </div>

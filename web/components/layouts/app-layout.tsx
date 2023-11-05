@@ -5,30 +5,38 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import {
   Bars3Icon,
   BellIcon,
-  CalendarIcon,
-  ChartPieIcon,
-  Cog6ToothIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
-  HomeIcon,
-  UsersIcon,
+  BoltIcon,
+  ChartBarSquareIcon,
+  CursorArrowRippleIcon,
+  ExclamationTriangleIcon,
+  HeartIcon,
+  PresentationChartLineIcon,
+  UserGroupIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 
 import BrandLogo from '@/assets/images/logolight.svg'
 import { cn } from '@/utils/ui-helper'
 
+import { EmptySlot } from '../common'
+
 const navigation = [
-  { name: 'Overview', href: '/overview', icon: HomeIcon },
-  { name: 'Monitors', href: '/monitors', icon: UsersIcon },
-  { name: 'Heartbeat', href: '/heartbeat', icon: FolderIcon },
-  { name: 'Incidents', href: '/incidents', icon: CalendarIcon, count: '5' },
-  { name: 'Status Page', href: '/status-page', icon: DocumentDuplicateIcon },
-  { name: 'Integrations', href: '/integrations', icon: ChartPieIcon },
+  { name: 'Overview', href: '/overview', icon: ChartBarSquareIcon },
+  { name: 'Monitors', href: '/monitors', icon: BoltIcon },
+  { name: 'Heartbeat', href: '/heartbeat', icon: HeartIcon },
+  { name: 'Incidents', href: '/incidents', icon: ExclamationTriangleIcon, count: '5' },
+  { name: 'Status Page', href: '/status-page', icon: PresentationChartLineIcon },
+  { name: 'Integrations', href: '/integrations', icon: CursorArrowRippleIcon },
 ]
 const teams = [
-  { id: 1, name: 'Billing & Invoices', href: '#', initial: 'H' },
-  { id: 2, name: 'Help & Support', href: '#', initial: 'T' },
+  { id: 1, name: 'Billing & Invoices', href: '/account/billing', initial: 'B' },
+  {
+    id: 2,
+    name: 'Help & Support',
+    href: 'https://pingplop.mintlify.app/introduction',
+    initial: 'H',
+    newTab: true,
+  },
 ]
 const userNavigation = [
   { name: 'Your account', href: '#' },
@@ -38,6 +46,7 @@ const userNavigation = [
 export function AppLayout() {
   const { pathname } = useLocation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sideOverOpen, setSideOverOpen] = useState(false)
 
   return (
     <div>
@@ -136,6 +145,8 @@ export function AppLayout() {
                                     : 'text-gray-400 hover:bg-gray-800 hover:text-white',
                                   'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
                                 )}
+                                target={team.newTab ? '_blank' : '_self'}
+                                rel='noopener noreferrer'
                               >
                                 <span className='flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white'>
                                   {team.initial}
@@ -151,8 +162,8 @@ export function AppLayout() {
                           to='#'
                           className='group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white'
                         >
-                          <Cog6ToothIcon className='h-6 w-6 shrink-0' aria-hidden='true' />
-                          Settings
+                          <UserGroupIcon className='h-6 w-6 shrink-0' aria-hidden='true' />
+                          Team Settings
                         </Link>
                       </li>
                     </ul>
@@ -214,6 +225,8 @@ export function AppLayout() {
                             : 'text-gray-400 hover:bg-gray-800 hover:text-white',
                           'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
                         )}
+                        target={team.newTab ? '_blank' : '_self'}
+                        rel='noopener noreferrer'
                       >
                         <span className='flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white'>
                           {team.initial}
@@ -229,8 +242,8 @@ export function AppLayout() {
                   to='#'
                   className='group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white'
                 >
-                  <Cog6ToothIcon className='h-6 w-6 shrink-0' aria-hidden='true' />
-                  Settings
+                  <UserGroupIcon className='h-6 w-6 shrink-0' aria-hidden='true' />
+                  Team Settings
                 </Link>
               </li>
             </ul>
@@ -240,7 +253,7 @@ export function AppLayout() {
 
       <div className='lg:pl-72'>
         {/* bg-white border-b border-gray-200 shadow-sm */}
-        <div className='sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 px-4 sm:gap-x-6 sm:px-6 lg:px-8'>
+        <div className='sticky top-0 z-20 flex h-16 shrink-0 items-center gap-x-4 px-4 sm:gap-x-6 sm:px-6 lg:px-8'>
           <button
             type='button'
             className='-m-2.5 p-2.5 text-gray-700 lg:hidden'
@@ -256,7 +269,11 @@ export function AppLayout() {
           <div className='flex flex-1 gap-x-4 self-stretch lg:gap-x-6'>
             <div className='relative flex flex-1'>{/* Put search form or breadcrumbs here */}</div>
             <div className='flex items-center gap-x-4 lg:gap-x-6'>
-              <button type='button' className='-m-2.5 p-2.5 text-gray-400 hover:text-gray-500'>
+              <button
+                type='button'
+                className='-m-2.5 p-2.5 text-gray-400 hover:text-gray-500'
+                onClick={() => setSideOverOpen(!sideOverOpen)}
+              >
                 <span className='sr-only'>View notifications</span>
                 <BellIcon className='h-6 w-6' aria-hidden='true' />
               </button>
@@ -317,11 +334,71 @@ export function AppLayout() {
             </div>
           </div>
         </div>
+
         <main className='py-4 lg:py-8'>
-          <div className='px-4 sm:px-6 lg:px-8'>
+          <div className='px-4 sm:px-8 lg:px-10'>
             <Outlet />
           </div>
         </main>
+
+        {/* Sidebar over / drawer */}
+        <Transition.Root show={sideOverOpen} as={Fragment}>
+          <Dialog as='div' className='relative z-30' onClose={setSideOverOpen}>
+            <Transition.Child
+              as={Fragment}
+              enter='ease-in-out duration-500'
+              enterFrom='opacity-0'
+              enterTo='opacity-100'
+              leave='ease-in-out duration-500'
+              leaveFrom='opacity-100'
+              leaveTo='opacity-0'
+            >
+              <div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity' />
+            </Transition.Child>
+            <div className='fixed inset-0 overflow-hidden'>
+              <div className='absolute inset-0 overflow-hidden'>
+                <div className='pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10'>
+                  <Transition.Child
+                    as={Fragment}
+                    enter='transform transition ease-in-out duration-500 sm:duration-700'
+                    enterFrom='translate-x-full'
+                    enterTo='translate-x-0'
+                    leave='transform transition ease-in-out duration-500 sm:duration-700'
+                    leaveFrom='translate-x-0'
+                    leaveTo='translate-x-full'
+                  >
+                    <Dialog.Panel className='pointer-events-auto w-screen max-w-xl'>
+                      <div className='flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl'>
+                        <div className='px-4 sm:px-6'>
+                          <div className='flex items-start justify-between'>
+                            <Dialog.Title className='text-base font-semibold leading-6 text-gray-900'>
+                              Notifications
+                            </Dialog.Title>
+                            <div className='ml-3 flex h-7 items-center'>
+                              <button
+                                type='button'
+                                className='relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                                onClick={() => setSideOverOpen(!sideOverOpen)}
+                              >
+                                <span className='absolute -inset-2.5' />
+                                <span className='sr-only'>Close panel</span>
+                                <XMarkIcon className='h-6 w-6' aria-hidden='true' />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div className='relative mt-6 flex-1 px-4 sm:px-6'>
+                          {/* Your content */}
+                          <EmptySlot className='h-full' />
+                        </div>
+                      </div>
+                    </Dialog.Panel>
+                  </Transition.Child>
+                </div>
+              </div>
+            </div>
+          </Dialog>
+        </Transition.Root>
       </div>
     </div>
   )
