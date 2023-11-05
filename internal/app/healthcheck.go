@@ -8,8 +8,8 @@ import (
 
 	"github.com/alexliesenfeld/health"
 	"github.com/go-chi/render"
-	"github.com/riipandi/pingplop/meta"
-	// "github.com/riipandi/pingplop/pkg/db"
+	"github.com/pingplop/pingplop/meta"
+	// "github.com/pingplop/pingplop/pkg/db"
 )
 
 func healthCheckHandler() http.HandlerFunc {

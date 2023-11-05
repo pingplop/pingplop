@@ -12,8 +12,8 @@ import (
 	"github.com/go-chi/render"
 
 	jwx "github.com/lestrrat-go/jwx/v2/jwt"
-	"github.com/riipandi/pingplop/internal/app/handler"
-	"github.com/riipandi/pingplop/pkg/jwt"
+	"github.com/pingplop/pingplop/internal/app/handler"
+	"github.com/pingplop/pingplop/pkg/jwt"
 )
 
 // We can use subdomain mapping to split between API and web app:

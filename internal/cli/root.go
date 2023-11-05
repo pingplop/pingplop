@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/viper"
 	"github.com/zs5460/art"
 
-	"github.com/riipandi/pingplop/internal/app"
+	"github.com/pingplop/pingplop/internal/app"
 )
 
 var (
@@ -51,11 +51,11 @@ func initConfig() {
 	if cfgFile != "" {
 		viper.SetConfigFile(cfgFile) // Use config file from the flag.
 	} else {
-		viper.SetConfigType("yaml")         // REQUIRED if the config file does not have the extension in the name
-		viper.SetConfigName("config")       // Set the config filename
+		viper.SetConfigType("yaml")            // REQUIRED if the config file does not have the extension in the name
+		viper.SetConfigName("config")          // Set the config filename
 		viper.AddConfigPath("/etc/pingplop/")  // path to look for the config file in
 		viper.AddConfigPath("$HOME/.pingplop") // call multiple times to add many search paths
-		viper.AddConfigPath(".")            // optionally look for config in the working directory
+		viper.AddConfigPath(".")               // optionally look for config in the working directory
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match

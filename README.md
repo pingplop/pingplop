@@ -6,13 +6,13 @@ initial setup.
 
 This repository contains a **Go** starter project template.
 
-[![Contributions](https://img.shields.io/badge/Contributions-welcome-blue.svg?style=flat-square&color=blueviolet)](https://github.com/riipandi/pingplop/graphs/contributors)
-[![Go Report Card](https://goreportcard.com/badge/github.com/riipandi/pingplop?style=flat-square)](https://goreportcard.com/report/github.com/riipandi/pingplop)
-[![License](https://img.shields.io/github/license/riipandi/pingplop?style=flat-square&color=informational)](https://github.com/riipandi/pingplop/blob/master/LICENSE)
+[![Contributions](https://img.shields.io/badge/Contributions-welcome-blue.svg?style=flat-square&color=blueviolet)](https://github.com/pingplop/pingplop/graphs/contributors)
+[![Go Report Card](https://goreportcard.com/badge/github.com/pingplop/pingplop?style=flat-square)](https://goreportcard.com/report/github.com/pingplop/pingplop)
+[![License](https://img.shields.io/github/license/pingplop/pingplop?style=flat-square&color=informational)](https://github.com/pingplop/pingplop/blob/master/LICENSE)
 [![Twitter](https://img.shields.io/twitter/follow/riipandi?style=flat-square&color=00acee)](https://twitter.com/riipandi)
 
 ```bash
-npx degit riipandi/pingplop myapp-name
+npx degit pingplop/pingplop myapp-name
 ```
 
 Open-Source server and website uptime monitoring. In this repo I'm using [go-chi][go-chi], but you can change it with whatever library you want.

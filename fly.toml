@@ -4,7 +4,7 @@
 # how to use this file.
 ##
 
-app = "pingplop"
+app = "pingplop-demo"
 primary_region = "sjc"
 kill_signal = "SIGINT"
 kill_timeout = 5
@@ -12,7 +12,7 @@ swap_size_mb = 256
 console_command = "/bin/sh"
 
 [build]
-  # image = "riipandi/pingplop:latest"
+  # image = "pingplop/pingplop:latest"
   dockerfile = "core/Dockerfile"
 
 [build.args]

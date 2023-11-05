@@ -13,7 +13,7 @@ WORKDIR /app
 ENV CGO_ENABLED 0
 ENV BUILD_VERSION $BUILD_VERSION
 ENV BUILD_DATE $BUILD_DATE
-ENV LDFLAG_PREFIX "github.com/riipandi/pingplop/meta"
+ENV LDFLAG_PREFIX "github.com/pingplop/pingplop/meta"
 
 COPY . .
 RUN --mount=type=cache,id=go,target=/go/pkg/mod --mount=type=cache,id=go,target=/root/.cache/go-build \
@@ -28,7 +28,7 @@ RUN --mount=type=cache,id=go,target=/go/pkg/mod --mount=type=cache,id=go,target=
 # Use the slim image for a lean production container.
 # -----------------------------------------------------------------------------
 FROM alpine:3.18 as runner
-LABEL org.opencontainers.image.source="https://github.com/riipandi/pingplop"
+LABEL org.opencontainers.image.source="https://github.com/pingplop/pingplop"
 
 ARG DATABASE_URL
 ENV DATABASE_URL $DATABASE_URL

@@ -2,7 +2,7 @@ package jwt
 
 import (
 	"github.com/go-chi/jwtauth/v5"
-	"github.com/riipandi/pingplop/pkg/env"
+	"github.com/pingplop/pingplop/pkg/env"
 )
 
 var TokenAuth *jwtauth.JWTAuth

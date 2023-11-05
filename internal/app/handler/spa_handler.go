@@ -11,7 +11,7 @@ import (
 	"io"
 	"path"
 
-	"github.com/riipandi/pingplop/web"
+	"github.com/pingplop/pingplop/web"
 )
 
 var ErrDir = errors.New("path is dir")

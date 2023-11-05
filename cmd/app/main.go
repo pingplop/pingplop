@@ -1,6 +1,6 @@
 package main
 
-import "github.com/riipandi/pingplop/internal/cli"
+import "github.com/pingplop/pingplop/internal/cli"
 
 func main() {
 	cli.Execute()

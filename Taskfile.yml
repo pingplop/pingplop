@@ -7,8 +7,8 @@ vars:
   BUILD_DATE:
     sh: date -u +"%Y-%m-%dT%H:%M:%SZ"
   BUILD_VERSION: '{{.BUILD_VERSION | default "unknown"}}'
-  PKG_FLAGS_PREFIX: github.com/riipandi/pingplop/meta
-  IMAGE_NAME: riipandi/pingplop
+  PKG_FLAGS_PREFIX: github.com/pingplop/pingplop/meta
+  IMAGE_NAME: pingplop/pingplop
   CONTAINER_NAME: pingplop
 
 tasks:

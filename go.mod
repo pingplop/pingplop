@@ -1,4 +1,4 @@
-module github.com/riipandi/pingplop
+module github.com/pingplop/pingplop
 
 go 1.21
 

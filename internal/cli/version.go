@@ -3,7 +3,7 @@ package cli
 import (
 	"fmt"
 
-	"github.com/riipandi/pingplop/meta"
+	"github.com/pingplop/pingplop/meta"
 	"github.com/spf13/cobra"
 )
 

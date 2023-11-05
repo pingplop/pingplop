@@ -11,8 +11,8 @@ builds:
     binary: pingplop
     ldflags:
       - -w -s -extldflags '-static'
-      - -X github.com/riipandi/pingplop/meta.Version={{ .Version }}
-      - -X github.com/riipandi/pingplop/meta.BuildDate={{ .Date }}
+      - -X github.com/pingplop/pingplop/meta.Version={{ .Version }}
+      - -X github.com/pingplop/pingplop/meta.BuildDate={{ .Date }}
     env:
       - CGO_ENABLED=0
     goos:
