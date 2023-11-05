@@ -8,10 +8,16 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/pingplop/pingplop/pkg/dbx"
 )
 
 func StartServer(bind string) {
-	// TODO Initialize database connection
+	// Initialize database connection
+	database, errdb := dbx.New()
+	if errdb != nil {
+		log.Fatalf("Could not set up database: %v", errdb)
+	}
 
 	// The HTTP Server
 	server := &http.Server{Addr: bind, Handler: httpHandler()}
@@ -25,7 +31,8 @@ func StartServer(bind string) {
 	go func() {
 		<-sig
 
-		// TODO Close database connection
+		// Close database connection
+		defer database.Conn.Close()
 
 		// Shutdown signal with grace period of 30 seconds
 		shutdownCtx, cancel := context.WithTimeout(serverCtx, 30*time.Second)

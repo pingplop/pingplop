@@ -6,11 +6,33 @@
 fly apps create pingplop-demo -o pingplop
 ```
 
+## Prepare Turso Database
+
+```sh
+turso auth login
+```
+
+```sh
+# Create new Turso database
+turso group create pingplop --location sjc
+turso db create pingplop-demo --group pingplop
+
+# Get database URL and Token
+turso db show pingplop-demo
+turso db tokens create pingplop-demo
+```
+
+### Scaling Turso
+
+```sh
+turso group locations add pingplop sin
+```
+
 ## Launch and deploy
 
 ```sh
 # Load secrets from dotenv file then initialize deployment
-fly secrets set $(cat .env | xargs -I %s echo %s)
+fly secrets set $(cat .env.demo | xargs -I %s echo %s)
 
 # Deploy the app
 fly deploy --remote-only

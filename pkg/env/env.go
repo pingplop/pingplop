@@ -11,9 +11,13 @@ import (
 )
 
 type config struct {
-	JWTSecret   string `env:"JWT_SECRET,required"`
-	DatabaseUrl string `env:"DATABASE_URL,required"`
-	Email       struct {
+	JWTSecret string `env:"JWT_SECRET,required"`
+	Database  struct {
+		Driver    string `env:"DATABASE_DRIVER,default=sqlite,strict"` // possible values: sqlite, libsql
+		AuthToken string `env:"DATABASE_AUTH_TOKEN"`
+		URL       string `env:"DATABASE_URL,required"`
+	}
+	Email struct {
 		Provider     string `env:"EMAIL_PROVIDER"` // possible values: smtp, postmark, awsses
 		MailFromName string `env:"EMAIL_FROM_NAME,default=Administrator,strict"`
 		MailFromAddr string `env:"EMAIL_FROM_ADDRESS,default=admin@example.com,strict"`

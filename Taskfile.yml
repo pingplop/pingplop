@@ -95,7 +95,7 @@ tasks:
 
   docker-run:
     cmds:
-      - docker run --rm -it --name {{.CONTAINER_NAME}} --env-file .env.docker -p 3080:3080 {{.IMAGE_NAME}}:latest
+      - docker run --rm -it --name {{.CONTAINER_NAME}} -v "$(pwd)/tmp:/app/data" --env-file .env.docker -p 3080:3080 {{.IMAGE_NAME}}:latest
 
   docker-shell:
     cmds:
@@ -103,4 +103,4 @@ tasks:
 
   docker-migrate:
     cmds:
-      - docker exec --env-file .env.docker {{.CONTAINER_NAME}} /usr/bin/pingplop migrate
+      - docker exec --env-file .env.docker {{.CONTAINER_NAME}} /app/pingplop migrate

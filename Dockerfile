@@ -49,22 +49,27 @@ RUN --mount=type=cache,id=go,target=/go/pkg/mod --mount=type=cache,id=go,target=
 # -----------------------------------------------------------------------------
 FROM alpine:3.18 as runner
 LABEL org.opencontainers.image.source="https://github.com/pingplop/pingplop"
+WORKDIR /app
 
 ARG JWT_SECRET
 ARG DATABASE_URL
+ARG DATABASE_AUTH_TOKEN
+ARG DATABASE_DRIVER
 
 ENV JWT_SECRET $JWT_SECRET
 ENV DATABASE_URL $DATABASE_URL
+ENV DATABASE_AUTH_TOKEN $DATABASE_AUTH_TOKEN
+ENV DATABASE_DRIVER $DATABASE_DRIVER
 
 # Don't run production as root, spawns command as a child process.
 RUN addgroup --system --gid 1001 nonroot && adduser --system --uid 1001 nonroot
 RUN apk update && apk add --no-cache tini ca-certificates
-RUN mkdir -p /appdata && chown -R nonroot:nonroot /appdata
+RUN mkdir -p /app/data && chmod -R 755 /app && chown -R nonroot:nonroot /app
 
-COPY --from=builder --chown=nonroot:nonroot /app/pingplop /usr/bin/pingplop
+COPY --from=builder --chown=nonroot:nonroot /app/pingplop /app/pingplop
 
 USER nonroot
 EXPOSE 3080
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["/usr/bin/pingplop", "--address", "0.0.0.0:3080"]
+CMD ["/app/pingplop", "--address", "0.0.0.0:3080"]

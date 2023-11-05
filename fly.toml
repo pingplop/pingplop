@@ -23,7 +23,7 @@ console_command = "/bin/sh"
 
 [deploy]
   strategy = "immediate"
-  # release_command = "/usr/bin/pingplop migrate"
+  # release_command = "/app/pingplop migrate"
 
 [env]
   PORT = "3080"

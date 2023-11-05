@@ -9,7 +9,7 @@ import (
 	"github.com/alexliesenfeld/health"
 	"github.com/go-chi/render"
 	"github.com/pingplop/pingplop/meta"
-	// "github.com/pingplop/pingplop/pkg/db"
+	"github.com/pingplop/pingplop/pkg/dbx"
 )
 
 func healthCheckHandler() http.HandlerFunc {
@@ -25,11 +25,11 @@ func healthCheckHandler() http.HandlerFunc {
 
 		// A check configuration to see if our database connection is up.
 		// The check function will be executed for each HTTP request.
-		// health.WithCheck(health.Check{
-		// 	Name:    "database",      // A unique check name.
-		// 	Timeout: 2 * time.Second, // A check specific timeout.
-		// 	Check:   db.Conn.PingContext,
-		// }),
+		health.WithCheck(health.Check{
+			Name:    "database",      // A unique check name.
+			Timeout: 2 * time.Second, // A check specific timeout.
+			Check:   dbx.Conn.PingContext,
+		}),
 
 		// The following check will be executed periodically every 15 seconds
 		// started with an initial delay of 3 seconds. The check function will NOT

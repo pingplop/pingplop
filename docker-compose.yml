@@ -3,51 +3,16 @@
 version: '3.8'
 
 services:
-  pgsql:
-    image: postgres:15-alpine
-    # Hydra Columnar table documentation:
-    # @ref: https://docs.hydra.so/concepts/using-hydra-columnar
-    # image: ghcr.io/hydradatabase/hydra:latest
-    container_name: pingplop_pgsql
-    hostname: postgres
-    ports:
-      - 5432:5432
-    volumes:
-      - pg_data:/var/lib/postgresql/data
-      # Optional: only use when using custom query for preparation
-      # - ./initialize.sql:/docker-entrypoint-initdb.d/initialize.sql
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: pingplop
-    healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U postgres -d pingplop']
-      interval: 30s
-      timeout: 20s
-      retries: 3
-
-  # keydb:
-  #   # drop-in replacement for Redis
-  #   image: eqalpha/keydb:latest
-  #   container_name: pingplop_keydb
-  #   restart: always
-  #   ports:
-  #     - '6379:6379'
-  #   volumes:
-  #     - 'keydb_data:/data'
-  #   command: 'keydb-server /etc/keydb/redis.conf --server-threads 2'
-
-  pgweb:
-    image: ghcr.io/sosedoff/pgweb:latest
-    container_name: pingplop_pgweb
+  keydb:
+    # drop-in replacement for Redis
+    image: eqalpha/keydb:latest
+    container_name: pingplop_keydb
     restart: always
     ports:
-      - '54321:8081'
-    environment:
-      PGWEB_DATABASE_URL: 'postgres://postgres:postgres@pgsql:5432/pingplop?sslmode=disable'
-      PGWEB_LOCK_SESSION: true
-    depends_on:
-      - pgsql
+      - '6379:6379'
+    volumes:
+      - 'keydb_data:/data'
+    command: 'keydb-server /etc/keydb/redis.conf --server-threads 2'
 
   mailpit:
     image: axllent/mailpit:v1.8
@@ -63,9 +28,7 @@ services:
       TZ: 'Asia/Jakarta'
 
 volumes:
-  pg_data:
+  keydb_data:
     driver: local
-  # keydb_data:
-  #   driver: local
   mailpit_data:
     driver: local
