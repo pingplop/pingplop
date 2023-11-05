@@ -23,7 +23,7 @@ export default function DefaultWebPage() {
         <p className='mt-4 text-base text-gray-700 md:text-lg'>
           Please contact the{' '}
           <a
-            href='mailto:contact@domainaja.com'
+            href='mailto:pingplop@skiff.com'
             className='text-red-600 hover:text-red-800'
             rel='noopener noreferrer'
             target='_blank'
