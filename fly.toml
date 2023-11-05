@@ -12,20 +12,19 @@ swap_size_mb = 256
 console_command = "/bin/sh"
 
 [build]
-  # image = "pingplop/pingplop:latest"
-  dockerfile = "core/Dockerfile"
+  # image = "ghcr.io/pingplop/pingplop:latest"
+  dockerfile = "Dockerfile"
 
 [build.args]
   NODE_VERSION = "20"
   GO_VERSION = "1.21"
-  BUILD_VERSION = "0.0.0"
-  BUILD_DATE = "2022-12-10T20:29:41Z"
   BUILD_VERSION = "0.0.1-fly"
+  BUILD_DATE = "2023-11-05T20:29:41Z"
 
 [deploy]
   strategy = "immediate"
   # release_command = "/usr/bin/pingplop migrate"
-d
+
 [env]
   PORT = "3080"
 
