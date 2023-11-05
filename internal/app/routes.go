@@ -78,7 +78,7 @@ func apiRoutes(r chi.Router) {
 	// Public API routes
 	r.Group(func(r chi.Router) {
 		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-			w.Write([]byte("PingPlop API v1"))
+			w.Write([]byte("Pingplop API v1"))
 		})
 		r.Get("/sysinfo", sysInfoHandler(true))
 		r.Get("/health", healthCheckHandler())

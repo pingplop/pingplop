@@ -16,7 +16,7 @@ var (
 	rootCmd = &cobra.Command{
 		Use:   "pingplop",
 		Short: "Golang starter project template.",
-		Long:  art.String("PingPlop v1.0"),
+		Long:  art.String("Pingplop v1.0"),
 		// Run:   func(cmd *cobra.Command, _ []string) { cmd.Help() },
 		Run: func(cmd *cobra.Command, args []string) {
 			addr, _ := cmd.Flags().GetString("address")
