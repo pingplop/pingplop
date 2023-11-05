@@ -1,0 +1,34 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "useDefineForClassFields": true,
+        "lib": ["ES2020", "DOM", "DOM.Iterable"],
+        "types": ["node", "jest", "@testing-library/jest-dom"],
+        "module": "ESNext",
+        "skipLibCheck": true,
+
+        /* Bundler mode */
+        "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "preserve",
+
+        /* Linting */
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
+
+        /* Absolute import */
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["web/*"],
+            "~/*": ["static/*"]
+        }
+    },
+    "include": ["web"],
+    "exclude": ["storybook-static", "node_modules", "dist", "build"],
+    "references": [{ "path": "./tsconfig.node.json" }]
+}

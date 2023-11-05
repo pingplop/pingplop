@@ -1,0 +1,10 @@
+{
+    "$schema": "https://raw.githubusercontent.com/raineorshine/npm-check-updates/main/src/types/RunOptions.json",
+    "interactive": true,
+    "upgrade": true,
+    "color": true,
+    "root": true,
+    "deep": false,
+    "packageManager": "pnpm",
+    "reject": ["typescript"]
+}

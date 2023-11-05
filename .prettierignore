@@ -1,0 +1,15 @@
+# Add files here to ignore them from prettier formatting
+/.nx/cache
+.cache/
+coverage/
+.fleet/
+.next/
+.vercel/
+build/
+dist/
+out/
+node_modules/
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+public/

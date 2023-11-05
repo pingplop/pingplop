@@ -36,6 +36,13 @@ testem.log
 *.local
 *.tsbuildinfo
 
+# Editor directories and files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
 # System Files
 .DS_Store
 .DS_Store?

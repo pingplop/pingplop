@@ -1,0 +1,147 @@
+{
+    "name": "pingplop",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+        "lint:fix": "eslint . --ext ts,tsx --report-unused-disable-directives --fix",
+        "format": "prettier --write \"./web/**/*.{json,js,jsx,ts,tsx,md,mdx}\" --log-level warn",
+        "deps": "pnpm dlx npm-check-updates --configFileName .ncurc.json",
+        "preinstall": "npx only-allow pnpm",
+        "prepare": "husky install",
+        "test": "vitest --run",
+        "test:ui": "vitest --ui",
+        "test:watch": "vitest",
+        "test:coverage": "vitest --run --coverage",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@fontsource-variable/jetbrains-mono": "^5.0.18",
+        "@fontsource-variable/noto-sans-hebrew": "^5.0.17",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^6.18.0",
+        "react": "^18.2.0",
+        "usehooks-ts": "^2.9.1"
+    },
+    "devDependencies": {
+        "@tailwindcss/aspect-ratio": "^0.4.2",
+        "@tailwindcss/forms": "^0.5.6",
+        "@tailwindcss/typography": "^0.5.10",
+        "@testing-library/dom": "^9.3.3",
+        "@testing-library/jest-dom": "^6.1.4",
+        "@testing-library/react": "^14.0.0",
+        "@testing-library/user-event": "^14.5.1",
+        "@types/jest": "^29.5.7",
+        "@types/jsdom": "^21.1.4",
+        "@types/node": "^20.8.10",
+        "@types/react": "^18.2.34",
+        "@types/react-dom": "^18.2.14",
+        "@typescript-eslint/eslint-plugin": "^6.9.1",
+        "@typescript-eslint/parser": "^6.9.1",
+        "@vitejs/plugin-react": "^4.1.1",
+        "@vitejs/plugin-react-swc": "^3.4.1",
+        "@vitest/coverage-v8": "^0.34.6",
+        "@vitest/ui": "^0.34.6",
+        "autoprefixer": "^10.4.16",
+        "clsx": "^2.0.0",
+        "eslint": "^8.53.0",
+        "eslint-plugin-react": "^7.33.2",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "eslint-plugin-react-refresh": "^0.4.4",
+        "eslint-plugin-simple-import-sort": "^10.0.0",
+        "eslint-plugin-tailwindcss": "^3.13.0",
+        "husky": "^8.0.3",
+        "jsdom": "^22.1.0",
+        "lucide-react": "^0.292.0",
+        "postcss": "^8.4.31",
+        "prettier": "^3.0.3",
+        "prettier-plugin-tailwindcss": "^0.5.6",
+        "prop-types": "^15.8.1",
+        "resize-observer-polyfill": "^1.5.1",
+        "tailwind-merge": "^2.0.0",
+        "tailwindcss": "^3.3.5",
+        "tailwindcss-animate": "^1.0.7",
+        "typescript": "^5.0.2",
+        "vite": "^4.5.0",
+        "vitest": "^0.34.6"
+    },
+    "browserslist": [
+        "last 3 chrome versions",
+        "last 3 firefox versions",
+        "last 3 opera versions",
+        "last 3 edge versions",
+        "last 3 safari versions",
+        "last 3 chromeandroid versions",
+        "last 1 firefoxandroid versions",
+        "ios >= 13.4"
+    ],
+    "prettier": {
+        "$schema": "http://json.schemastore.org/prettierrc",
+        "arrowParens": "always",
+        "bracketSpacing": true,
+        "bracketSameLine": false,
+        "printWidth": 100,
+        "quoteProps": "consistent",
+        "singleQuote": true,
+        "semi": false,
+        "tabWidth": 2,
+        "trailingComma": "es5",
+        "useTabs": false,
+        "plugins": [
+            "prettier-plugin-tailwindcss"
+        ],
+        "overrides": [
+            {
+                "files": [
+                    "*.html",
+                    "*.css",
+                    ".sass"
+                ],
+                "options": {
+                    "singleQuote": false
+                }
+            },
+            {
+                "files": [
+                    "*.json",
+                    ".prettierrc"
+                ],
+                "options": {
+                    "tabWidth": 4
+                }
+            },
+            {
+                "files": [
+                    "*.jsx",
+                    "*.tsx",
+                    "*.mdx"
+                ],
+                "options": {
+                    "jsxSingleQuote": true
+                }
+            },
+            {
+                "files": [
+                    "*.go"
+                ],
+                "options": {
+                    "tabWidth": 4
+                }
+            },
+            {
+                "files": [
+                    "Makefile",
+                    "*.mk"
+                ],
+                "options": {
+                    "useTabs": true,
+                    "tabWidth": 4
+                }
+            }
+        ]
+    }
+}

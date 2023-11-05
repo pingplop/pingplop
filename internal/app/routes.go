@@ -36,7 +36,7 @@ func httpHandler() http.Handler {
 		// content types to a data format based on Accept-Encoding request
 		// header. It uses a given compression level.
 		r.Use(middleware.Compress(5, "text/html", "text/css"))
-		r.Get("/*", handler.SPAHandler("sample"))
+		r.Get("/*", handler.SPAHandler("dist"))
 	})
 
 	// Group Routes for API

@@ -3,6 +3,7 @@
 /tmp
 /dist
 /docs
+/vendor
 .next
 .fleet
 .github
@@ -19,8 +20,4 @@ DEPLOY.md
 .env*
 compose-*.yml
 docker-compose*.yml
-
-vendor/
-web/*
-!web/embed.go
-!web/sample/
+web/dist/

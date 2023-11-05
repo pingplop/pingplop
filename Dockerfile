@@ -1,8 +1,28 @@
 # syntax=docker/dockerfile:1.4
 
 # Arguments with default value (for build).
+ARG NODE_ENV=production
+ARG NODE_VERSION=20
 ARG GO_VERSION=1.21
 ARG BUILD_VERSION 0.0.0
+
+# -----------------------------------------------------------------------------
+# This is base image with `pnpm` package manager
+# -----------------------------------------------------------------------------
+FROM node:${NODE_VERSION}-alpine AS base_web
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN apk update && apk add --no-cache libc6-compat
+RUN corepack enable && corepack prepare pnpm@latest-8 --activate
+WORKDIR /app
+
+# -----------------------------------------------------------------------------
+# Build the web application
+# -----------------------------------------------------------------------------
+FROM base_web AS builder_web
+COPY --chown=node:node . .
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store NODE_ENV=${NODE_ENV} pnpm build
 
 # -----------------------------------------------------------------------------
 # Build the application binaries
@@ -15,7 +35,7 @@ ENV BUILD_VERSION $BUILD_VERSION
 ENV BUILD_DATE $BUILD_DATE
 ENV LDFLAG_PREFIX "github.com/pingplop/pingplop/meta"
 
-COPY . .
+COPY --from=builder_web /app/ .
 RUN --mount=type=cache,id=go,target=/go/pkg/mod --mount=type=cache,id=go,target=/root/.cache/go-build \
   go mod download && go mod tidy
 
@@ -30,7 +50,10 @@ RUN --mount=type=cache,id=go,target=/go/pkg/mod --mount=type=cache,id=go,target=
 FROM alpine:3.18 as runner
 LABEL org.opencontainers.image.source="https://github.com/pingplop/pingplop"
 
+ARG JWT_SECRET
 ARG DATABASE_URL
+
+ENV JWT_SECRET $JWT_SECRET
 ENV DATABASE_URL $DATABASE_URL
 
 # Don't run production as root, spawns command as a child process.

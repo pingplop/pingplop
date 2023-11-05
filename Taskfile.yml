@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
-version: "3"
+version: '3'
 
 vars:
   GIT_SHA:
@@ -23,8 +23,8 @@ tasks:
     silent: true
 
   install-deps:
-    aliases: ["deps"]
-    cmds: ["mkdir -p build", "go mod download", "go mod tidy", "go mod vendor"]
+    aliases: ['deps']
+    cmds: ['mkdir -p build', 'go mod download', 'go mod tidy', 'go mod vendor']
     silent: true
 
   # -----------------------------------------------------------------------------------------------
@@ -32,20 +32,21 @@ tasks:
   # -----------------------------------------------------------------------------------------------
 
   dev:
-    deps: ["install-deps"]
+    deps: ['install-deps']
     cmd: air -c air.toml
 
   build:
     env:
       CGO_ENABLED: 0
       LD_FLAGS: "-w -s -extldflags '-static' -X {{.PKG_FLAGS_PREFIX}}.Version={{.BUILD_VERSION}} -X {{.PKG_FLAGS_PREFIX}}.BuildDate={{.BUILD_DATE}}"
-    deps: ["clean", "install-deps"]
+    deps: ['clean', 'install-deps']
     cmds:
+      - pnpm build
       - go build --ldflags="$LD_FLAGS" -a -o build/pingplop cmd/app/main.go
       - ls -lAh build
 
   start:
-    deps: ["build"]
+    deps: ['build']
     cmd: ./build/pingplop serve
 
   format:
@@ -54,7 +55,7 @@ tasks:
       - gosec -quiet -no-fail ./...
 
   lint:
-    deps: ["format"]
+    deps: ['format']
     cmd: echo 'Not yet implemented'
 
   # -----------------------------------------------------------------------------------------------
