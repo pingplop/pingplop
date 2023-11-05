@@ -36,13 +36,40 @@ export function ScreenSizeIndicator({ withScreenSize = false }: { withScreenSize
   const screenSize = withScreenSize ? `: ${width}x${height}` : ''
 
   return (
-    <div className='fixed bottom-0 left-0 z-50 flex h-6 w-auto items-center justify-center rounded-tr bg-gray-800 px-1.5 font-sans text-xs text-white'>
+    <div className='fixed bottom-0 right-0 z-50 flex h-6 w-auto items-center justify-center rounded-tl bg-gray-800 px-1.5 font-sans text-xs text-white'>
       <div className='block sm:hidden'>xs {screenSize}</div>
       <div className='hidden sm:block md:hidden'>sm {screenSize}</div>
       <div className='hidden md:block lg:hidden'>md {screenSize}</div>
       <div className='hidden lg:block xl:hidden'>lg {screenSize}</div>
       <div className='hidden xl:block 2xl:hidden'>xl {screenSize}</div>
       <div className='hidden 2xl:block'>2xl {screenSize}</div>
+    </div>
+  )
+}
+
+export function EmptySlot() {
+  return (
+    <div className='relative h-[576px] overflow-hidden rounded-xl border border-dashed border-gray-400 opacity-75'>
+      <svg className='absolute inset-0 h-full w-full stroke-gray-900/10' fill='none'>
+        <defs>
+          <pattern
+            id='pattern-1526ac66-f54a-4681-8fb8-0859d412f251'
+            x={0}
+            y={0}
+            width={10}
+            height={10}
+            patternUnits='userSpaceOnUse'
+          >
+            <path d='M-3 13 15-5M-5 5l18-18M-1 21 17 3' />
+          </pattern>
+        </defs>
+        <rect
+          stroke='none'
+          fill='url(#pattern-1526ac66-f54a-4681-8fb8-0859d412f251)'
+          width='100%'
+          height='100%'
+        />
+      </svg>
     </div>
   )
 }

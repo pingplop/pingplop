@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { ArrowLeftCircleIcon } from 'lucide-react'
+import { ArrowLeftCircleIcon } from '@heroicons/react/24/solid'
+import { Button } from '@tremor/react'
 
 export default function ErrorNotFound() {
   return (
@@ -14,13 +15,11 @@ export default function ErrorNotFound() {
           typed the address correctly, or try using our site search to find something specific.
         </p>
         <p className='mt-8 text-base font-medium text-gray-700 md:mt-10 md:text-lg'>
-          <Link
-            to='/'
-            className='inline-flex items-center justify-center gap-1.5 rounded-lg bg-black px-4 py-2.5 text-base text-white duration-300 hover:bg-gray-700'
-          >
-            <ArrowLeftCircleIcon className='h-5 w-5' />
-            <span>Back to dashboard</span>
-          </Link>
+          <Button icon={ArrowLeftCircleIcon} iconPosition='left' size='lg'>
+            <Link to='/'>
+              <span>Back to dashboard</span>
+            </Link>
+          </Button>
         </p>
       </div>
     </div>

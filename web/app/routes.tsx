@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom'
 
+import { EmptySlot } from '@/components/common'
 import { AppLayout } from '@/components/layouts'
+import DashboardPage from '@/pages/dashboard'
 import ErrorNotFound from '@/pages/not-found'
 import DefaultWebPage from '@/pages/welcome'
 
@@ -10,7 +12,14 @@ const AppRoutes = ({ basename }: { basename?: string }) => {
   const protectedRoutes: RouteObject[] = [
     {
       element: <AppLayout />,
-      children: [],
+      children: [
+        { path: '/overview', element: <DashboardPage /> },
+        { path: '/monitors', element: <EmptySlot /> },
+        { path: '/heartbeat', element: <EmptySlot /> },
+        { path: '/incidents', element: <EmptySlot /> },
+        { path: '/status-page', element: <EmptySlot /> },
+        { path: '/integrations', element: <EmptySlot /> },
+      ],
     },
   ]
 
