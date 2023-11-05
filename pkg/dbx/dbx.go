@@ -4,10 +4,13 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"path/filepath"
 
+	"github.com/pingplop/pingplop/migrations"
 	"github.com/pingplop/pingplop/pkg/env"
+	migrate "github.com/rubenv/sql-migrate"
 
 	_ "github.com/libsql/libsql-client-go/libsql"
 	_ "modernc.org/sqlite"
@@ -89,6 +92,13 @@ func New() (*Database, error) {
 	}
 	log.Println("database connection established")
 
+	if env.Config.Database.AutoMigrate {
+		err := runMigration(conn)
+		if err != nil {
+			return nil, err
+		}
+	}
+
 	// Initialize SQL Query builder and migrator
 	Conn = conn
 
@@ -99,5 +109,26 @@ func connectionCheck(conn *sql.DB) error {
 	if err := conn.Ping(); err != nil {
 		return err
 	}
+	return nil
+}
+
+func runMigration(conn *sql.DB) error {
+	// Configure sql-migrate table name
+	migrate.SetTable("_migrations")
+
+	// Initialize the migration source from embedded SQL files
+	migrationSource := migrate.HttpFileSystemMigrationSource{
+		FileSystem: http.FS(migrations.MigrationDir),
+	}
+
+	// Run database migrations
+	log.Println("running database migration")
+	n, err := migrate.Exec(conn, "sqlite3", migrationSource, migrate.Up)
+	if err != nil {
+		log.Fatalf("migration error: %v", err)
+	}
+
+	log.Printf("migration applied: %d", n)
+
 	return nil
 }

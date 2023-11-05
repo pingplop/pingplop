@@ -13,9 +13,10 @@ import (
 type config struct {
 	JWTSecret string `env:"JWT_SECRET,required"`
 	Database  struct {
-		Driver    string `env:"DATABASE_DRIVER,default=sqlite,strict"` // possible values: sqlite, libsql
-		AuthToken string `env:"DATABASE_AUTH_TOKEN"`
-		URL       string `env:"DATABASE_URL,required"`
+		Driver      string `env:"DATABASE_DRIVER,default=sqlite,strict"` // possible values: sqlite, libsql
+		AuthToken   string `env:"DATABASE_AUTH_TOKEN"`
+		URL         string `env:"DATABASE_URL,required"`
+		AutoMigrate bool   `env:"DATABASE_AUTO_MIGRATE,default=true"`
 	}
 	Email struct {
 		Provider     string `env:"EMAIL_PROVIDER"` // possible values: smtp, postmark, awsses

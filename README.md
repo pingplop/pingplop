@@ -19,11 +19,11 @@ Open-Source server and website uptime monitoring. In this repo I'm using [go-chi
 
 ## 🏁 Quick Start
 
-You will need `Go >=1.21.3`, `Docker >= 20.10`, and `Taskfile` installed on your machine.
+You will need `Go >=1.21.3`, `Docker >= 20.10`, `sql-migrate`, and `Taskfile` installed on your machine.
 
 ### Up and Running
 
-1. Install the required toolchain & SDK: [Go](https://go.dev/doc/install), [Docker][docker], and [Taskfile][taskfile].
+1. Install the required toolchain & SDK: [Go](https://go.dev/doc/install), [sql-migrate][sql-migrate], [Docker][docker], and [Taskfile][taskfile].
 2. Install the required dependencies using this command: `go mod download && go mod vendor`
 3. Create `.env` file or copy from `.env.example`, then configure required variables.
 4. Run project in development mode: `task dev`
@@ -73,6 +73,16 @@ task docker-push
 
 Read [DEPLOY.md](./DEPLOY.md) for detailed documentation.
 
+## 🏗️ Development
+
+### Create database migration
+
+```sh
+sql-migrate new MIGRATION_NAME --env=development
+```
+
+To learn more about `sql-migrate` commands, please refer to the [project documentation][sql-migrate].
+
 ## 📚 References
 
 - [Choosing the Right Go Web Framework](https://brunoscheufler.com/blog/2019-04-26-choosing-the-right-go-web-framework)
@@ -95,3 +105,4 @@ See the [license file](./LICENSE) for more information.
 [go-chi]: https://github.com/go-chi/chi
 [docker]: https://docs.docker.com/engine/install/
 [taskfile]: https://taskfile.dev/installation
+[sql-migrate]: https://github.com/rubenv/sql-migrate
