@@ -1,0 +1,105 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+vars:
+  GIT_SHA:
+    sh: git rev-parse --short HEAD
+  BUILD_DATE:
+    sh: date -u +"%Y-%m-%dT%H:%M:%SZ"
+  BUILD_VERSION: '{{.BUILD_VERSION | default "unknown"}}'
+  PKG_FLAGS_PREFIX: github.com/riipandi/pingplop/meta
+  IMAGE_NAME: riipandi/pingplop
+  CONTAINER_NAME: pingplop
+
+tasks:
+  prepare:
+    cmd: docker-compose -f docker-compose.yml up -d
+
+  cleanup:
+    cmd: docker-compose -f docker-compose.yml down --remove-orphans
+
+  clean:
+    cmd: find . -name *_gen.go -type f -delete
+    silent: true
+
+  install-deps:
+    aliases: ["deps"]
+    cmds: ["mkdir -p build", "go mod download", "go mod tidy", "go mod vendor"]
+    silent: true
+
+  # -----------------------------------------------------------------------------------------------
+  # Tasks for Docker development
+  # -----------------------------------------------------------------------------------------------
+
+  dev:
+    deps: ["install-deps"]
+    cmd: air -c air.toml
+
+  build:
+    env:
+      CGO_ENABLED: 0
+      LD_FLAGS: "-w -s -extldflags '-static' -X {{.PKG_FLAGS_PREFIX}}.Version={{.BUILD_VERSION}} -X {{.PKG_FLAGS_PREFIX}}.BuildDate={{.BUILD_DATE}}"
+    deps: ["clean", "install-deps"]
+    cmds:
+      - go build --ldflags="$LD_FLAGS" -a -o build/pingplop cmd/app/main.go
+      - ls -lAh build
+
+  start:
+    deps: ["build"]
+    cmd: ./build/pingplop serve
+
+  format:
+    cmds:
+      - golangci-lint run -c golangci.yml ./...
+      - gosec -quiet -no-fail ./...
+
+  lint:
+    deps: ["format"]
+    cmd: echo 'Not yet implemented'
+
+  # -----------------------------------------------------------------------------------------------
+  # Tasks for create release
+  # -----------------------------------------------------------------------------------------------
+
+  release-single:
+    cmds:
+      - goreleaser build --single-target --snapshot --rm-dist
+
+  release-snapshot:
+    cmds:
+      - goreleaser release --snapshot --rm-dist --skip-publish
+
+  release-publih:
+    cmds:
+      - goreleaser release --rm-dist
+
+  # -----------------------------------------------------------------------------------------------
+  # Tasks for Docker container
+  # -----------------------------------------------------------------------------------------------
+
+  docker-build:
+    env:
+      DOCKER_BUILDKIT: 1
+    cmds:
+      - |
+        docker build . --build-arg BUILD_VERSION={{.BUILD_VERSION}} \
+          --build-arg BUILD_DATE={{.BUILD_DATE}} \
+          -t {{.IMAGE_NAME}}:{{.BUILD_VERSION}} \
+          -t {{.IMAGE_NAME}}:latest
+      - docker image list | grep {{.IMAGE_NAME}}
+
+  docker-push:
+    cmds:
+      - goreleaser release --rm-distdocker push {{.IMAGE_NAME}}:latest && docker push {{.IMAGE_NAME}}:{{.BUILD_VERSION}}
+
+  docker-run:
+    cmds:
+      - docker run --rm -it --name {{.CONTAINER_NAME}} --env-file .env.docker -p 3080:3080 {{.IMAGE_NAME}}:latest
+
+  docker-shell:
+    cmds:
+      - docker run --rm -it --entrypoint sh {{.IMAGE_NAME}}:latest
+
+  docker-migrate:
+    cmds:
+      - docker exec --env-file .env.docker {{.CONTAINER_NAME}} /usr/bin/pingplop migrate

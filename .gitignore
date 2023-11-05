@@ -1,0 +1,74 @@
+# dependencies
+node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+logs
+*.log
+/.fleet
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+/typings
+build-errors.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+testem.log
+*.local
+*.tsbuildinfo
+
+# System Files
+.DS_Store
+.DS_Store?
+Thumbs.db
+*.sqlite3
+*.db
+
+# compiled output
+dist/
+dist-ssr
+/out-tsc
+.dist
+.output
+.build*
+.parcel-cache
+builds
+build/
+tmp/
+temp/
+vendor/
+/pingplop
+
+# tests coverage
+coverage.out
+
+# env files
+.env*
+!.env.example
+!.env.docker
+
+# fly.toml
+fly.*.toml*
+!fly.*example.toml
+
+# projects
+web/dist/
