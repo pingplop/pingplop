@@ -51,11 +51,17 @@
     "navigation": [
         {
             "group": "Get Started",
-            "pages": ["introduction", "quickstart", "development"]
+            "pages": ["introduction", "quickstart", "development", "deployment"]
         },
         {
             "group": "Essentials",
-            "pages": ["essentials/markdown", "essentials/code", "essentials/images", "essentials/settings", "essentials/navigation"]
+            "pages": [
+                "essentials/markdown",
+                "essentials/code",
+                "essentials/images",
+                "essentials/settings",
+                "essentials/navigation"
+            ]
         },
         {
             "group": "API Documentation",
@@ -63,7 +69,11 @@
         },
         {
             "group": "Endpoint Examples",
-            "pages": ["api-reference/endpoint/get", "api-reference/endpoint/create", "api-reference/endpoint/delete"]
+            "pages": [
+                "api-reference/endpoint/get",
+                "api-reference/endpoint/create",
+                "api-reference/endpoint/delete"
+            ]
         }
     ],
     "footerSocials": {

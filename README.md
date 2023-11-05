@@ -71,7 +71,7 @@ task docker-push
 
 ## 🚀 Deployment
 
-Read [DEPLOY.md](./DEPLOY.md) for detailed documentation.
+Read [Deployment Guide](https://pingplop.mintlify.app/deployment) for detailed documentation.
 
 ## 🏗️ Development
 
