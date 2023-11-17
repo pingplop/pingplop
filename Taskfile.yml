@@ -91,6 +91,7 @@ tasks:
     cmd: goreleaser build --single-target --snapshot --clean
 
   release:
+    desc: Trigger GitHub actions for release
     cmds:
       - git add --all . && git commit -am "create release v{{.APP_VERSION}}"
       - git push origin {{.GIT_BRANCH}}
