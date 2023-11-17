@@ -27,14 +27,14 @@ func UserRepository(ctx context.Context) *Repository {
 	}
 }
 
-func (r Repository) CreateUser(email, firstName, lastName, preferedUsername, password, avatarUrl string) (*models.User, error) {
+func (r Repository) CreateUser(email, firstName, lastName, preferredUsername, password, avatarUrl string) (*models.User, error) {
 	var m models.User
 
 	query := r.Db.Insert(models.TableUser).
-		Columns("email", "first_name", "last_name", "prefered_username", "avatar_url").
-		Values(strings.ToLower(email), firstName, lastName, preferedUsername, avatarUrl).
+		Columns("email", "first_name", "last_name", "preferred_username", "avatar_url").
+		Values(strings.ToLower(email), firstName, lastName, preferredUsername, avatarUrl).
 		Suffix(`ON CONFLICT (email) DO NOTHING`).
-		Suffix("RETURNING id, email, first_name, last_name, prefered_username, avatar_url, created_at")
+		Suffix("RETURNING id, email, first_name, last_name, preferred_username, avatar_url, created_at")
 
 	err := query.QueryRowContext(r.Ctx).Scan(&m.ID, &m.Email, &m.FirstName, &m.LastName, &m.PreferedUsername, &m.AvatarUrl, &m.CreatedAt)
 	if err != nil {

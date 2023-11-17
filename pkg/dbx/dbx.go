@@ -32,7 +32,6 @@ var (
 )
 
 func New() (*Database, error) {
-
 	// Get the directory of the binary file
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {

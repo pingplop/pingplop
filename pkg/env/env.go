@@ -48,7 +48,7 @@ func init() {
 	Reload()
 }
 
-// Reload configuration from current Enviornment Variables
+// Reload configuration from current Environment Variables
 func Reload() {
 	Config = config{}
 	err := envdecode.Decode(&Config)
@@ -57,7 +57,7 @@ func Reload() {
 		panic(err)
 	}
 
-	// Email Provider can be inferred if absense
+	// Email Provider can be inferred if absence
 	if Config.Email.Provider == "" {
 		if Config.Email.Postmark.APIKey != "" {
 			Config.Email.Provider = "postmark"

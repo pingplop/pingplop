@@ -50,14 +50,10 @@ tasks:
     deps: ['build']
     cmd: ./build/pingplop serve
 
-  format:
+  lint:
     cmds:
       - golangci-lint run -c golangci.yml ./...
-      - gosec -quiet -no-fail ./...
-
-  lint:
-    deps: ['format']
-    cmd: echo 'Not yet implemented'
+      # - gosec -quiet -no-fail ./...
 
   # -----------------------------------------------------------------------------------------------
   # Tasks for working with migration

@@ -17,7 +17,6 @@ import (
 // We can use subdomain mapping to split between API and web app:
 // @ref: https://go-chi.io/#/pages/middleware?id=routeheaders
 func httpHandler() http.Handler {
-
 	r := chi.NewRouter()
 
 	// Global middlewares
@@ -39,7 +38,6 @@ func httpHandler() http.Handler {
 
 	// Group Routes for API
 	r.Group(func(r chi.Router) {
-
 		// Limit number of currently processed requests at a time across all users.
 		r.Use(middleware.Throttle(30)) // 30 seconds
 
@@ -72,7 +70,6 @@ func httpHandler() http.Handler {
 }
 
 func apiRoutes(r chi.Router) {
-
 	// Public API routes
 	r.Group(func(r chi.Router) {
 		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
@@ -96,7 +93,6 @@ func apiRoutes(r chi.Router) {
 		// Register protected routes here
 		// .........
 	})
-
 }
 
 func authRoutes(r chi.Router) {

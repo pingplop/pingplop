@@ -13,7 +13,6 @@ import (
 )
 
 func healthCheckHandler() http.HandlerFunc {
-
 	// Create a new Checker.
 	checker := health.NewChecker(
 

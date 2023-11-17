@@ -42,7 +42,7 @@ func tryRead(fs embed.FS, prefix, requestedPath string, w http.ResponseWriter) e
 
 	// set cache control header to serve file for a year
 	// static files in this case need to be cache busted
-	// (usualy by appending a hash to the filename)
+	// (usually by appending a hash to the filename)
 	w.Header().Set("Cache-Control", "public, max-age=31536000, immutable")
 
 	_, err = io.Copy(w, f)

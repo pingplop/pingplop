@@ -1,5 +1,5 @@
 -- +migrate Up
-INSERT INTO users (email, first_name, last_name, prefered_username, metadata, created_at)
+INSERT INTO users (email, first_name, last_name, preferred_username, metadata, created_at)
 VALUES (
     'admin@example.com',
     'Admin',
@@ -15,7 +15,7 @@ VALUES (
     }',
     datetime('now', 'localtime')
 ) ON CONFLICT (email) DO NOTHING
-RETURNING id, email, first_name, last_name, prefered_username, avatar_url, created_at;
+RETURNING id, email, first_name, last_name, preferred_username, avatar_url, created_at;
 
 -- +migrate StatementBegin
 

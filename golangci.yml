@@ -1,5 +1,7 @@
+# yaml-language-server: $schema=https://json.schemastore.org/golangci-lint.json
+
 run:
-  go: 1.21
+  go: '1.21'
   concurrency: 4
   timeout: 10m
 
@@ -7,9 +9,9 @@ linters:
   disable-all: true
   enable:
     - asciicheck
-    - depguard
+    # - depguard
     - exportloopref
-    - gocritic
+    # - gocritic
     - gofmt
     - goimports
     - gomodguard

@@ -16,7 +16,7 @@ type User struct {
 	Email            *string    `json:"email" sql:"email"`
 	FirstName        string     `json:"first_name" sql:"first_name"`
 	LastName         string     `json:"last_name" sql:"last_name"`
-	PreferedUsername *string    `json:"prefered_username" sql:"prefered_username"`
+	PreferedUsername *string    `json:"preferred_username" sql:"preferred_username"`
 	AvatarUrl        *string    `json:"avatar_url" sql:"avatar_url"`
 	Metadata         *Metadata  `json:"metadata" sql:"metadata"`
 	EmailConfirmedAt *time.Time `json:"email_confirmed_at" sql:"email_confirmed_at"`

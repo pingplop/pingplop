@@ -10,7 +10,7 @@ CREATE TABLE users (
   email TEXT NOT NULL UNIQUE,
   first_name TEXT,
   last_name TEXT,
-  prefered_username TEXT,
+  preferred_username TEXT,
   avatar_url TEXT,
   metadata TEXT default '{}',
   email_confirmed_at TEXT,
@@ -23,7 +23,7 @@ CREATE TABLE users (
 -- +migrate StatementBegin
 
 CREATE INDEX idx_users_email ON users(email);
-CREATE INDEX idx_users_prefered_username ON users(prefered_username);
+CREATE INDEX idx_users_preferred_username ON users(preferred_username);
 
 -- Trigger function to update updated_at
 CREATE TRIGGER update_users_updated_at AFTER UPDATE ON users FOR EACH ROW

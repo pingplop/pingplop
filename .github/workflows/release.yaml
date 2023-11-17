@@ -34,21 +34,14 @@ jobs:
           goVersion: ${{ env.goVersion }}
 
       - if: ${{ steps.pnpm-cache.outputs.cache-hit != 'true' }}
-        name: Build frontend application
+        name: Build Admin dashboard UI
         run: pnpm install && pnpm build
 
-      # This step usually is not needed because the /ui/dist is pregenerated locally
-      # but its here to ensure that each release embeds the latest admin ui artifacts.
-      # If the artificats differs, a "dirty error" is thrown - https://goreleaser.com/errors/dirty/
-      # - name: Build Admin dashboard UI
-      #   run: npm --prefix=./web ci && npm --prefix=./web run build
-      # The prebuilt golangci-lint doesn't support go 1.18+ yet
-      # https://github.com/golangci/golangci-lint/issues/2649
-      # - name: Run linter
-      #   uses: golangci/golangci-lint-action@v3
-      # - name: Run tests
-      #   run: go test ./...
-      - name: Run GoReleaser
+      - name: Run linter
+        uses: golangci/golangci-lint-action@v3
+      - name: Run unit tests
+        run: go test ./...
+      - name: Run GoReleaser release clean
         uses: goreleaser/goreleaser-action@v3
         with:
           distribution: goreleaser
