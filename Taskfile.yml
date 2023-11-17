@@ -5,6 +5,7 @@ silent: true
 
 vars:
   GIT_SHA: {sh: git rev-parse --short HEAD}
+  GIT_BRANCH: {sh: git symbolic-ref --short -q HEAD}
   APP_VERSION: {sh: cat package.json | jq -r .version}
   BUILD_DATE: '{{ now | date "2006-01-02T15:04:05Z" }}'
   PKG_FLAGS_PREFIX: github.com/pingplop/pingplop/meta
@@ -91,8 +92,10 @@ tasks:
 
   release:
     cmds:
-      # - git push -d origin v$(cat package.json | jq -r .version)
-      # - git tag --delete v$(cat package.json | jq -r .version)
+      - git add --all . && git commit -am "create release v{{.APP_VERSION}}"
+      - git push origin {{.GIT_BRANCH}}
+      - git push -d origin v$(cat package.json | jq -r .version)
+      - git tag --delete v$(cat package.json | jq -r .version)
       - git tag v$(cat package.json | jq -r .version) -m release
       - git push origin v$(cat package.json | jq -r .version)
       - goreleaser release --clean
