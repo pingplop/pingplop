@@ -5,9 +5,7 @@ name: CI Actions
 on:
   push:
     tags-ignore:
-      - '**'
-    branches:
-      - '**'
+      - '*'
   pull_request:
 
 permissions: read-all
@@ -24,6 +22,7 @@ concurrency:
 
 jobs:
   test-build:
+    # if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
