@@ -27,20 +27,16 @@ builds:
       - linux
       - darwin
       - windows
-      - freebsd
     goarch:
       - amd64
       - arm64
-      - arm
     goarm:
       - "7"
     ignore:
+      - goos: linux
+        goarch: arm64
       - goos: windows
-        goarch: arm
-      - goos: freebsd
-        goarch: arm
-      - goos: darwin
-        goarch: arm
+        goarch: arm64
 
 release:
   draft: true
@@ -48,6 +44,7 @@ release:
 archives:
   - format: binary
   - id: archive_noncgo
+    format: zip
     builds: [build_noncgo]
     files:
       - LICENSE*
