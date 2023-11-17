@@ -46,6 +46,9 @@ tasks:
       - go build --ldflags="$LD_FLAGS" -a -o build/pingplop cmd/app/main.go
       - ls -lAh build
 
+  release:
+    cmd: goreleaser release --clean
+
   start:
     deps: ['build']
     cmd: ./build/pingplop serve

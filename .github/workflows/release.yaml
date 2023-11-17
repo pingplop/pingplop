@@ -1,9 +1,17 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
 name: Create Release
 
 on:
   pull_request:
     types: [opened, synchronize]
 
+env:
+  nodeVersion: 20
+  goVersion: '1.21.3'
+
+# Cancel in progress workflows on pull_requests. A Doppler Service Token provides read-only
+# access to a single config and is recommended due to its limited access scope.
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
@@ -16,31 +24,16 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 15
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - name: Run actions/setup-sdk@local
+        uses: ./.github/setup-sdk
         with:
-          fetch-depth: 0
+          nodeVersion: ${{ env.nodeVersion }}
+          goVersion: ${{ env.goVersion }}
 
-      # - name: Setup PNPM Package Manager
-      #   uses: pnpm/action-setup@v2
-      #   with:
-      #     version: ^7.17
-      #     run_install: |
-      #       - args: [--global, prettier, husky, lint-staged, tailwindcss]
-      #       - args: [--no-frozen-lockfile]
-
-      # - name: Setup Node.js
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     cache: "pnpm"
-
-      # - name: Install dependencies
-      #   run: pnpm install
-
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: ">=1.21.3"
+      - if: ${{ steps.pnpm-cache.outputs.cache-hit != 'true' }}
+        name: Build frontend application
+        run: pnpm install && pnpm build
 
       # This step usually is not needed because the /ui/dist is pregenerated locally
       # but its here to ensure that each release embeds the latest admin ui artifacts.
@@ -58,6 +51,6 @@ jobs:
         with:
           distribution: goreleaser
           version: latest
-          args: release --rm-dist
+          args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

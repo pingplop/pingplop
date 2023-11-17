@@ -4,6 +4,8 @@ dist: build/releases
 
 before:
   hooks:
+    - pnpm install
+    - pnpm build
     - go mod tidy
 
 builds:
