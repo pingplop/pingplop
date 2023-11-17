@@ -46,5 +46,6 @@ runs:
     - uses: actions/setup-go@v4
       with:
         go-version: ${{ inputs.goVersion }}
+        cache: true
 
     - uses: superfly/flyctl-actions/setup-flyctl@master
