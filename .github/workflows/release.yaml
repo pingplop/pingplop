@@ -3,11 +3,11 @@
 name: Create Release
 
 on:
-  workflow_dispatch:
   push:
     tags: ['v*']
   pull_request:
     types: [opened, synchronize]
+  # workflow_dispatch:
 
 env:
   nodeVersion: 20
