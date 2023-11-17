@@ -98,8 +98,8 @@ tasks:
       - git tag --delete v$(cat package.json | jq -r .version)
       - git tag v$(cat package.json | jq -r .version) -m release
       - git push origin v$(cat package.json | jq -r .version)
-      - goreleaser release --clean
-      - cat build/releases/checksums.txt
+      # - goreleaser release --clean
+      # - cat build/releases/checksums.txt
 
   # -----------------------------------------------------------------------------------------------
   # Tasks for Docker container
