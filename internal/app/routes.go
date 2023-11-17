@@ -35,7 +35,7 @@ func httpHandler() http.Handler {
 		// Compress is a middleware that compresses response body of a given
 		// content types to a data format based on Accept-Encoding request
 		// header. It uses a given compression level.
-		r.Use(middleware.Compress(5, "text/html", "text/css"))
+		r.Use(middleware.Compress(5, "text/html", "text/css", "text/javascript"))
 		r.Get("/*", handler.SPAHandler("dist"))
 	})
 
@@ -82,6 +82,7 @@ func apiRoutes(r chi.Router) {
 		})
 		r.Get("/sysinfo", sysInfoHandler(true))
 		r.Get("/health", healthCheckHandler())
+		r.Route("/auth", authRoutes)
 	})
 
 	// Protected API routes
@@ -120,9 +121,12 @@ func apiRoutes(r chi.Router) {
 		})
 
 		// Register protected routes here
-		// r.Get("/users", handler.GetAllUsers)
-		// r.Post("/users", handler.CreateUser)
-		// r.Get("/users/{userId}", handler.GetUserById)
+		// .........
 	})
 
+}
+
+func authRoutes(r chi.Router) {
+	r.Post("/token", handler.AuthTokenHandler)
+	r.Post("/signup", handler.SignupHandler)
 }

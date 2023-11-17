@@ -47,6 +47,7 @@ func init() {
 }
 
 // initConfig reads in config file and ENV variables if set.
+// TODO replace viper with https://github.com/knadh/koanf
 func initConfig() {
 	if cfgFile != "" {
 		viper.SetConfigFile(cfgFile) // Use config file from the flag.

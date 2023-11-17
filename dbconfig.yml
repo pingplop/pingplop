@@ -6,6 +6,6 @@ development:
 
 production:
   dialect: sqlite3
-  datasource: build/data/pingplop.db
+  datasource: ${DATABASE_URL}
   dir: migrations
   table: _migrations

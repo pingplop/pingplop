@@ -1,31 +1,35 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: '3'
 
+silent: true
+
 vars:
-  GIT_SHA:
-    sh: git rev-parse --short HEAD
-  BUILD_DATE:
-    sh: date -u +"%Y-%m-%dT%H:%M:%SZ"
+  GIT_SHA: {sh: git rev-parse --short HEAD}
+  BUILD_DATE: '{{ now | date "2006-01-02T15:04:05Z" }}'
   BUILD_VERSION: '{{.BUILD_VERSION | default "unknown"}}'
   PKG_FLAGS_PREFIX: github.com/pingplop/pingplop/meta
   IMAGE_NAME: pingplop/pingplop
   CONTAINER_NAME: pingplop
 
 tasks:
+  default:
+    desc: 'Print all available tasks'
+    cmd: task --list-all
+
   prepare:
     cmd: docker-compose -f docker-compose.yml up -d
 
   cleanup:
-    cmd: docker-compose -f docker-compose.yml down --remove-orphans
+    cmds:
+      - defer: rm -rf tmp/ build/ web/dist/
+      - docker-compose -f docker-compose.yml down --remove-orphans
 
   clean:
     cmd: find . -name *_gen.go -type f -delete
-    silent: true
 
   install-deps:
     aliases: ['deps']
     cmds: ['mkdir -p build', 'go mod download', 'go mod tidy', 'go mod vendor']
-    silent: true
 
   # -----------------------------------------------------------------------------------------------
   # Tasks for Docker development
@@ -39,9 +43,9 @@ tasks:
     env:
       CGO_ENABLED: 0
       LD_FLAGS: "-w -s -extldflags '-static' -X {{.PKG_FLAGS_PREFIX}}.Version={{.BUILD_VERSION}} -X {{.PKG_FLAGS_PREFIX}}.BuildDate={{.BUILD_DATE}}"
-    deps: ['clean', 'install-deps']
+    # deps: ['clean', 'install-deps']
     cmds:
-      - pnpm build
+      # - pnpm build
       - go build --ldflags="$LD_FLAGS" -a -o build/pingplop cmd/app/main.go
       - ls -lAh build
 
@@ -57,6 +61,28 @@ tasks:
   lint:
     deps: ['format']
     cmd: echo 'Not yet implemented'
+
+  # -----------------------------------------------------------------------------------------------
+  # Tasks for working with migration
+  # -----------------------------------------------------------------------------------------------
+
+  migrate-new:
+    desc: 'Example: task migrate-new name=MIGRATION_NAME'
+    requires:
+      vars: [name]
+    cmd: sql-migrate new {{.name}} --env=development
+
+  migrate-up:
+    cmds: ['sql-migrate up --env=development', 'sql-migrate status --env=development']
+
+  migrate-down:
+    cmds: ['sql-migrate down --env=development', 'sql-migrate status --env=development']
+
+  migrate-status:
+    cmd: sql-migrate status --env=development
+
+  migrate-reset:
+    cmds: ['rm -f build/data/pingplop.db', 'task migrate-up']
 
   # -----------------------------------------------------------------------------------------------
   # Tasks for create release

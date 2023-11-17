@@ -1,13 +1,23 @@
-import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouteObject, RouterProvider } from 'react-router-dom'
 
 import { EmptySlot } from '@/components/common'
-import { AppLayout } from '@/components/layouts'
+import { AppLayout, AuthLayout } from '@/components/layouts'
 import DashboardPage from '@/pages/dashboard'
+import LoginPage from '@/pages/login'
 import ErrorNotFound from '@/pages/not-found'
-import DefaultWebPage from '@/pages/welcome'
 
 const AppRoutes = ({ basename }: { basename?: string }) => {
-  const publicRoutes: RouteObject[] = [{ path: '/', element: <DefaultWebPage /> }]
+  const authenticated = false
+  const redirectTo = authenticated ? '/overview' : '/login'
+
+  const homeRoute: RouteObject = { path: '/', element: <Navigate to={redirectTo} replace /> }
+
+  const authRoutes: RouteObject[] = [
+    {
+      element: <AuthLayout />,
+      children: [{ path: '/login', element: <LoginPage /> }],
+    },
+  ]
 
   const protectedRoutes: RouteObject[] = [
     {
@@ -28,7 +38,7 @@ const AppRoutes = ({ basename }: { basename?: string }) => {
   const notFoundRoute = { path: '*', element: <ErrorNotFound /> }
 
   // Combine and conditionally include routes based on authentication status
-  const routes = [...publicRoutes, ...protectedRoutes, notFoundRoute]
+  const routes = [homeRoute, ...authRoutes, ...protectedRoutes, notFoundRoute]
   const router = createBrowserRouter(routes, { basename })
 
   // Provide the router configuration using RouterProvider

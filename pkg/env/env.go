@@ -16,7 +16,7 @@ type config struct {
 		Driver      string `env:"DATABASE_DRIVER,default=sqlite,strict"` // possible values: sqlite, libsql
 		AuthToken   string `env:"DATABASE_AUTH_TOKEN"`
 		URL         string `env:"DATABASE_URL,required"`
-		AutoMigrate bool   `env:"DATABASE_AUTO_MIGRATE,default=false"`
+		AutoMigrate bool   `env:"DATABASE_AUTO_MIGRATE,default=true,strict"`
 	}
 	Email struct {
 		Provider     string `env:"EMAIL_PROVIDER"` // possible values: smtp, postmark, awsses
@@ -37,11 +37,6 @@ type config struct {
 			AccessKeyID     string `env:"EMAIL_AWSSES_ACCESS_KEY_ID"`
 			SecretAccessKey string `env:"EMAIL_AWSSES_SECRET_ACCESS_KEY"`
 		}
-	}
-	Maintenance struct {
-		Enabled bool   `env:"MAINTENANCE,default=false,strict"`
-		Message string `env:"MAINTENANCE_MESSAGE"`
-		Until   string `env:"MAINTENANCE_UNTIL"`
 	}
 }
 

@@ -15,7 +15,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 
-import BrandLogo from '@/assets/images/logolight.svg'
+import BrandLogo from '@/assets/images/logo-light.svg'
 import { cn } from '@/utils/ui-helper'
 
 import { EmptySlot } from '../common'
@@ -40,7 +40,7 @@ const teams = [
 ]
 const userNavigation = [
   { name: 'Your account', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Sign out', href: '/login' },
 ]
 
 export function AppLayout() {

@@ -15,7 +15,7 @@ export default defineConfig({
   base: '/',
   build: {
     emptyOutDir: true,
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 1200,
     reportCompressedSize: false,
     outDir: resolve(__dirname, 'web/dist'),
     rollupOptions: {

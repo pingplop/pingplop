@@ -5,6 +5,7 @@
     "color": true,
     "root": true,
     "deep": false,
+    "install": "always",
     "packageManager": "pnpm",
     "reject": ["typescript"]
 }
