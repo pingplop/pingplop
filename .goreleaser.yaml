@@ -1,4 +1,9 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+
 project_name: pingplop
+
+github_urls:
+  download: http://github.com/pingplop/pingplop/releases
 
 dist: build/releases
 
@@ -18,8 +23,8 @@ builds:
     env:
       - CGO_ENABLED=0
     goos:
-      # - windows
-      # - darwin
+      - windows
+      - darwin
       - freebsd
       - linux
     goarch:
@@ -40,7 +45,14 @@ release:
   draft: true
 
 archives:
+  - format: binary
   - format: zip
+    id: out-zip
+    files:
+      - LICENSE*
+      - CHANGELOG*
+  - format: tar.gz
+    id: out-tar-gz
     files:
       - LICENSE*
       - CHANGELOG*

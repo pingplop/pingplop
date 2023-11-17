@@ -3,8 +3,8 @@ testdata_dir = "testdata"
 tmp_dir = "tmp"
 
 [build]
-  full_bin = "godotenv -f .env build/pingplop"
-  cmd = "go build -o build/pingplop cmd/app/main.go"
+  full_bin = "godotenv -f .env build/debug/pingplop"
+  cmd = "go build -o build/debug/pingplop cmd/app/main.go"
   args_bin = ["--address 127.0.0.1:3080"]
   exclude_dir = ["static"]
   exclude_file = []
@@ -15,7 +15,7 @@ tmp_dir = "tmp"
   include_ext = ["go"]
   kill_delay = "0s"
   delay = 500
-  log = "build/build-errors.log"
+  log = "build/debug/build-errors.log"
   send_interrupt = false
   stop_on_error = true
 
