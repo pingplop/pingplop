@@ -85,9 +85,7 @@ tasks:
   reset-tag:
     internal: true
     cmds:
-      - git add --all . && git commit --allow-empty -m "create release v{{.APP_VERSION}}"
-      - git push origin {{.GIT_BRANCH}}
-      - git push -d origin v{{.APP_VERSION}}
+      - git push --delete origin v{{.APP_VERSION}}
       - git tag --delete v{{.APP_VERSION}}
 
   release-snapshot:
@@ -100,8 +98,10 @@ tasks:
 
   release:
     desc: Trigger GitHub actions for release
-    deps: ['reset-tag']
+    # deps: ['reset-tag']
     cmds:
+      - git add --all . && git commit -am "create release v{{.APP_VERSION}}"
+      - git push origin {{.GIT_BRANCH}}
       - git tag v{{.APP_VERSION}} -m "create release v{{.APP_VERSION}}"
       - git push origin v{{.APP_VERSION}}
       # - goreleaser release --clean
