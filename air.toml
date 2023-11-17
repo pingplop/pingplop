@@ -4,7 +4,7 @@ tmp_dir = "tmp"
 
 [build]
   full_bin = "godotenv -f .env build/debug/pingplop"
-  cmd = "go build -o build/debug/pingplop cmd/app/main.go"
+  cmd = "go build --ldflags=\"-w -s -extldflags '-static'\" -o build/debug/pingplop cmd/app/main.go"
   args_bin = ["--address 127.0.0.1:3080"]
   exclude_dir = ["static"]
   exclude_file = []
