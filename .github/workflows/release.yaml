@@ -34,13 +34,13 @@ jobs:
           goVersion: ${{ env.goVersion }}
 
       - if: ${{ steps.pnpm-cache.outputs.cache-hit != 'true' }}
-        name: Build Admin dashboard UI
+        name: Build admin dashboard
         run: pnpm install && pnpm build
 
       # - name: Run linter
       #   uses: golangci/golangci-lint-action@v3
 
-      - name: Run unit tests
+      - name: Run Golang unit tests
         run: go test ./...
 
       - name: Run GoReleaser release clean
@@ -50,4 +50,4 @@ jobs:
           version: latest
           args: release --clean
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
