@@ -100,7 +100,7 @@ tasks:
     desc: Trigger GitHub actions for release
     # deps: ['reset-tag']
     cmds:
-      - git add --all . && git commit -am "create release v{{.APP_VERSION}}"
+      - git add --all . && git commit --allow-empty -m "create release v{{.APP_VERSION}}"
       - git push origin {{.GIT_BRANCH}}
       - git tag v{{.APP_VERSION}} -m "create release v{{.APP_VERSION}}"
       - git push origin v{{.APP_VERSION}}
