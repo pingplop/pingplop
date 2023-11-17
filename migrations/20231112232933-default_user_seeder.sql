@@ -14,7 +14,8 @@ VALUES (
        }
     }',
     datetime('now', 'localtime')
-) ON CONFLICT (email) DO NOTHING
+)
+ON CONFLICT (email) DO NOTHING
 RETURNING id, email, first_name, last_name, preferred_username, avatar_url, created_at;
 
 -- +migrate StatementBegin

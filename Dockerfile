@@ -5,9 +5,9 @@ ARG NODE_ENV=production
 ARG NODE_VERSION=20
 ARG GO_VERSION=1.21
 
-# -----------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # This is base image with `pnpm` package manager
-# -----------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 FROM node:${NODE_VERSION}-alpine AS base_web
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -15,17 +15,17 @@ RUN apk update && apk add --no-cache libc6-compat
 RUN corepack enable && corepack prepare pnpm@latest-8 --activate
 WORKDIR /app
 
-# -----------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Build the web application
-# -----------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 FROM base_web AS builder_web
 COPY --chown=node:node . .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store NODE_ENV=${NODE_ENV} pnpm build
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store NODE_ENV=$NODE_ENV pnpm build
 
-# -----------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Build the application binaries
-# -----------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 FROM golang:${GO_VERSION}-alpine as builder
 WORKDIR /app
 
@@ -46,9 +46,9 @@ RUN --mount=type=cache,id=go,target=/go/pkg/mod --mount=type=cache,id=go,target=
   --ldflags="-w -s -extldflags '-static' -X ${LDFLAG_PREFIX}.Version=${APP_VERSION} -X ${LDFLAG_PREFIX}.BuildDate=${BUILD_DATE}" \
   -trimpath -a -o pingplop cmd/app/main.go
 
-# -----------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Use the slim image for a lean production container.
-# -----------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 FROM alpine:3.18 as runner
 LABEL org.opencontainers.image.source="https://github.com/pingplop/pingplop"
 WORKDIR /app

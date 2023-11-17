@@ -99,7 +99,7 @@ tasks:
     cmd: sql-migrate status --env=development
 
   migrate-reset:
-    cmds: ['rm -f build/data/pingplop.db', 'task migrate-up']
+    cmds: ['rm -f build/debug/data/pingplop.db', 'task migrate-up']
 
   # -----------------------------------------------------------------------------------------------
   # Tasks for create release

@@ -1,6 +1,6 @@
 -- +migrate Up
 CREATE TABLE passwords (
-  user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+  user_id TEXT(36) PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE NOT NULL,
   password_hash TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now')) NOT NULL,
   updated_at TIMESTAMP

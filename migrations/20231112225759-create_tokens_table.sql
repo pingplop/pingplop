@@ -7,7 +7,7 @@ CREATE TABLE tokens (
     substr(hex(randomblob(2)), 2) || '-' ||
     hex(randomblob(6))
   )) NOT NULL,
-  user_id TEXT NOT NULL,
+  user_id TEXT(36) NOT NULL,
   kind TEXT NOT NULL, -- verification or recovery
   token TEXT NOT NULL UNIQUE,
   expires_at TEXT NOT NULL,

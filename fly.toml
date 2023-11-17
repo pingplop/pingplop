@@ -4,6 +4,7 @@
 # how to use this file.
 ##
 
+# pingplop-demo.fly.dev
 app = "pingplop-demo"
 primary_region = "sjc"
 kill_signal = "SIGINT"

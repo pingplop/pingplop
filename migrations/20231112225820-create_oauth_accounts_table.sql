@@ -7,7 +7,7 @@ CREATE TABLE oauth_accounts (
     substr(hex(randomblob(2)), 2) || '-' ||
     hex(randomblob(6))
   )) NOT NULL,
-  user_id TEXT NOT NULL,
+  user_id TEXT(36) NOT NULL,
   account_type TEXT NOT NULL,
   provider TEXT NOT NULL,
   provider_account_id TEXT NOT NULL,

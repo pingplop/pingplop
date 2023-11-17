@@ -7,11 +7,12 @@ CREATE TABLE users (
     substr(hex(randomblob(2)), 2) || '-' ||
     hex(randomblob(6))
   )) NOT NULL,
+  tenant_id TEXT(36) NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000',
   email TEXT NOT NULL UNIQUE,
-  first_name TEXT,
-  last_name TEXT,
-  preferred_username TEXT,
-  avatar_url TEXT,
+  first_name TEXT DEFAULT '',
+  last_name TEXT DEFAULT '',
+  preferred_username TEXT NOT NULL,
+  avatar_url TEXT DEFAULT '',
   metadata TEXT default '{}',
   email_confirmed_at TEXT,
   banned_until TEXT,
@@ -24,6 +25,7 @@ CREATE TABLE users (
 
 CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_users_preferred_username ON users(preferred_username);
+CREATE UNIQUE INDEX users_tenant_id_unique ON users (tenant_id);
 
 -- Trigger function to update updated_at
 CREATE TRIGGER update_users_updated_at AFTER UPDATE ON users FOR EACH ROW
