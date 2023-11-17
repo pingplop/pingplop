@@ -24,12 +24,9 @@ tasks:
       - defer: rm -rf tmp/ build/ web/dist/
       - docker-compose -f docker-compose.yml down --remove-orphans
 
-  clean:
-    cmd: find . -name *_gen.go -type f -delete
-
   install-deps:
     aliases: ['deps']
-    cmds: ['mkdir -p build', 'go mod download', 'go mod tidy', 'go mod vendor']
+    cmds: ['mkdir -p build', 'pnpm install', 'go mod download', 'go mod tidy', 'go mod vendor']
 
   # -----------------------------------------------------------------------------------------------
   # Tasks for Docker development
@@ -43,7 +40,7 @@ tasks:
     env:
       CGO_ENABLED: 0
       LD_FLAGS: "-w -s -extldflags '-static' -X {{.PKG_FLAGS_PREFIX}}.Version={{.APP_VERSION}} -X {{.PKG_FLAGS_PREFIX}}.BuildDate={{.BUILD_DATE}}"
-    deps: ['clean', 'install-deps']
+    deps: ['install-deps']
     cmds:
       - pnpm build
       - go build --ldflags="$LD_FLAGS" -a -o build/pingplop cmd/app/main.go
