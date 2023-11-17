@@ -40,6 +40,8 @@ jobs:
         name: Build admin dashboard
         run: pnpm install && pnpm build
 
+      # The prebuilt golangci-lint doesn't support go 1.18+ yet
+      # https://github.com/golangci/golangci-lint/issues/2649
       # - name: Run linter
       #   uses: golangci/golangci-lint-action@v3
 
