@@ -1,7 +1,7 @@
 package jwt
 
 import (
-	"github.com/go-chi/jwtauth/v5"
+	"github.com/pingplop/pingplop/internal/middleware/jwtauth"
 	"github.com/pingplop/pingplop/pkg/env"
 )
 

@@ -45,7 +45,7 @@ tasks:
       LD_FLAGS: "-w -s -extldflags '-static' -X {{.PKG_FLAGS_PREFIX}}.Version={{.BUILD_VERSION}} -X {{.PKG_FLAGS_PREFIX}}.BuildDate={{.BUILD_DATE}}"
     # deps: ['clean', 'install-deps']
     cmds:
-      # - pnpm build
+      - pnpm build
       - go build --ldflags="$LD_FLAGS" -a -o build/pingplop cmd/app/main.go
       - ls -lAh build
 

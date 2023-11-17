@@ -8,11 +8,9 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 	"github.com/go-chi/httprate"
-	"github.com/go-chi/jwtauth/v5"
-	"github.com/go-chi/render"
 
-	jwx "github.com/lestrrat-go/jwx/v2/jwt"
 	"github.com/pingplop/pingplop/internal/app/handler"
+	"github.com/pingplop/pingplop/internal/middleware/jwtauth"
 	"github.com/pingplop/pingplop/pkg/jwt"
 )
 
@@ -93,32 +91,7 @@ func apiRoutes(r chi.Router) {
 		// Handle valid / invalid tokens. In this example, we use the provided authenticator
 		// middleware, but you can write your own very easily, look at the Authenticator
 		// method in jwtauth.go and tweak it, its not scary.
-
-		// r.Use(jwtauth.Authenticator)
-		r.Use(func(next http.Handler) http.Handler {
-			return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-				token, _, err := jwtauth.FromContext(r.Context())
-
-				if err != nil {
-					// http.Error(w, err.Error(), http.StatusUnauthorized)
-					w.Header().Set("Content-type", "application/json")
-					w.WriteHeader(http.StatusUnauthorized)
-					render.Render(w, r, handler.ErrUnauthorized)
-					return
-				}
-
-				if token == nil || jwx.Validate(token) != nil {
-					// http.Error(w, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)
-					w.Header().Set("Content-type", "application/json")
-					w.WriteHeader(http.StatusUnauthorized)
-					render.Render(w, r, handler.ErrUnauthorized)
-					return
-				}
-
-				// Token is authenticated, pass it through
-				next.ServeHTTP(w, r)
-			})
-		})
+		r.Use(jwtauth.Authenticator)
 
 		// Register protected routes here
 		// .........
