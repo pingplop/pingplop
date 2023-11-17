@@ -23,15 +23,9 @@ builds:
       - -X github.com/pingplop/pingplop/meta.BuildDate={{ .Date }}
     env:
       - CGO_ENABLED=0
-    goos:
-      - linux
-      - darwin
-      - windows
-    goarch:
-      - amd64
-      - arm64
-    goarm:
-      - "7"
+    goos: [linux, darwin ,windows]
+    goarch: [amd64, arm64]
+    goarm: ['7']
     ignore:
       - goos: linux
         goarch: arm64
