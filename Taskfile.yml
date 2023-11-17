@@ -12,6 +12,8 @@ vars:
   IMAGE_NAME: pingplop/pingplop
   CONTAINER_NAME: pingplop
 
+# output: prefixed
+
 tasks:
   default:
     desc: 'Print all available tasks'
@@ -26,16 +28,37 @@ tasks:
       - docker-compose -f docker-compose.yml down --remove-orphans
 
   install-deps:
+    internal: true
     aliases: ['deps']
     cmds: ['mkdir -p build', 'pnpm install', 'go mod download', 'go mod tidy', 'go mod vendor']
 
   # -----------------------------------------------------------------------------------------------
-  # Tasks for Docker development
+  # Tasks for development
   # -----------------------------------------------------------------------------------------------
 
   dev:
-    deps: ['install-deps']
-    cmd: air -c air.toml
+    deps: [install-deps]
+    cmd: pnpm concurrently --raw --hide 0 'pnpm dev' 'air -c air.toml'
+
+  # dev-all:
+  #   deps: [install-deps]
+  #   cmds:
+  #     - task: dev-server
+  #     - task: dev-frontend
+
+  # dev-server:
+  #   internal: true
+  #   run: when_changed
+  #   cmd: air -c air.toml
+
+  # dev-frontend:
+  #   internal: true
+  #   run: when_changed
+  #   cmd: pnpm dev
+
+  # -----------------------------------------------------------------------------------------------
+  # Tasks for Golang development
+  # -----------------------------------------------------------------------------------------------
 
   build:
     env:
@@ -97,6 +120,7 @@ tasks:
     cmd: goreleaser build --single-target --snapshot --clean
 
   release:
+    prompt: This will create a new release, do you want to continue?
     desc: Trigger GitHub actions for release
     # deps: ['reset-tag']
     cmds:
