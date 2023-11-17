@@ -39,8 +39,10 @@ jobs:
 
       - name: Run linter
         uses: golangci/golangci-lint-action@v3
+
       - name: Run unit tests
         run: go test ./...
+
       - name: Run GoReleaser release clean
         uses: goreleaser/goreleaser-action@v3
         with:
@@ -48,4 +50,4 @@ jobs:
           version: latest
           args: release --clean
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

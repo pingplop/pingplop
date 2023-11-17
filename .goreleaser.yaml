@@ -14,7 +14,8 @@ before:
     - go mod tidy
 
 builds:
-  - main: ./cmd/app
+  - id: build_noncgo
+    main: ./cmd/app
     binary: pingplop
     ldflags:
       - -w -s -extldflags '-static'
@@ -23,10 +24,10 @@ builds:
     env:
       - CGO_ENABLED=0
     goos:
-      - windows
-      - darwin
-      - freebsd
       - linux
+      - darwin
+      - windows
+      - freebsd
     goarch:
       - amd64
       - arm64
@@ -46,13 +47,8 @@ release:
 
 archives:
   - format: binary
-  - format: zip
-    id: out-zip
-    files:
-      - LICENSE*
-      - CHANGELOG*
-  - format: tar.gz
-    id: out-tar-gz
+  - id: archive_noncgo
+    builds: [build_noncgo]
     files:
       - LICENSE*
       - CHANGELOG*
@@ -67,4 +63,5 @@ changelog:
   sort: asc
   filters:
     exclude:
+      - '^docs:'
       - "^web:"
