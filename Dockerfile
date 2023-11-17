@@ -4,7 +4,6 @@
 ARG NODE_ENV=production
 ARG NODE_VERSION=20
 ARG GO_VERSION=1.21
-ARG BUILD_VERSION 0.0.0
 
 # -----------------------------------------------------------------------------
 # This is base image with `pnpm` package manager
@@ -30,10 +29,13 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store NODE_ENV=${NODE_ENV} pnpm buil
 FROM golang:${GO_VERSION}-alpine as builder
 WORKDIR /app
 
-ENV CGO_ENABLED 0
-ENV BUILD_VERSION $BUILD_VERSION
+ARG APP_VERSION "0.0.0"
+ARG BUILD_DATE "0000-00-00T00:00:00Z"
+ENV APP_VERSION $APP_VERSION
 ENV BUILD_DATE $BUILD_DATE
+
 ENV LDFLAG_PREFIX "github.com/pingplop/pingplop/meta"
+ENV CGO_ENABLED 0
 
 COPY --from=builder_web /app/ .
 RUN --mount=type=cache,id=go,target=/go/pkg/mod --mount=type=cache,id=go,target=/root/.cache/go-build \
@@ -41,7 +43,7 @@ RUN --mount=type=cache,id=go,target=/go/pkg/mod --mount=type=cache,id=go,target=
 
 # BUILD_DATE="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 RUN --mount=type=cache,id=go,target=/go/pkg/mod --mount=type=cache,id=go,target=/root/.cache/go-build go build \
-  --ldflags="-w -s -extldflags '-static' -X ${LDFLAG_PREFIX}.Version=${BUILD_VERSION} -X ${LDFLAG_PREFIX}.BuildDate=${BUILD_DATE}" \
+  --ldflags="-w -s -extldflags '-static' -X ${LDFLAG_PREFIX}.Version=${APP_VERSION} -X ${LDFLAG_PREFIX}.BuildDate=${BUILD_DATE}" \
   -trimpath -a -o pingplop cmd/app/main.go
 
 # -----------------------------------------------------------------------------

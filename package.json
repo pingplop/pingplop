@@ -1,7 +1,7 @@
 {
     "name": "pingplop",
     "private": true,
-    "version": "0.0.0",
+    "version": "0.1.0",
     "type": "module",
     "scripts": {
         "dev": "vite",
@@ -10,7 +10,7 @@
         "docs:dev": "(cd docs && mintlify dev)",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "lint:fix": "eslint . --ext ts,tsx --report-unused-disable-directives --fix",
-        "format": "prettier --write \"./web/**/*.{json,js,jsx,ts,tsx,md,mdx}\" --log-level warn",
+        "format": "prettier --write './web/**/*.{json,js,jsx,ts,tsx,md,mdx}' --log-level warn",
         "deps": "npm-check-updates --configFileName .ncurc.json",
         "preinstall": "npx only-allow pnpm",
         "prepare": "husky install",
