@@ -1,5 +1,5 @@
 -- +migrate Up
-CREATE TABLE monitors (
+CREATE TABLE IF NOT EXISTS monitors (
   id TEXT(36) PRIMARY KEY DEFAULT (lower(
     hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
     substr(hex( randomblob(2)), 2) || '-' ||
@@ -24,7 +24,7 @@ CREATE TABLE monitors (
 	FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON UPDATE no action ON DELETE no action
 );
 
-CREATE TABLE monitors_to_pages (
+CREATE TABLE IF NOT EXISTS monitors_to_pages (
 	monitor_id INTEGER NOT NULL,
 	page_id INTEGER NOT NULL,
 	PRIMARY KEY(monitor_id, page_id)
@@ -41,6 +41,6 @@ END;
 -- +migrate StatementEnd
 
 -- +migrate Down
-DROP TRIGGER update_monitors_updated_at;
-DROP TABLE monitors_to_pages;
-DROP TABLE monitors;
+DROP TRIGGER IF EXISTS update_monitors_updated_at;
+DROP TABLE IF EXISTS monitors_to_pages;
+DROP TABLE IF EXISTS monitors;

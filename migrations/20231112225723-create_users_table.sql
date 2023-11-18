@@ -1,5 +1,5 @@
 -- +migrate Up
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   id TEXT(36) PRIMARY KEY DEFAULT (lower(
     hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
     substr(hex( randomblob(2)), 2) || '-' ||
@@ -67,11 +67,11 @@ END;
 -- +migrate StatementEnd
 
 -- +migrate Down
-DROP INDEX idx_users_email;
-DROP INDEX idx_users_preferred_username;
-DROP INDEX idx_users_name;
--- DROP INDEX idx_unique_users_tenant_id;
-DROP INDEX idx_unique_users_email;
-DROP TRIGGER validate_email_before_insert_users;
-DROP TRIGGER update_users_updated_at;
-DROP TABLE users;
+DROP INDEX IF EXISTS idx_users_email;
+DROP INDEX IF EXISTS idx_users_preferred_username;
+DROP INDEX IF EXISTS idx_users_name;
+-- DROP INDEX IF EXISTS idx_unique_users_tenant_id;
+DROP INDEX IF EXISTS idx_unique_users_email;
+DROP TRIGGER IF EXISTS validate_email_before_insert_users;
+DROP TRIGGER IF EXISTS update_users_updated_at;
+DROP TABLE IF EXISTS users;

@@ -1,5 +1,5 @@
 -- +migrate Up
-CREATE TABLE integrations (
+CREATE TABLE IF NOT EXISTS integrations (
   id TEXT(36) PRIMARY KEY DEFAULT (lower(
     hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
     substr(hex( randomblob(2)), 2) || '-' ||
@@ -17,4 +17,4 @@ CREATE TABLE integrations (
 );
 
 -- +migrate Down
-DROP TABLE integrations;
+DROP TABLE IF EXISTS integrations;

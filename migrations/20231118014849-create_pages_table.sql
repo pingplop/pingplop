@@ -1,5 +1,5 @@
 -- +migrate Up
-CREATE TABLE pages (
+CREATE TABLE IF NOT EXISTS pages (
   id TEXT(36) PRIMARY KEY DEFAULT (lower(
     hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
     substr(hex( randomblob(2)), 2) || '-' ||
@@ -20,7 +20,7 @@ CREATE TABLE pages (
 
 CREATE UNIQUE INDEX pages_slug_unique ON pages (slug);
 
-CREATE TABLE incidents_to_pages (
+CREATE TABLE IF NOT EXISTS incidents_to_pages (
 	page_id integer NOT NULL,
 	incident_id integer NOT NULL,
 	PRIMARY KEY(incident_id, page_id),
@@ -29,6 +29,6 @@ CREATE TABLE incidents_to_pages (
 );
 
 -- +migrate Down
-DROP TABLE incidents_to_pages;
-DROP INDEX pages_slug_unique;
-DROP TABLE pages;
+DROP TABLE IF EXISTS incidents_to_pages;
+DROP INDEX IF EXISTS pages_slug_unique;
+DROP TABLE IF EXISTS pages;

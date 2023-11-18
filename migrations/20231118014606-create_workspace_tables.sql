@@ -1,5 +1,5 @@
 -- +migrate Up
-CREATE TABLE workspaces (
+CREATE TABLE IF NOT EXISTS workspaces (
   id TEXT(36) PRIMARY KEY DEFAULT (lower(
     hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
     substr(hex( randomblob(2)), 2) || '-' ||
@@ -20,7 +20,7 @@ CREATE TABLE workspaces (
 CREATE UNIQUE INDEX workspaces_slug_unique ON workspaces (slug);
 CREATE UNIQUE INDEX workspaces_stripe_id_unique ON workspaces (stripe_id);
 
-CREATE TABLE users_to_workspaces (
+CREATE TABLE IF NOT EXISTS users_to_workspaces (
 	user_id TEXT(36) NOT NULL,
 	workspace_id INTEGER NOT NULL,
 	PRIMARY KEY(user_id, workspace_id),
@@ -29,7 +29,7 @@ CREATE TABLE users_to_workspaces (
 );
 
 -- +migrate Down
-DROP TABLE users_to_workspaces;
-DROP INDEX workspaces_slug_unique;
-DROP INDEX workspaces_stripe_id_unique;
-DROP TABLE workspaces;
+DROP TABLE IF EXISTS users_to_workspaces;
+DROP INDEX IF EXISTS workspaces_slug_unique;
+DROP INDEX IF EXISTS workspaces_stripe_id_unique;
+DROP TABLE IF EXISTS workspaces;

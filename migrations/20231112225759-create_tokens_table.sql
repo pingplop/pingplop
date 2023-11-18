@@ -1,5 +1,5 @@
 -- +migrate Up
-CREATE TABLE tokens (
+CREATE TABLE IF NOT EXISTS tokens (
   id TEXT(36) PRIMARY KEY DEFAULT (lower(
     hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
     substr(hex( randomblob(2)), 2) || '-' ||
@@ -29,6 +29,6 @@ END;
 -- +migrate StatementEnd
 
 -- +migrate Down
-DROP TRIGGER update_tokens_updated_at;
-DROP INDEX idx_tokens_user_id;
-DROP TABLE tokens;
+DROP TRIGGER IF EXISTS update_tokens_updated_at;
+DROP INDEX IF EXISTS idx_tokens_user_id;
+DROP TABLE IF EXISTS tokens;

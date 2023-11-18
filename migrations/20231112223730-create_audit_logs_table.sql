@@ -1,5 +1,5 @@
 -- +migrate Up
-CREATE TABLE audit_logs (
+CREATE TABLE IF NOT EXISTS audit_logs (
   id TEXT(36) PRIMARY KEY DEFAULT (lower(
     hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
     substr(hex( randomblob(2)), 2) || '-' ||
@@ -14,4 +14,4 @@ CREATE TABLE audit_logs (
 );
 
 -- +migrate Down
-DROP TABLE audit_logs;
+DROP TABLE IF EXISTS audit_logs;

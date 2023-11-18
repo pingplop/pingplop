@@ -1,5 +1,5 @@
 -- +migrate Up
-CREATE TABLE passwords (
+CREATE TABLE IF NOT EXISTS passwords (
   user_id TEXT(36) PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE NOT NULL,
   password_hash TEXT NOT NULL,
   created_at TEXT DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc')) NOT NULL,
@@ -19,6 +19,6 @@ END;
 -- +migrate StatementEnd
 
 -- +migrate Down
-DROP TRIGGER update_passwords_updated_at;
-DROP INDEX idx_passwords_user_id;
-DROP TABLE passwords;
+DROP TRIGGER IF EXISTS update_passwords_updated_at;
+DROP INDEX IF EXISTS idx_passwords_user_id;
+DROP TABLE IF EXISTS passwords;

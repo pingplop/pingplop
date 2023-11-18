@@ -7,7 +7,7 @@ import (
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/google/uuid"
-	"github.com/pingplop/pingplop/internal/models"
+	"github.com/pingplop/pingplop/internal/model"
 	"github.com/pingplop/pingplop/pkg/dbx"
 	"github.com/pingplop/pingplop/third_party/sqlstruct"
 )
@@ -27,10 +27,10 @@ func UserRepository(ctx context.Context) *Repository {
 	}
 }
 
-func (r Repository) CreateUser(email, firstName, lastName, preferredUsername, password, avatarUrl string) (*models.User, error) {
-	var m models.User
+func (r Repository) CreateUser(email, firstName, lastName, preferredUsername, password, avatarUrl string) (*model.User, error) {
+	var m model.User
 
-	query := r.Db.Insert(models.TableUser).
+	query := r.Db.Insert(model.TableUser).
 		Columns("email", "first_name", "last_name", "preferred_username", "avatar_url").
 		Values(strings.ToLower(email), firstName, lastName, preferredUsername, avatarUrl).
 		Suffix(`ON CONFLICT (email) DO NOTHING`).
@@ -44,10 +44,10 @@ func (r Repository) CreateUser(email, firstName, lastName, preferredUsername, pa
 	return &m, nil
 }
 
-func (r Repository) CreatePassword(userId uuid.UUID, passwordHash string) (*models.Password, error) {
-	var m models.Password
+func (r Repository) CreatePassword(userId uuid.UUID, passwordHash string) (*model.Password, error) {
+	var m model.Password
 
-	query := r.Db.Insert(models.TablePassword).
+	query := r.Db.Insert(model.TablePassword).
 		Columns("user_id", "password_hash").
 		Values(userId, passwordHash).
 		Suffix(`ON CONFLICT (user_id) DO NOTHING`).
@@ -61,11 +61,11 @@ func (r Repository) CreatePassword(userId uuid.UUID, passwordHash string) (*mode
 	return &m, nil
 }
 
-func (r Repository) FindAllUsers() ([]models.User, error) {
-	var users []models.User
+func (r Repository) FindAllUsers() ([]model.User, error) {
+	var users []model.User
 
 	// Generate SQL query then execute the query and bind the result to the User struct
-	columns := sqlstruct.Columns(models.User{})
+	columns := sqlstruct.Columns(model.User{})
 	query := r.Db.Select(columns).From("users").Where(sq.Eq{"deleted_at": nil})
 
 	rows, err := query.Query()
@@ -80,9 +80,9 @@ func (r Repository) FindAllUsers() ([]models.User, error) {
 	}
 	defer rows.Close()
 
-	// Iterate over the rows and scan data into models.User instances
+	// Iterate over the rows and scan data into model.User instances
 	for rows.Next() {
-		var user models.User
+		var user model.User
 		err := sqlstruct.Scan(&user, rows)
 		if err != nil {
 			log.Print(err)
@@ -94,12 +94,12 @@ func (r Repository) FindAllUsers() ([]models.User, error) {
 	return users, nil
 }
 
-func (r Repository) FindUserById(userId string) (models.User, error) {
-	var user models.User
+func (r Repository) FindUserById(userId string) (model.User, error) {
+	var user model.User
 
 	// Generate SQL query then execute the query and bind the result to the User struct
 	// columns := []string{"id", "email", "updated_at"} // -> columns...
-	columns := sqlstruct.Columns(models.User{})
+	columns := sqlstruct.Columns(model.User{})
 	rows, err := r.Db.Select(columns).From("users").Where(sq.Eq{"deleted_at": nil}).Where(sq.Eq{"id": userId}).Query()
 
 	if err != nil {

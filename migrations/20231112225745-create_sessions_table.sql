@@ -1,5 +1,5 @@
 -- +migrate Up
-CREATE TABLE sessions (
+CREATE TABLE IF NOT EXISTS sessions (
   id TEXT(36) PRIMARY KEY DEFAULT (lower(
     hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
     substr(hex( randomblob(2)), 2) || '-' ||
@@ -20,6 +20,6 @@ CREATE INDEX idx_sessions_user_id ON sessions(user_id);
 CREATE INDEX idx_sessions_session_token ON sessions(session_token);
 
 -- +migrate Down
-DROP INDEX idx_sessions_user_id;
-DROP INDEX idx_sessions_session_token;
-DROP TABLE sessions;
+DROP INDEX IF EXISTS idx_sessions_user_id;
+DROP INDEX IF EXISTS idx_sessions_session_token;
+DROP TABLE IF EXISTS sessions;

@@ -1,5 +1,5 @@
 -- +migrate Up
-CREATE TABLE incidents (
+CREATE TABLE IF NOT EXISTS incidents (
   id TEXT(36) PRIMARY KEY DEFAULT (lower(
     hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
     substr(hex( randomblob(2)), 2) || '-' ||
@@ -15,7 +15,7 @@ CREATE TABLE incidents (
   FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON UPDATE no action ON DELETE cascade
 );
 
-CREATE TABLE incident_updates (
+CREATE TABLE IF NOT EXISTS incident_updates (
   id TEXT(36) PRIMARY KEY DEFAULT (lower(
     hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
     substr(hex( randomblob(2)), 2) || '-' ||
@@ -32,7 +32,7 @@ CREATE TABLE incident_updates (
   FOREIGN KEY (incident_id) REFERENCES incidents(id) ON UPDATE no action ON DELETE cascade
 );
 
-CREATE TABLE incidents_to_monitors (
+CREATE TABLE IF NOT EXISTS incidents_to_monitors (
 	monitor_id integer NOT NULL,
 	incident_id integer NOT NULL,
 	PRIMARY KEY(incident_id, monitor_id)
@@ -59,8 +59,8 @@ END;
 -- +migrate StatementEnd
 
 -- +migrate Down
-DROP TRIGGER update_incident_updates_updated_at;
-DROP TRIGGER update_incidents_updated_at;
-DROP TABLE incidents_to_monitors;
-DROP TABLE incident_updates;
-DROP TABLE incidents;
+DROP TRIGGER IF EXISTS update_incident_updates_updated_at;
+DROP TRIGGER IF EXISTS update_incidents_updated_at;
+DROP TABLE IF EXISTS incidents_to_monitors;
+DROP TABLE IF EXISTS incident_updates;
+DROP TABLE IF EXISTS incidents;

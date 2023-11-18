@@ -1,5 +1,5 @@
 -- +migrate Up
-CREATE TABLE oauth_accounts (
+CREATE TABLE IF NOT EXISTS oauth_accounts (
   id TEXT(36) PRIMARY KEY DEFAULT (lower(
     hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
     substr(hex( randomblob(2)), 2) || '-' ||
@@ -38,6 +38,6 @@ END;
 -- +migrate StatementEnd
 
 -- +migrate Down
-DROP TRIGGER update_oauth_accounts_updated_at;
-DROP INDEX idx_accounts_user_id;
-DROP TABLE oauth_accounts;
+DROP TRIGGER IF EXISTS update_oauth_accounts_updated_at;
+DROP INDEX IF EXISTS idx_accounts_user_id;
+DROP TABLE IF EXISTS oauth_accounts;
