@@ -1,8 +1,8 @@
 package jwt
 
 import (
-	"github.com/pingplop/pingplop/internal/middleware/jwtauth"
 	"github.com/pingplop/pingplop/pkg/env"
+	"github.com/pingplop/pingplop/pkg/middleware/jwtauth"
 )
 
 var TokenAuth *jwtauth.JWTAuth

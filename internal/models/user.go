@@ -12,18 +12,18 @@ import (
 var TableUser = "users"
 
 type User struct {
-	ID               uuid.UUID  `json:"id" sql:"id"`
-	Email            *string    `json:"email" sql:"email"`
-	FirstName        string     `json:"first_name" sql:"first_name"`
-	LastName         string     `json:"last_name" sql:"last_name"`
-	PreferedUsername *string    `json:"preferred_username" sql:"preferred_username"`
-	AvatarUrl        *string    `json:"avatar_url" sql:"avatar_url"`
-	Metadata         *Metadata  `json:"metadata" sql:"metadata"`
-	EmailConfirmedAt *time.Time `json:"email_confirmed_at" sql:"email_confirmed_at"`
-	BannedUntil      *time.Time `json:"banned_until" sql:"banned_until"`
-	CreatedAt        time.Time  `json:"created_at" sql:"created_at"`
-	UpdatedAt        time.Time  `json:"updated_at" sql:"updated_at"`
-	DeletedAt        *time.Time `json:"deleted_at,omitempty" sql:"deleted_at"`
+	ID                uuid.UUID  `json:"id" sql:"id"`
+	Email             *string    `json:"email" sql:"email"`
+	FirstName         string     `json:"first_name" sql:"first_name"`
+	LastName          string     `json:"last_name" sql:"last_name"`
+	PreferredUsername *string    `json:"preferred_username" sql:"preferred_username"`
+	AvatarUrl         *string    `json:"avatar_url" sql:"avatar_url"`
+	Metadata          *Metadata  `json:"metadata" sql:"metadata"`
+	EmailConfirmedAt  *time.Time `json:"email_confirmed_at" sql:"email_confirmed_at"`
+	BannedUntil       *time.Time `json:"banned_until" sql:"banned_until"`
+	CreatedAt         time.Time  `json:"created_at" sql:"created_at"`
+	UpdatedAt         time.Time  `json:"updated_at" sql:"updated_at"`
+	DeletedAt         *time.Time `json:"deleted_at,omitempty" sql:"deleted_at"`
 }
 
 // The Metadata struct represents the data in the JSON/JSONB column.

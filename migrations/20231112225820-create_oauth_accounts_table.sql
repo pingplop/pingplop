@@ -1,6 +1,6 @@
 -- +migrate Up
 CREATE TABLE oauth_accounts (
-  id UUID PRIMARY KEY DEFAULT (lower(
+  id TEXT(36) PRIMARY KEY DEFAULT (lower(
     hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
     substr(hex( randomblob(2)), 2) || '-' ||
     substr('AB89', 1 + (abs(random()) % 4) , 1)  ||
@@ -18,25 +18,26 @@ CREATE TABLE oauth_accounts (
   id_token TEXT,
   session_state TEXT,
   expires_at INTEGER,
-  created_at TEXT DEFAULT (strftime('%Y-%m-%d %H:%M:%S', 'now')),
+  created_at TEXT DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc')) NOT NULL,
   updated_at TEXT,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
--- +migrate StatementBegin
-
 CREATE INDEX idx_accounts_user_id ON oauth_accounts(user_id);
+
+-- +migrate StatementBegin
 
 -- Add a trigger function
 CREATE TRIGGER update_oauth_accounts_updated_at
 AFTER UPDATE ON oauth_accounts
 FOR EACH ROW
 BEGIN
-    UPDATE oauth_accounts SET updated_at = strftime('%Y-%m-%d %H:%M:%S', 'now')
-    WHERE id = NEW.id;
+    UPDATE oauth_accounts SET updated_at = strftime('%Y-%m-%d %H:%M:%S', 'now') WHERE id = NEW.id;
 END;
 
 -- +migrate StatementEnd
 
 -- +migrate Down
-DROP TABLE IF EXISTS oauth_accounts;
+DROP TRIGGER update_oauth_accounts_updated_at;
+DROP INDEX idx_accounts_user_id;
+DROP TABLE oauth_accounts;

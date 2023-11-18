@@ -10,8 +10,8 @@ import (
 	"github.com/go-chi/httprate"
 
 	"github.com/pingplop/pingplop/internal/app/handler"
-	"github.com/pingplop/pingplop/internal/middleware/jwtauth"
 	"github.com/pingplop/pingplop/pkg/jwt"
+	"github.com/pingplop/pingplop/pkg/middleware/jwtauth"
 )
 
 // We can use subdomain mapping to split between API and web app:

@@ -36,7 +36,7 @@ func (r Repository) CreateUser(email, firstName, lastName, preferredUsername, pa
 		Suffix(`ON CONFLICT (email) DO NOTHING`).
 		Suffix("RETURNING id, email, first_name, last_name, preferred_username, avatar_url, created_at")
 
-	err := query.QueryRowContext(r.Ctx).Scan(&m.ID, &m.Email, &m.FirstName, &m.LastName, &m.PreferedUsername, &m.AvatarUrl, &m.CreatedAt)
+	err := query.QueryRowContext(r.Ctx).Scan(&m.ID, &m.Email, &m.FirstName, &m.LastName, &m.PreferredUsername, &m.AvatarUrl, &m.CreatedAt)
 	if err != nil {
 		return nil, err
 	}
