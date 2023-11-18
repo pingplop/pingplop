@@ -1,16 +1,23 @@
-import { createBrowserRouter, Navigate, RouteObject, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom'
 
 import { EmptySlot } from '@/components/common'
-import { AppLayout, AuthLayout } from '@/components/layouts'
+import { AppLayout, AuthLayout, HomeLayout } from '@/components/layouts'
 import DashboardPage from '@/pages/dashboard'
 import LoginPage from '@/pages/login'
 import ErrorNotFound from '@/pages/not-found'
+import { PublicPageIncidents, PublicPageMaintenance, PublicPageStatus } from '@/pages/statuspage'
 
 const AppRoutes = ({ basename }: { basename?: string }) => {
-  const authenticated = false
-  const redirectTo = authenticated ? '/overview' : '/login'
-
-  const homeRoute: RouteObject = { path: '/', element: <Navigate to={redirectTo} replace /> }
+  const publicRoutes: RouteObject[] = [
+    {
+      element: <HomeLayout />,
+      children: [
+        { path: '/', element: <PublicPageStatus /> },
+        { path: '/maintenance', element: <PublicPageMaintenance /> },
+        { path: '/incidents', element: <PublicPageIncidents /> },
+      ],
+    },
+  ]
 
   const authRoutes: RouteObject[] = [
     {
@@ -23,13 +30,13 @@ const AppRoutes = ({ basename }: { basename?: string }) => {
     {
       element: <AppLayout />,
       children: [
-        { path: '/overview', element: <DashboardPage /> },
-        { path: '/monitors', element: <EmptySlot /> },
-        { path: '/heartbeat', element: <EmptySlot /> },
-        { path: '/incidents', element: <EmptySlot /> },
-        { path: '/status-page', element: <EmptySlot /> },
-        { path: '/integrations', element: <EmptySlot /> },
-        { path: '/account/billing', element: <EmptySlot /> },
+        { path: '/-/overview', element: <DashboardPage /> },
+        { path: '/-/monitors', element: <EmptySlot /> },
+        { path: '/-/heartbeat', element: <EmptySlot /> },
+        { path: '/-/incidents', element: <EmptySlot /> },
+        { path: '/-/status-page', element: <EmptySlot /> },
+        { path: '/-/integrations', element: <EmptySlot /> },
+        { path: '/-/account/billing', element: <EmptySlot /> },
       ],
     },
   ]
@@ -38,7 +45,7 @@ const AppRoutes = ({ basename }: { basename?: string }) => {
   const notFoundRoute = { path: '*', element: <ErrorNotFound /> }
 
   // Combine and conditionally include routes based on authentication status
-  const routes = [homeRoute, ...authRoutes, ...protectedRoutes, notFoundRoute]
+  const routes = [...publicRoutes, ...authRoutes, ...protectedRoutes, notFoundRoute]
   const router = createBrowserRouter(routes, { basename })
 
   // Provide the router configuration using RouterProvider

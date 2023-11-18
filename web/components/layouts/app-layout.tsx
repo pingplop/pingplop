@@ -16,20 +16,20 @@ import {
 } from '@heroicons/react/24/outline'
 
 import BrandLogo from '@/assets/images/logo-light.svg'
+import { EmptySlot } from '@/components/common'
 import { cn } from '@/utils/ui-helper'
 
-import { EmptySlot } from '../common'
-
 const navigation = [
-  { name: 'Overview', href: '/overview', icon: ChartBarSquareIcon },
-  { name: 'Monitors', href: '/monitors', icon: BoltIcon },
-  { name: 'Heartbeat', href: '/heartbeat', icon: HeartIcon },
-  { name: 'Incidents', href: '/incidents', icon: ExclamationTriangleIcon, count: '5' },
-  { name: 'Status Page', href: '/status-page', icon: PresentationChartLineIcon },
-  { name: 'Integrations', href: '/integrations', icon: CursorArrowRippleIcon },
+  { name: 'Overview', href: '/-/overview', icon: ChartBarSquareIcon },
+  { name: 'Monitors', href: '/-/monitors', icon: BoltIcon },
+  { name: 'Heartbeat', href: '/-/heartbeat', icon: HeartIcon },
+  { name: 'Incidents', href: '/-/incidents', icon: ExclamationTriangleIcon, count: '5' },
+  { name: 'Status Page', href: '/-/status-page', icon: PresentationChartLineIcon },
+  { name: 'Integrations', href: '/-/integrations', icon: CursorArrowRippleIcon },
 ]
+
 const teams = [
-  { id: 1, name: 'Billing & Invoices', href: '/account/billing', initial: 'B' },
+  { id: 1, name: 'Billing & Invoices', href: '/-/account/billing', initial: 'B' },
   {
     id: 2,
     name: 'Help & Support',
@@ -38,6 +38,7 @@ const teams = [
     newTab: true,
   },
 ]
+
 const userNavigation = [
   { name: 'Your account', href: '#' },
   { name: 'Sign out', href: '/login' },
