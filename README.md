@@ -10,7 +10,7 @@
 [![Twitter Badge](https://img.shields.io/badge/-@riipandi-1ca0f1?style=flat&labelColor=gray&logo=x&logoColor=white&link=https://twitter.com/riipandi)](https://twitter.com/riipandi)
 
 This is the open-source core of [Pingplop][pingplop-site], a server and website uptime monitoring solution.
-Pingplop is made in the ID 🇮🇩 and hosted on multiple regions at [Fly.io][fly-regions].You can find an interactive
+Pingplop is made in 🇮🇩 and hosted on multiple regions at [Fly.io][fly-regions].You can find an interactive
 demo of what the status page looks like [here][pingplop-demo].
 
 ## How does it work?
@@ -21,7 +21,7 @@ issues. Content monitoring ensures critical information is intact, and alerting 
 of any breaches or anomalies. Historical data analysis enables trend identification and informed
 decision-making to enhance overall website reliability.
 
-Pingplop goal is to proactively address issues, preventing downtime and optimizing the user experience for visitors.
+The goal is to proactively address issues, preventing downtime and optimizing the user experience for visitors.
 
 [Learn more about privacy on our documentation.][pingplop-docs]
 
