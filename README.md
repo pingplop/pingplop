@@ -16,7 +16,7 @@ demo of what the status page looks like [here][pingplop-demo].
 ## How does it work?
 
 Site monitoring involves regularly checking a website's availability, performance, and functionality.
-Tools send periodic requests to verify uptime, measure page load times, and detect errors or security
+Pingplop send periodic requests to verify uptime, measure page load times, and detect errors or security
 issues. Content monitoring ensures critical information is intact, and alerting systems notify administrators
 of any breaches or anomalies. Historical data analysis enables trend identification and informed
 decision-making to enhance overall website reliability.
