@@ -35,6 +35,8 @@ Contributions are welcome! Please open a pull requests for your changes and tick
 
 Note that we only accept pull requests if you transfer the ownership of your contribution to us. As we also offer a managed commercial solution with this library at its core, we want to make sure we can keep control over the source code.
 
+Read [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed documentation.
+
 ## License
 
 This project is open-sourced software licensed under the [GNU Affero General Public License v3.0][agpl-license].
