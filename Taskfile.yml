@@ -72,7 +72,7 @@ tasks:
 
   start:
     deps: ['build']
-    cmd: ./build/pingplop serve
+    cmd: ./build/pingplop --address 127.0.0.1:3080
 
   lint:
     cmds:

@@ -10,12 +10,12 @@ import (
 	"github.com/joeshaw/envdecode"
 )
 
+var DefaultDatabaseUrl = "sqlite://pingplop.db"
+
 type config struct {
 	JWTSecret string `env:"JWT_SECRET,required"`
 	Database  struct {
-		Driver      string `env:"DATABASE_DRIVER,default=sqlite,strict"` // possible values: sqlite, libsql
-		AuthToken   string `env:"DATABASE_AUTH_TOKEN"`
-		URL         string `env:"DATABASE_URL,required"`
+		URL         string `env:"DATABASE_URL,default=,strict"`
 		AutoMigrate bool   `env:"DATABASE_AUTO_MIGRATE,default=true,strict"`
 	}
 	Email struct {

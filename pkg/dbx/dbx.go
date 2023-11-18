@@ -4,13 +4,12 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
+	"strings"
 
-	"github.com/pingplop/pingplop/migrations"
 	"github.com/pingplop/pingplop/pkg/env"
-	migrate "github.com/rubenv/sql-migrate"
 
 	_ "github.com/libsql/libsql-client-go/libsql"
 	_ "modernc.org/sqlite"
@@ -20,6 +19,12 @@ type Database struct {
 	Conn *sql.DB
 }
 
+type DBParams struct {
+	Driver    string
+	FilePath  string
+	AuthToken string
+}
+
 type Dialect string
 
 const (
@@ -27,24 +32,137 @@ const (
 	DialectLibSQL Dialect = "libsql"
 )
 
-var (
-	Conn *sql.DB
-)
+var Conn *sql.DB
 
+var allowedSchemes = []string{"file", "libsql", "sqlite"}
+
+// Initialize database connection
 func New() (*Database, error) {
-	// Get the directory of the binary file
-	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	params, err := DatabaseParams(env.Config.Database.URL)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
-	// Data directory path
-	dataDir := filepath.Join(dir, "data")
+	driver := Dialect(params.Driver)
+	log.Printf("using %s database driver", driver)
 
-	// Check if the data directory exists, if not, create it
-	if _, err := os.Stat(dataDir); os.IsNotExist(err) {
-		err := os.Mkdir(dataDir, 0755) // Create the directory with read/write permissions for owner
+	var ds, dialect string
+
+	if driver == DialectSQLite {
+		dataDir, err := prepareDataDirectory("data")
 		if err != nil {
+			return nil, err
+		}
+
+		dbPath := filepath.Join(dataDir, params.FilePath)
+		dialect = string(DialectSQLite)
+
+		if err := ensureDatabaseFileExists(dbPath); err != nil {
+			return nil, err
+		}
+
+		ds = dbPath
+	} else if driver == DialectLibSQL {
+		ds = env.Config.Database.URL
+		dialect = string(DialectLibSQL)
+	} else {
+		return nil, fmt.Errorf("unsupported database driver '%s'", params.Driver)
+	}
+
+	// Establish a connection to the database
+	log.Printf("connecting to: %s", params.FilePath)
+	conn, err := sql.Open(dialect, ds)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := connectionCheck(conn); err != nil {
+		return nil, err
+	}
+
+	log.Println("database connection established")
+
+	if env.Config.Database.AutoMigrate {
+		if err := runMigration(conn); err != nil {
+			return nil, err
+		}
+	}
+
+	Conn = conn
+
+	return &Database{conn}, nil
+}
+
+func connectionCheck(conn *sql.DB) error {
+	return conn.Ping()
+}
+
+func DatabaseParams(urlString string) (*DBParams, error) {
+	if urlString == "" {
+		urlString = env.DefaultDatabaseUrl
+	}
+
+	if !isValidScheme(urlString) {
+		return nil, fmt.Errorf("unsupported or invalid database scheme: %s", urlString)
+	}
+
+	parsedURL, err := url.Parse(urlString)
+	if err != nil {
+		return nil, fmt.Errorf("cannot parse DATABASE_URL: %w", err)
+	}
+
+	var driver, filePath, token string
+
+	// Check if the scheme is one of the allowed values
+	if parsedURL.Scheme == string(DialectSQLite) || parsedURL.Scheme == "file" {
+		driver = string(DialectSQLite)
+		filePath = parsedURL.Host + parsedURL.Path
+	} else if isAllowedScheme(parsedURL.Scheme) {
+		driver = parsedURL.Scheme
+		filePath = parsedURL.Host + parsedURL.Path
+	} else {
+		return nil, fmt.Errorf("unsupported database driver: %s", parsedURL.Scheme)
+	}
+
+	parameters, err := url.ParseQuery(parsedURL.RawQuery)
+	if err != nil {
+		return nil, fmt.Errorf("cannot parse query parameters: %w", err)
+	}
+
+	if t := parameters.Get("authToken"); t != "" {
+		token = t
+	}
+
+	dbParams := &DBParams{
+		Driver:    driver,
+		FilePath:  filePath,
+		AuthToken: token,
+	}
+
+	return dbParams, nil
+}
+
+func ensureDatabaseFileExists(filePath string) error {
+	if _, err := os.Stat(filePath); os.IsNotExist(err) {
+		file, err := os.Create(filePath)
+		if err != nil {
+			return err
+		}
+		file.Close()
+	}
+	return nil
+}
+
+func prepareDataDirectory(dirName string) (string, error) {
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	if err != nil {
+		return "", err
+	}
+
+	dataDir := filepath.Join(dir, dirName)
+
+	if _, err := os.Stat(dataDir); os.IsNotExist(err) {
+		if err := os.Mkdir(dataDir, 0755); err != nil {
 			log.Fatal(err)
 		}
 		log.Println("data directory created")
@@ -52,82 +170,22 @@ func New() (*Database, error) {
 		log.Println("data directory already exists")
 	}
 
-	// Initialize database connection
-	dbDialect := env.Config.Database.Driver
-	log.Printf("using %s database driver", dbDialect)
-
-	var dbUrl string
-	if dbDialect == string(DialectSQLite) {
-		// Database file path inside the data directory
-		dbUrl = filepath.Join(dataDir, "pingplop.db")
-
-		// Check if the database file exists, if not, create it
-		if _, err := os.Stat(dbUrl); os.IsNotExist(err) {
-			file, err := os.Create(dbUrl)
-			if err != nil {
-				log.Fatal(err)
-			}
-			file.Close()
-			log.Println("sqlite database file created")
-		} else {
-			log.Println("sqlite database file already exists")
-		}
-		log.Printf("database path: %s", dbUrl)
-	} else if dbDialect == string(DialectLibSQL) {
-		dbUrl = fmt.Sprintf("%s?authToken=%s", env.Config.Database.URL, env.Config.Database.AuthToken)
-	} else {
-		panic(fmt.Errorf("unsupported database driver '%s'", dbDialect))
-	}
-
-	// Establish a connection to the database
-	conn, err := sql.Open(dbDialect, dbUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	// Check database connection
-	if err := connectionCheck(conn); err != nil {
-		return nil, err
-	}
-	log.Println("database connection established")
-
-	if env.Config.Database.AutoMigrate {
-		err := runMigration(conn)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	// Initialize SQL Query builder and migrator
-	Conn = conn
-
-	return &Database{conn}, nil
+	return dataDir, nil
 }
 
-func connectionCheck(conn *sql.DB) error {
-	if err := conn.Ping(); err != nil {
-		return err
+func isValidScheme(urlString string) bool {
+	u, err := url.Parse(urlString)
+	if err != nil {
+		return false
 	}
-	return nil
+	return isAllowedScheme(u.Scheme)
 }
 
-func runMigration(conn *sql.DB) error {
-	// Configure sql-migrate table name
-	migrate.SetTable("_migrations")
-
-	// Initialize the migration source from embedded SQL files
-	migrationSource := migrate.HttpFileSystemMigrationSource{
-		FileSystem: http.FS(migrations.MigrationDir),
+func isAllowedScheme(scheme string) bool {
+	for _, allowedScheme := range allowedSchemes {
+		if strings.EqualFold(scheme, allowedScheme) {
+			return true
+		}
 	}
-
-	// Run database migrations
-	log.Println("running database migration")
-	n, err := migrate.Exec(conn, "sqlite3", migrationSource, migrate.Up)
-	if err != nil {
-		log.Fatalf("migration error: %v", err)
-	}
-
-	log.Printf("migration applied: %d", n)
-
-	return nil
+	return false
 }

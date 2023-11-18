@@ -30,19 +30,6 @@ func healthCheckHandler() http.HandlerFunc {
 			Check:   dbx.Conn.PingContext,
 		}),
 
-		// The following check will be executed periodically every 15 seconds
-		// started with an initial delay of 3 seconds. The check function will NOT
-		// be executed for each HTTP request.
-		// health.WithPeriodicCheck(15*time.Second, 3*time.Second, health.Check{
-		// 	Name: "search",
-		// 	// The check function checks the health of a component. If an error is
-		// 	// returned, the component is considered unavailable (or "down").
-		// 	// The context contains a deadline according to the configured timeouts.
-		// 	Check: func(ctx context.Context) error {
-		// 		return fmt.Errorf("this makes the check fail")
-		// 	},
-		// }),
-
 		// Set a status listener that will be invoked when the health status changes.
 		// More powerful hooks are also available (see docs).
 		health.WithStatusListener(func(ctx context.Context, state health.CheckerState) {

@@ -50,17 +50,17 @@ CREATE TRIGGER log_users_table_after_update AFTER UPDATE ON users
    OR old.first_name <> new.first_name
    OR old.last_name <> new.last_name
 BEGIN
-	INSERT INTO audit_logs (payload, user_action, created_at)
-    VALUES (
-      json_object(
-        'log_type', 'user',
-        'action', 'user_data_updated',
-        'actor_id', NEW.id,
-        'timestamp', strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc'),
-        'old_data', json_object('email', old.email, 'first_name', old.first_name, 'last_name', old.last_name),
-        'new_data', json_object('email', new.email, 'first_name', new.first_name, 'last_name', new.last_name)
-      ),
-      'UPDATE', strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc')
+  INSERT INTO audit_logs (payload, user_action, created_at)
+  VALUES (
+    json_object(
+      'log_type', 'user',
+      'action', 'user_data_updated',
+      'actor_id', NEW.id,
+      'timestamp', strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc'),
+      'old_data', json_object('email', old.email, 'first_name', old.first_name, 'last_name', old.last_name),
+      'new_data', json_object('email', new.email, 'first_name', new.first_name, 'last_name', new.last_name)
+    ),
+    'UPDATE', strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc')
   );
 END;
 

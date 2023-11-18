@@ -16,7 +16,7 @@ func StartServer(bind string) {
 	// Initialize database connection
 	database, errdb := dbx.New()
 	if errdb != nil {
-		log.Fatalf("Could not set up database: %v", errdb)
+		log.Fatalf("%v", errdb)
 	}
 
 	// The HTTP Server
