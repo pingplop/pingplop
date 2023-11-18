@@ -31,9 +31,7 @@ export const useAuthStore = ({
       try {
         const body: BodyInit = JSON.stringify({ username, password })
         const request = new Request(apiUrl('AUTH_LOGIN'), { method: 'POST', body })
-
         const resp = await sendRequest<LoginResponse>(request)
-        console.log('DEBUG ~ resp', resp)
 
         const { token, ...user } = resp
         const authenticated = true

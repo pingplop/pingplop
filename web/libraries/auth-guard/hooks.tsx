@@ -54,7 +54,7 @@ export function useCookies<T extends string, U = { [K in T]?: unknown }>(
       return () => {
         cookies.removeChangeListener(onChange)
       }
-    }, [cookies, allCookies])
+    }, [cookies, allCookies, dependencies])
   }
 
   const setCookie = useMemo(() => cookies.set.bind(cookies), [cookies])

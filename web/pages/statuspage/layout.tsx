@@ -125,7 +125,7 @@ export default function PublicLayout() {
                 </div>
                 <div className='flex flex-col items-center justify-center gap-4 border-t md:flex md:flex-row md:justify-between md:border-none'>
                   <Link
-                    to='https://pingplop.com/?ref=tenantId'
+                    to={`https://pingplop.com/?ref=${window.location.host}&utm_source=powered_by`}
                     rel='noopener noreferrer'
                     target='_blank'
                   >
