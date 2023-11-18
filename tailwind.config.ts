@@ -13,8 +13,8 @@ export default {
     current: 'currentColor',
     extend: {
       fontFamily: {
-        sans: ['Noto Sans Hebrew Variable', ...fontFamily.sans],
-        mono: ['JetBrains Mono Variable', ...fontFamily.mono],
+        sans: ['Noto Sans Display', ...fontFamily.sans],
+        mono: ['JetBrains Mono', ...fontFamily.mono],
       },
       colors: {
         'gray': colors.slate,

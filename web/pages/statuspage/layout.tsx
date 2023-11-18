@@ -25,7 +25,7 @@ const navlinks = [
   },
 ]
 
-export function HomeLayout() {
+export default function PublicLayout() {
   const { pathname } = useLocation()
   const [isFullScreen, setFullScreen] = useState(false)
 
@@ -44,7 +44,7 @@ export function HomeLayout() {
               className='inline-flex items-center gap-2.5 text-2xl font-bold text-black md:text-3xl'
               aria-label='logo'
             >
-              <img src={BrandLogo} className='h-8 w-auto text-yellow-500' alt='Brand Logo' />
+              <img src={BrandLogo} className='h-7 w-auto text-yellow-500' alt='Brand Logo' />
             </Link>
 
             <nav className='hidden gap-12 lg:flex'>

@@ -1,4 +1,4 @@
-import { ScreenSizeIndicator } from '@/components/common'
+import ScreenSizeIndicator from '@/components/tw-indicator'
 import { cn } from '@/utils/ui-helper'
 
 import AppRoutes from './routes'

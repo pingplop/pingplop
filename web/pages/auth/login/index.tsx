@@ -3,7 +3,7 @@ import { Button, Card, Text, TextInput, Title } from '@tremor/react'
 
 import BrandLogo from '@/assets/images/logo-light.svg'
 
-export default function LoginPage() {
+export default function Page() {
   return (
     <main>
       <div className='sm:mx-auto sm:w-full sm:max-w-sm'>

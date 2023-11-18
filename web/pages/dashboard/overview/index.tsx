@@ -1,6 +1,6 @@
 import { Card, Col, Grid, Text, Title } from '@tremor/react'
 
-export default function DashboardPage() {
+export default function Page() {
   return (
     <div>
       <Title>Overview</Title>

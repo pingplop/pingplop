@@ -10,41 +10,46 @@ import {
   CursorArrowRippleIcon,
   ExclamationTriangleIcon,
   HeartIcon,
+  LifebuoyIcon,
   PresentationChartLineIcon,
   UserGroupIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
+import { Divider } from '@tremor/react'
 
 import BrandLogo from '@/assets/images/logo-light.svg'
-import { EmptySlot } from '@/components/common'
+import EmptySlot from '@/components/empty-slot'
 import { cn } from '@/utils/ui-helper'
 
 const navigation = [
   { name: 'Overview', href: '/-/overview', icon: ChartBarSquareIcon },
-  { name: 'Monitors', href: '/-/monitors', icon: BoltIcon },
+  { name: 'Monitoring', href: '/-/monitors', icon: BoltIcon },
   { name: 'Heartbeat', href: '/-/heartbeat', icon: HeartIcon },
   { name: 'Incidents', href: '/-/incidents', icon: ExclamationTriangleIcon, count: '5' },
-  { name: 'Status Page', href: '/-/status-page', icon: PresentationChartLineIcon },
+  { name: 'Status Pages', href: '/-/pages', icon: PresentationChartLineIcon },
   { name: 'Integrations', href: '/-/integrations', icon: CursorArrowRippleIcon },
 ]
 
-const teams = [
-  { id: 1, name: 'Billing & Invoices', href: '/-/account/billing', initial: 'B' },
+const adminMenus = [
   {
-    id: 2,
-    name: 'Help & Support',
-    href: 'https://docs.pingplop.com/introduction',
-    initial: 'H',
-    newTab: true,
+    id: 1,
+    name: 'Account Settings',
+    href: '/-/accounts',
+    initial: 'A',
+    newTab: false,
   },
+  { id: 2, name: 'Billing & Invoices', href: '/-/billing', initial: 'B' },
 ]
 
 const userNavigation = [
-  { name: 'Your account', href: '#' },
+  { name: 'Your account', href: '/-/accounts' },
+  { name: 'separator', href: '#' },
+  { name: 'Visit public page', href: '/', newTab: true },
+  { name: 'separator', href: '#' },
   { name: 'Sign out', href: '/login' },
 ]
 
-export function AppLayout() {
+export default function AppLayout() {
   const { pathname } = useLocation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [sideOverOpen, setSideOverOpen] = useState(false)
@@ -133,26 +138,26 @@ export function AppLayout() {
                       </li>
                       <li>
                         <div className='text-xs font-semibold leading-6 text-gray-400'>
-                          Your teams
+                          Administration
                         </div>
                         <ul role='list' className='-mx-2 mt-2 space-y-1'>
-                          {teams.map((team) => (
-                            <li key={team.name}>
+                          {adminMenus.map((item) => (
+                            <li key={item.name}>
                               <Link
-                                to={team.href}
+                                to={item.href}
                                 className={cn(
-                                  pathname === team.href
+                                  pathname === item.href
                                     ? 'bg-gray-800 text-white'
                                     : 'text-gray-400 hover:bg-gray-800 hover:text-white',
                                   'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
                                 )}
-                                target={team.newTab ? '_blank' : '_self'}
+                                target={item.newTab ? '_blank' : '_self'}
                                 rel='noopener noreferrer'
                               >
                                 <span className='flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white'>
-                                  {team.initial}
+                                  {item.initial}
                                 </span>
-                                <span className='truncate'>{team.name}</span>
+                                <span className='truncate'>{item.name}</span>
                               </Link>
                             </li>
                           ))}
@@ -214,25 +219,25 @@ export function AppLayout() {
                 </ul>
               </li>
               <li>
-                <div className='text-xs font-semibold leading-6 text-gray-400'>Your teams</div>
+                <div className='text-xs font-semibold leading-6 text-gray-400'>Administration</div>
                 <ul role='list' className='-mx-2 mt-2 space-y-1'>
-                  {teams.map((team) => (
-                    <li key={team.name}>
+                  {adminMenus.map((item) => (
+                    <li key={item.name}>
                       <Link
-                        to={team.href}
+                        to={item.href}
                         className={cn(
-                          pathname === team.href
+                          pathname === item.href
                             ? 'bg-gray-800 text-white'
                             : 'text-gray-400 hover:bg-gray-800 hover:text-white',
                           'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
                         )}
-                        target={team.newTab ? '_blank' : '_self'}
+                        target={item.newTab ? '_blank' : '_self'}
                         rel='noopener noreferrer'
                       >
                         <span className='flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white'>
-                          {team.initial}
+                          {item.initial}
                         </span>
-                        <span className='truncate'>{team.name}</span>
+                        <span className='truncate'>{item.name}</span>
                       </Link>
                     </li>
                   ))}
@@ -240,11 +245,13 @@ export function AppLayout() {
               </li>
               <li className='mt-auto'>
                 <Link
-                  to='#'
+                  to='https://docs.pingplop.com/introduction'
                   className='group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white'
+                  rel='noopener noreferrer'
+                  target='_blank'
                 >
-                  <UserGroupIcon className='h-6 w-6 shrink-0' aria-hidden='true' />
-                  Team Settings
+                  <LifebuoyIcon className='h-6 w-6 shrink-0' aria-hidden='true' />
+                  Help &amp; Support
                 </Link>
               </li>
             </ul>
@@ -313,20 +320,26 @@ export function AppLayout() {
                   leaveFrom='transform opacity-100 scale-100'
                   leaveTo='transform opacity-0 scale-95'
                 >
-                  <Menu.Items className='absolute right-0 z-10 mt-2.5 w-44 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none'>
+                  <Menu.Items className='absolute right-0 z-10 mt-2.5 w-56 origin-top-right rounded-md bg-white px-2 py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none'>
                     {userNavigation.map((item) => (
                       <Menu.Item key={item.name}>
-                        {({ active }) => (
-                          <Link
-                            to={item.href}
-                            className={cn(
-                              active ? 'bg-gray-50' : '',
-                              'block px-3 py-1 text-sm leading-6 text-gray-900'
-                            )}
-                          >
-                            {item.name}
-                          </Link>
-                        )}
+                        {({ active }) =>
+                          item.name === 'separator' ? (
+                            <Divider className='my-2 px-2' />
+                          ) : (
+                            <Link
+                              to={item.href}
+                              className={cn(
+                                active ? 'bg-gray-50' : '',
+                                'block px-3 py-1 text-sm leading-6 text-gray-900'
+                              )}
+                              target={item.newTab ? '_blank' : '_self'}
+                              rel='noopener noreferrer'
+                            >
+                              {item.name}
+                            </Link>
+                          )
+                        }
                       </Menu.Item>
                     ))}
                   </Menu.Items>

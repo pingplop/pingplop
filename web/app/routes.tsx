@@ -1,20 +1,49 @@
-import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouteObject, RouterProvider } from 'react-router-dom'
 
-import { EmptySlot } from '@/components/common'
-import { AppLayout, AuthLayout, HomeLayout } from '@/components/layouts'
-import DashboardPage from '@/pages/dashboard'
-import LoginPage from '@/pages/login'
+import { AuthLayout, LoginPage } from '@/pages/auth'
+import {
+  AccountPage,
+  AppLayout,
+  BillingPage,
+  HeartbeatPage,
+  IncidentsPage,
+  IntegrationsPage,
+  ManageStatusPages,
+  MonitoringPage,
+  OverviewPage,
+} from '@/pages/dashboard'
 import ErrorNotFound from '@/pages/not-found'
-import { PublicPageIncidents, PublicPageMaintenance, PublicPageStatus } from '@/pages/statuspage'
+import {
+  PublicLayout,
+  PublicPageIncidents,
+  PublicPageMaintenance,
+  PublicPageStatus,
+} from '@/pages/statuspage'
 
 const AppRoutes = ({ basename }: { basename?: string }) => {
   const publicRoutes: RouteObject[] = [
     {
-      element: <HomeLayout />,
+      element: <PublicLayout />,
       children: [
         { path: '/', element: <PublicPageStatus /> },
         { path: '/maintenance', element: <PublicPageMaintenance /> },
         { path: '/incidents', element: <PublicPageIncidents /> },
+      ],
+    },
+  ]
+
+  const protectedRoutes: RouteObject[] = [
+    {
+      element: <AppLayout />,
+      children: [
+        { path: '/-/overview', element: <OverviewPage /> },
+        { path: '/-/monitors', element: <MonitoringPage /> },
+        { path: '/-/heartbeat', element: <HeartbeatPage /> },
+        { path: '/-/incidents', element: <IncidentsPage /> },
+        { path: '/-/pages', element: <ManageStatusPages /> },
+        { path: '/-/integrations', element: <IntegrationsPage /> },
+        { path: '/-/accounts', element: <AccountPage /> },
+        { path: '/-/billing', element: <BillingPage /> },
       ],
     },
   ]
@@ -26,26 +55,14 @@ const AppRoutes = ({ basename }: { basename?: string }) => {
     },
   ]
 
-  const protectedRoutes: RouteObject[] = [
-    {
-      element: <AppLayout />,
-      children: [
-        { path: '/-/overview', element: <DashboardPage /> },
-        { path: '/-/monitors', element: <EmptySlot /> },
-        { path: '/-/heartbeat', element: <EmptySlot /> },
-        { path: '/-/incidents', element: <EmptySlot /> },
-        { path: '/-/status-page', element: <EmptySlot /> },
-        { path: '/-/integrations', element: <EmptySlot /> },
-        { path: '/-/account/billing', element: <EmptySlot /> },
-      ],
-    },
+  // Public routes that do not require a specific layout
+  const commonRoutes: RouteObject[] = [
+    { path: '/-', element: <Navigate to='/-/overview' /> },
+    { path: '*', element: <ErrorNotFound /> },
   ]
 
-  // Screen to handle error not found
-  const notFoundRoute = { path: '*', element: <ErrorNotFound /> }
-
   // Combine and conditionally include routes based on authentication status
-  const routes = [...publicRoutes, ...authRoutes, ...protectedRoutes, notFoundRoute]
+  const routes = [...publicRoutes, ...authRoutes, ...protectedRoutes, ...commonRoutes]
   const router = createBrowserRouter(routes, { basename })
 
   // Provide the router configuration using RouterProvider

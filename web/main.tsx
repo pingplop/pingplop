@@ -1,9 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
-import '@fontsource-variable/noto-sans-hebrew'
-import '@fontsource-variable/jetbrains-mono'
-
 import { logHello } from './utils/logger'
 import { App } from './app'
 
