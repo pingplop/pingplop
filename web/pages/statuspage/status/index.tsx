@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Card, Color, Flex, Text, Title, Tracker } from '@tremor/react'
 
 interface Tracker {
@@ -116,7 +117,7 @@ export function PublicPageStatus() {
           </Title>
           <div className='mt-6 text-sm font-medium'>
             <Text className='leading-7 text-gray-600'>Last updated on Nov 18 at 08:52pm UTC</Text>
-            <Text className='leading-7 text-gray-600'>Next update in 35 sec</Text>
+            <CountdownTimer initialTime={60} />
           </div>
         </div>
 
@@ -133,9 +134,9 @@ export function PublicPageStatus() {
 
         <div className='mt-8 flex flex-col gap-4'>
           <Card>
-            <Title>Marketing Website</Title>
-            <Text color='gray'>example.com &mdash; Operational</Text>
-            <Flex justifyContent='end' className='mt-4'>
+            <Title>Primary Website</Title>
+            <Flex justifyContent='between' className='mt-2'>
+              <Text color='gray'>pingplop.com &mdash; Operational</Text>
               <Text color='green'>Uptime 92%</Text>
             </Flex>
             <Tracker data={data} className='mt-2' />
@@ -143,8 +144,8 @@ export function PublicPageStatus() {
 
           <Card>
             <Title>Public API</Title>
-            <Text color='gray'>api.example.com &mdash; Operational</Text>
-            <Flex justifyContent='end' className='mt-4'>
+            <Flex justifyContent='between' className='mt-2'>
+              <Text color='gray'>api.pingplop.com &mdash; Operational</Text>
               <Text color='green'>Uptime 92%</Text>
             </Flex>
             <Tracker data={data} className='mt-2' />
@@ -152,5 +153,39 @@ export function PublicPageStatus() {
         </div>
       </div>
     </div>
+  )
+}
+
+const CountdownTimer = ({ initialTime }: { initialTime: number }) => {
+  const currTime = sessionStorage.getItem('countdownTime') as string
+  const storedTime = parseInt(currTime) || initialTime
+  const [time, setTime] = useState(storedTime)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Decrease the time by 1 second
+      setTime((prevTime) => prevTime - 1)
+
+      // Check if the countdown reaches 0, then reset to the initial time
+      if (time === 0) {
+        setTime(initialTime)
+      }
+    }, 1000)
+
+    // Save the current time to sessionStorage
+    sessionStorage.setItem('countdownTime', time.toString())
+
+    // Clear the interval when the component is unmounted
+    return () => clearInterval(interval)
+  }, [time, initialTime])
+
+  // Convert seconds to minutes and seconds for display
+  const minutes = Math.floor(time / 60)
+  const seconds = time % 60
+
+  return (
+    <Text className='leading-7 text-gray-600'>
+      Next update in {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+    </Text>
   )
 }

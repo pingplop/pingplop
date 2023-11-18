@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { DocumentFullScreen } from '@chiragrupani/fullscreen-react'
-import { ArrowsPointingOutIcon } from '@heroicons/react/20/solid'
+import { ArrowsPointingOutIcon, LightBulbIcon } from '@heroicons/react/20/solid'
 import { Button, Text } from '@tremor/react'
+import { Icon } from '@tremor/react'
 
 import BrandLogo from '@/assets/images/logo-light.svg'
 import { cn } from '@/utils/ui-helper'
@@ -64,7 +65,7 @@ export default function PublicLayout() {
               ))}
             </nav>
 
-            <div>
+            <div className='flex gap-4'>
               <Button
                 type='button'
                 className='hidden lg:inline-block'
@@ -102,7 +103,7 @@ export default function PublicLayout() {
           <footer className='mx-auto w-full py-4 sm:py-6 lg:py-8'>
             <div className='flex flex-col items-center border-t pt-6'>
               <div className='mx-auto w-full px-0.5 md:flex md:items-center md:justify-between'>
-                <div className='flex items-center justify-center gap-6'>
+                <div className='flex items-center justify-center justify-between gap-4 pl-1'>
                   <Button
                     size='xs'
                     type='button'
@@ -113,8 +114,16 @@ export default function PublicLayout() {
                   >
                     <Text color='gray'>Fullscreen View</Text>
                   </Button>
+                  <Icon
+                    icon={LightBulbIcon}
+                    variant='solid'
+                    className='cursor-pointer md:hidden'
+                    tooltip='Toggle theme'
+                    color='neutral'
+                    size='xs'
+                  />
                 </div>
-                <div>
+                <div className='flex flex-col items-center justify-center gap-4 border-t md:flex md:flex-row md:justify-between md:border-none'>
                   <Link
                     to='https://pingplop.com/?ref=tenantId'
                     rel='noopener noreferrer'
@@ -122,6 +131,14 @@ export default function PublicLayout() {
                   >
                     <Text className='font-medium hover:text-yellow-600'>Powered by Pingplop</Text>
                   </Link>
+                  <Icon
+                    icon={LightBulbIcon}
+                    variant='solid'
+                    className='hidden cursor-pointer'
+                    tooltip='Toggle theme'
+                    color='neutral'
+                    size='xs'
+                  />
                 </div>
               </div>
             </div>

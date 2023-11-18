@@ -1,9 +1,47 @@
-import { Link } from 'react-router-dom'
-import { Button, Card, Text, TextInput, Title } from '@tremor/react'
+import { useState } from 'react'
+import type { SubmitHandler } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Button, Callout, Card, Text, TextInput, Title } from '@tremor/react'
+import { z } from 'zod'
 
 import BrandLogo from '@/assets/images/logo-light.svg'
+import { useAuth } from '@/libraries/auth-guard'
+import { cn } from '@/utils/ui-helper'
+// import { PageWrapper } from '@/components/meta-seo'
+
+const zFormSchema = z.object({
+  email: z.string(),
+  password: z.string().min(1, 'Password required'),
+})
+
+type FormSchema = z.infer<typeof zFormSchema>
+type ErrorState = { show: boolean; message: string }
 
 export default function Page() {
+  const [searchParams] = useSearchParams()
+  const { login } = useAuth()
+  const navigate = useNavigate()
+
+  const resolver = zodResolver(zFormSchema)
+  const { formState, register, ...frm } = useForm<FormSchema>({ resolver })
+  const [errorState, setErrorState] = useState<ErrorState>({ show: false, message: '' })
+
+  const onSubmit: SubmitHandler<FormSchema> = ({ email: username, password }) => {
+    const returnTo = searchParams.get('returnTo') || '/-/overview'
+    login(username, password)
+      .then(() => navigate(returnTo))
+      .catch((err) => {
+        if (err && err instanceof Error) {
+          setErrorState({ show: true, message: err.message })
+          console.error(err.message)
+        }
+      })
+      .finally(() => frm.reset())
+  }
+
   return (
     <main>
       <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
@@ -14,8 +52,17 @@ export default function Page() {
       </div>
 
       <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+        <Callout
+          title='Login failed'
+          className={cn(errorState.show ? 'block' : 'hidden', 'my-4')}
+          icon={ExclamationTriangleIcon}
+          color='rose'
+        >
+          {errorState.show && errorState.message ? errorState.message : null}
+        </Callout>
+
         <Card>
-          <form className='space-y-6' action='#' method='POST'>
+          <form onSubmit={frm.handleSubmit(onSubmit)} className='space-y-6'>
             <div>
               <label htmlFor='email' className='block text-sm font-medium leading-6 text-gray-900'>
                 Email address
@@ -23,12 +70,17 @@ export default function Page() {
               <div className='mt-2'>
                 <TextInput
                   id='email'
-                  name='email'
-                  type='email'
+                  type='text'
+                  {...register('email')}
+                  aria-invalid={formState.errors.email && true}
+                  disabled={formState.isSubmitting}
+                  autoFocus
                   placeholder='somebody@example.com'
                   autoComplete='email'
-                  required
                 />
+                {formState.errors.email && (
+                  <Text color='red'>{formState.errors.email.message}</Text>
+                )}
               </div>
             </div>
 
@@ -49,16 +101,27 @@ export default function Page() {
               <div className='mt-2'>
                 <TextInput
                   id='password'
-                  name='password'
                   type='password'
+                  {...register('password')}
+                  aria-invalid={formState.errors.password && true}
+                  disabled={formState.isSubmitting}
                   placeholder='************'
-                  required
+                  autoComplete='password'
                 />
+                {formState.errors.email && (
+                  <Text color='red'>{formState.errors.email.message}</Text>
+                )}
               </div>
             </div>
 
             <div>
-              <Button type='submit' variant='primary' className='w-full'>
+              <Button
+                type='submit'
+                variant='primary'
+                className='w-full'
+                loading={formState.isSubmitting}
+                disabled={formState.isSubmitting}
+              >
                 Continue
               </Button>
             </div>
