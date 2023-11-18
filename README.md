@@ -10,7 +10,7 @@
 [![Twitter Badge](https://img.shields.io/badge/-@riipandi-1ca0f1?style=flat&labelColor=gray&logo=x&logoColor=white&link=https://twitter.com/riipandi)](https://twitter.com/riipandi)
 
 This is the open-source core of [Pingplop][pingplop-site], a server and website uptime monitoring solution.
-Pingplop is made in 🇮🇩 and hosted on multiple regions at [Fly.io][fly-regions].You can find an interactive
+Pingplop is made in 🇮🇩 and hosted on multiple regions at [Fly.io][fly-regions]. You can find an interactive
 demo of what the status page looks like [here][pingplop-demo].
 
 ## How does it work?
