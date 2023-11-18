@@ -85,11 +85,7 @@ export function HomeLayout() {
 
         <footer className='mx-auto w-full bg-white px-4 py-4 sm:py-10 md:px-8 lg:py-12'>
           <div className='flex flex-col items-center border-t pt-6'>
-            <Link
-              to='https://github.com/pingplop?ref=tenantId'
-              rel='noopener noreferrer'
-              target='_blank'
-            >
+            <Link to='https://pingplop.com/?ref=tenantId' rel='noopener noreferrer' target='_blank'>
               <Text className='font-medium hover:text-yellow-600'>Powered by Pingplop</Text>
             </Link>
           </div>

@@ -48,7 +48,7 @@ See the [license file](./LICENSE) for more information.
 
 <sub>🤫 Psst! You can [support my work here](https://github.com/sponsors/riipandi).</sub>
 
-[pingplop-site]: https://github.com/pingplop
+[pingplop-site]: https://pingplop.com/?ref=github
 [pingplop-docs]: https://pingplop.mintlify.app/introduction
 [pingplop-demo]: https://pingplop-demo.fly.dev/
 [pingplop-godev]: https://pkg.go.dev/github.com/pingplop/pingplop

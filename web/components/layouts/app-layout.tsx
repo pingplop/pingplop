@@ -33,7 +33,7 @@ const teams = [
   {
     id: 2,
     name: 'Help & Support',
-    href: 'https://pingplop.mintlify.app/introduction',
+    href: 'https://docs.pingplop.com/introduction',
     initial: 'H',
     newTab: true,
   },

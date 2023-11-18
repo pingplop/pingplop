@@ -11,7 +11,7 @@ Does this page need fixes or improvements? Open an issue or contribute a merge r
 
 ${HANDSHAKE} Contribute to Pingplop: https://github.com/pingplop/pingplop
 ${MAG} Create a new Pingplop issue: https://github.com/pingplop/pingplop/issues
-${ROCKET} We like your curiosity! Help us improve Pingplop by joining the team: https://github.com/pingplop/pingplop
+${ROCKET} We like your curiosity! Help us improve Pingplop by joining the team: https://github.com/orgs/pingplop/discussions
 `,
       'padding-top: 0.5em; font-size: 2em;',
       'padding-bottom: 0.5em;'
