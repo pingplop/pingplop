@@ -50,7 +50,7 @@ See the [license file](./LICENSE) for more information.
 
 [pingplop-site]: https://pingplop.com/?ref=github
 [pingplop-docs]: https://pingplop.mintlify.app/introduction
-[pingplop-demo]: https://pingplop-demo.fly.dev/
+[pingplop-demo]: https://demo.pingplop.com/
 [pingplop-godev]: https://pkg.go.dev/github.com/pingplop/pingplop
 [fly-regions]: https://fly.io/docs/reference/regions/
 [agpl-license]: https://choosealicense.com/licenses/agpl-3.0/
