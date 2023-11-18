@@ -21,6 +21,7 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
+        "@chiragrupani/fullscreen-react": "^1.2.5",
         "@headlessui/react": "^1.7.17",
         "@heroicons/react": "^2.0.18",
         "@tremor/react": "^3.11.1",
