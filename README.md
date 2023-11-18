@@ -23,7 +23,7 @@ decision-making to enhance overall website reliability.
 
 The goal is to proactively address issues, preventing downtime and optimizing the user experience for visitors.
 
-[Learn more about privacy on our documentation.][pingplop-docs]
+[Learn more about Pingplop on our documentation.][pingplop-docs]
 
 ## Documentation
 
