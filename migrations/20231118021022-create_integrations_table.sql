@@ -1,14 +1,8 @@
 -- +migrate Up
 CREATE TABLE IF NOT EXISTS integrations (
-  id TEXT(36) PRIMARY KEY DEFAULT (lower(
-    hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
-    substr(hex( randomblob(2)), 2) || '-' ||
-    substr('AB89', 1 + (abs(random()) % 4) , 1)  ||
-    substr(hex(randomblob(2)), 2) || '-' ||
-    hex(randomblob(6))
-  )) NOT NULL,
+  id TEXT(20) PRIMARY KEY DEFAULT '' NOT NULL,
 	name text(256) NOT NULL,
-	workspace_id TEXT(36),
+	workspace_id TEXT(20),
 	credential TEXT,
 	external_id TEXT NOT NULL,
 	data TEXT NOT NULL,

@@ -1,6 +1,7 @@
 -- +migrate Up
-INSERT INTO users (email, first_name, last_name, preferred_username, metadata)
+INSERT INTO users (id, email, first_name, last_name, preferred_username, metadata)
 VALUES (
+  'clctni7a2ua5epijcg10',
   'admin@xmail.com',
   'Admin',
   'Sistem',

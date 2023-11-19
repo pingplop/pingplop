@@ -6,20 +6,20 @@ import (
 	"errors"
 	"time"
 
-	"github.com/google/uuid"
+	"github.com/rs/xid"
 )
 
 var TableUser = "users"
 
 type User struct {
 	// db tag is used by Gorp, it's lets you specify the column name if it differs from the struct field
-	ID                uuid.UUID `json:"id" sql:"id" db:"id"`
-	Email             string    `json:"email" sql:"email" db:"email"`
-	FirstName         string    `json:"first_name" sql:"first_name" db:"first_name"`
-	LastName          string    `json:"last_name" sql:"last_name" db:"last_name"`
-	PreferredUsername string    `json:"preferred_username" sql:"preferred_username" db:"preferred_username"`
-	AvatarUrl         string    `json:"avatar_url" sql:"avatar_url" db:"avatar_url"`
-	Metadata          *string   `json:"metadata" sql:"metadata" db:"metadata"`
+	ID                xid.ID  `json:"id" sql:"id" db:"id"`
+	Email             string  `json:"email" sql:"email" db:"email"`
+	FirstName         string  `json:"first_name" sql:"first_name" db:"first_name"`
+	LastName          string  `json:"last_name" sql:"last_name" db:"last_name"`
+	PreferredUsername string  `json:"preferred_username" sql:"preferred_username" db:"preferred_username"`
+	AvatarUrl         string  `json:"avatar_url" sql:"avatar_url" db:"avatar_url"`
+	Metadata          *string `json:"metadata" sql:"metadata" db:"metadata"`
 	// Metadata          *Metadata  `json:"metadata" sql:"metadata" db:"metadata"`
 	EmailConfirmedAt *int64 `json:"email_confirmed_at" sql:"email_confirmed_at" db:"email_confirmed_at"`
 	BannedUntil      *int64 `json:"banned_until" sql:"banned_until" db:"banned_until"`
@@ -63,7 +63,7 @@ func (a *Metadata) Scan(value interface{}) error {
 var TablePassword = "passwords"
 
 type Password struct {
-	UserID       uuid.UUID `json:"user_id" sql:"user_id" db:"user_id"`
+	UserID       xid.ID    `json:"user_id" sql:"user_id" db:"user_id"`
 	PasswordHash string    `json:"password_hash" sql:"password_hash" db:"password_hash"`
 	CreatedAt    time.Time `json:"created_at" sql:"created_at" db:"created_at"`
 	UpdatedAt    time.Time `json:"updated_at" sql:"updated_at" db:"updated_at"`

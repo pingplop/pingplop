@@ -1,12 +1,6 @@
 -- +migrate Up
 CREATE TABLE IF NOT EXISTS monitors (
-  id TEXT(36) PRIMARY KEY DEFAULT (lower(
-    hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
-    substr(hex( randomblob(2)), 2) || '-' ||
-    substr('AB89', 1 + (abs(random()) % 4) , 1)  ||
-    substr(hex(randomblob(2)), 2) || '-' ||
-    hex(randomblob(6))
-  )) NOT NULL,
+  id TEXT(20) PRIMARY KEY DEFAULT '' NOT NULL,
 	job_type TEXT(3) DEFAULT 'other' NOT NULL,
 	periodicity TEXT(6) DEFAULT 'other' NOT NULL,
 	status TEXT(2) DEFAULT 'active' NOT NULL,
@@ -14,7 +8,7 @@ CREATE TABLE IF NOT EXISTS monitors (
 	url TEXT(512) NOT NULL,
 	name TEXT(256) DEFAULT '' NOT NULL,
 	description TEXT DEFAULT '' NOT NULL,
-	workspace_id TEXT(36),
+	workspace_id TEXT(20),
 	headers TEXT DEFAULT '',
 	body TEXT DEFAULT '',
 	method TEXT(5) DEFAULT 'GET',

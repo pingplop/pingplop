@@ -1,12 +1,6 @@
 -- +migrate Up
 CREATE TABLE IF NOT EXISTS incidents (
-  id TEXT(36) PRIMARY KEY DEFAULT (lower(
-    hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
-    substr(hex( randomblob(2)), 2) || '-' ||
-    substr('AB89', 1 + (abs(random()) % 4) , 1)  ||
-    substr(hex(randomblob(2)), 2) || '-' ||
-    hex(randomblob(6))
-  )) NOT NULL,
+  id TEXT(20) PRIMARY KEY DEFAULT '' NOT NULL,
   status text(4) NOT NULL,
   title text(256) NOT NULL,
   workspace_id integer NOT NULL,
@@ -16,13 +10,7 @@ CREATE TABLE IF NOT EXISTS incidents (
 );
 
 CREATE TABLE IF NOT EXISTS incident_updates (
-  id TEXT(36) PRIMARY KEY DEFAULT (lower(
-    hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
-    substr(hex( randomblob(2)), 2) || '-' ||
-    substr('AB89', 1 + (abs(random()) % 4) , 1)  ||
-    substr(hex(randomblob(2)), 2) || '-' ||
-    hex(randomblob(6))
-  )) NOT NULL,
+  id TEXT(20) PRIMARY KEY DEFAULT '' NOT NULL,
   status text(4) NOT NULL,
   date integer NOT NULL,
   message TEXT NOT NULL,

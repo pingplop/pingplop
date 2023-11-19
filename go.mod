@@ -11,10 +11,10 @@ require (
 	github.com/go-chi/httprate v0.7.4
 	github.com/go-chi/render v1.0.3
 	github.com/go-gorp/gorp/v3 v3.1.0
-	github.com/google/uuid v1.3.1
 	github.com/joeshaw/envdecode v0.0.0-20200121155833-099f1fc765bd
 	github.com/lestrrat-go/jwx/v2 v2.0.16
 	github.com/libsql/libsql-client-go v0.0.0-20231026052543-fce76c0f39a7
+	github.com/rs/xid v1.5.0
 	github.com/rubenv/sql-migrate v1.5.2
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
@@ -34,6 +34,7 @@ require (
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
+	github.com/google/uuid v1.3.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect

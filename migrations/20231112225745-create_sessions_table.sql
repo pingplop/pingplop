@@ -1,13 +1,7 @@
 -- +migrate Up
 CREATE TABLE IF NOT EXISTS sessions (
-  id TEXT(36) PRIMARY KEY DEFAULT (lower(
-    hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
-    substr(hex( randomblob(2)), 2) || '-' ||
-    substr('AB89', 1 + (abs(random()) % 4) , 1)  ||
-    substr(hex(randomblob(2)), 2) || '-' ||
-    hex(randomblob(6))
-  )) NOT NULL,
-  user_id TEXT(36) NOT NULL,
+  id TEXT(20) PRIMARY KEY DEFAULT '' NOT NULL,
+  user_id TEXT(20) NOT NULL,
   session_token TEXT NOT NULL,
   user_agent_hash TEXT,
   ip_address TEXT,

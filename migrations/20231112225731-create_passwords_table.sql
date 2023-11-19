@@ -1,6 +1,6 @@
 -- +migrate Up
 CREATE TABLE IF NOT EXISTS passwords (
-  user_id TEXT(36) PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+  user_id TEXT(20) PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE NOT NULL,
   password_hash TEXT NOT NULL,
   created_at INTEGER DEFAULT (CAST(strftime('%s', 'now', 'utc') AS INTEGER)) NOT NULL,
   updated_at INTEGER

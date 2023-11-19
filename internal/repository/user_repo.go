@@ -6,10 +6,10 @@ import (
 	"strings"
 
 	sq "github.com/Masterminds/squirrel"
-	"github.com/google/uuid"
 	"github.com/pingplop/pingplop/internal/model"
 	"github.com/pingplop/pingplop/pkg/dbx"
 	"github.com/pingplop/pingplop/third_party/sqlstruct"
+	"github.com/rs/xid"
 )
 
 // findUser := "select * from users where id = $1"
@@ -44,7 +44,7 @@ func (r Repository) CreateUser(email, firstName, lastName, preferredUsername, pa
 	return &m, nil
 }
 
-func (r Repository) CreatePassword(userId uuid.UUID, passwordHash string) (*model.Password, error) {
+func (r Repository) CreatePassword(userId xid.ID, passwordHash string) (*model.Password, error) {
 	var m model.Password
 
 	query := r.Db.Insert(model.TablePassword).
