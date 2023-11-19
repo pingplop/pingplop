@@ -15,7 +15,7 @@ logHello(import.meta.env.PROD)
 export function App() {
   return (
     <div className={cn('disable-select', 'h-full min-h-screen bg-gray-50')}>
-      <AuthProvider authStorage='localstorage'>
+      <AuthProvider authStorage='cookies'>
         <AppRoutes basename='/' />
       </AuthProvider>
       <ScreenSizeIndicator withScreenSize />

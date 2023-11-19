@@ -5,7 +5,7 @@ type Endpoint = 'AUTH_LOGIN' | 'AUTH_LOGOUT'
 const API_BASE_URL = config('API_BASE_URL')
 
 const endpointUrls: Record<Endpoint, string> = {
-  AUTH_LOGIN: '/auth/login',
+  AUTH_LOGIN: '/auth/token',
   AUTH_LOGOUT: '/auth/logout',
 }
 

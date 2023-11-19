@@ -4,20 +4,30 @@ import Cookies from 'universal-cookie'
 export type AuthStorage = 'localstorage' | 'cookies'
 
 export type LoginResponse = {
-  id: number
-  username: string
-  email: string
-  firstName: string
-  lastName: string
-  gender: string
-  image: string
-  token: string
+  access_token: string
+  expires_at: number
+  refresh_token: string
+  user: {
+    id: string
+    email: string
+    first_name: string
+    last_name: string
+    preferred_username: string
+    avatar_url: string
+    metadata: object
+    email_confirmed_at: number
+    banned_until: number
+    created_at: number
+    updated_at: number
+  }
+  user_id: string
 }
 
 export interface AuthState {
   authenticated: boolean
-  token: string | null
-  user: Omit<LoginResponse, 'token'> | null
+  access_token: string | null
+  refresh_token: string | null
+  user: Omit<LoginResponse, 'access_token' | 'refresh_token'> | null
 }
 
 export interface AuthActions {

@@ -18,7 +18,13 @@ export const useAuthStore = ({
   storeKey = DEFAULT_AUTH_STORE_KEY,
   authStorage = DEFAULT_AUTH_STORAGE,
 }: AuthStoreProps) => {
-  const initialState: AuthState = { authenticated: false, token: null, user: null }
+  const initialState: AuthState = {
+    authenticated: false,
+    access_token: null,
+    refresh_token: null,
+    user: null,
+  }
+
   const [authState, setAuthState] = useLocalStorage<AuthState>(storeKey, initialState)
   const [cookies, setCookie, removeCookie] = useCookies([storeKey])
 
@@ -33,12 +39,18 @@ export const useAuthStore = ({
         const request = new Request(apiUrl('AUTH_LOGIN'), { method: 'POST', body })
         const resp = await sendRequest<LoginResponse>(request)
 
-        const { token, ...user } = resp
-        const authenticated = true
+        const { access_token, refresh_token, ...user } = resp
+        const authenticated = access_token !== ''
 
-        return authStorage === 'cookies'
-          ? setCookie(storeKey, { authenticated, token, user })
-          : setAuthState({ authenticated, token, user })
+        if (authStorage === 'cookies') {
+          setCookie('access_token', resp.access_token)
+          setCookie('authenticated', authenticated)
+          setCookie('user_data', user)
+          // TODO put each value into separated cookies key
+          setCookie(storeKey, { authenticated, access_token, refresh_token, user })
+          return
+        }
+        return setAuthState({ authenticated, access_token, refresh_token, user })
       } catch (error) {
         // Handle specific fetch-related errors
         if (error instanceof RequestError) {
