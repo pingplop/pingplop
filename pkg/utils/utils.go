@@ -2,10 +2,17 @@ package utils
 
 import (
 	"errors"
+	"log"
 	"regexp"
 	"strconv"
 	"strings"
 )
+
+func CheckErr(err error, msg string) {
+  if err != nil {
+    log.Println(msg, err)
+  }
+}
 
 // GenerateUsername generates a username from an email address.
 // It sanitizes characters, uses an underscore as a separator, and checks for duplicates if existingUsernames is provided.

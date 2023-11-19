@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS integrations (
 	credential TEXT,
 	external_id TEXT NOT NULL,
 	data TEXT NOT NULL,
-	created_at TEXT DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc')) NOT NULL,
+	created_at INTEGER DEFAULT (CAST(strftime('%s', 'now', 'utc') AS INTEGER)) NOT NULL,
+  updated_at INTEGER,
 	FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON UPDATE no action ON DELETE no action
 );
 

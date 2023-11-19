@@ -7,8 +7,10 @@ import (
 	"net/http"
 
 	"github.com/go-chi/render"
+	"github.com/pingplop/pingplop/pkg/jwt"
 	"github.com/pingplop/pingplop/pkg/utils"
 
+	"github.com/pingplop/pingplop/internal/model"
 	repo "github.com/pingplop/pingplop/internal/repository"
 )
 
@@ -16,23 +18,17 @@ func AuthTokenHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(http.StatusOK)
 
+	// For debugging/example purposes, we generate and print
+	// a sample jwt token with claims `user_id:123` here:
+	_, accessToken, _ := jwt.TokenAuth.Encode(map[string]interface{}{"user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"})
+
 	// Create a map representing the data
 	result := map[string]interface{}{
-		"access_token":  "string",
+		"access_token":  accessToken,
 		"refresh_token": "string",
-		"token_type":    "Bearer",
+		"user_id":       "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+		"user":          model.User{},
 		"expires_at":    0,
-		"user": map[string]interface{}{
-			"id":                 "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-			"role":               "string",
-			"email":              "string",
-			"email_confirmed_at": "2023-11-12T18:24:45.401Z",
-			"last_sign_in_at":    "2023-11-12T18:24:45.401Z",
-			"user_metadata":      map[string]interface{}{},
-			"banned_until":       "2023-11-12T18:24:45.401Z",
-			"created_at":         "2023-11-12T18:24:45.401Z",
-			"updated_at":         "2023-11-12T18:24:45.401Z",
-		},
 	}
 
 	// Render the data as JSON and write it to the response
@@ -101,8 +97,8 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	render.JSON(w, r, map[string]interface{}{
-		"status_code": http.StatusOK,
-		"message":     "User has been created",
-		"user":        user,
+		"code":    http.StatusOK,
+		"message": "User has been created",
+		"user":    user,
 	})
 }

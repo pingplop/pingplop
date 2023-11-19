@@ -28,7 +28,7 @@ tasks:
       - docker-compose -f docker-compose.yml down --remove-orphans
 
   install-deps:
-    internal: true
+    internal: false
     aliases: ['deps']
     cmds: ['mkdir -p build', 'pnpm install', 'go mod download', 'go mod tidy', 'go mod vendor']
 

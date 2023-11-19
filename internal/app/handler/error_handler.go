@@ -46,17 +46,26 @@ func ServerErrorRenderer(err error) *ErrorResponse {
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(http.StatusNotFound)
-	render.Render(w, r, ErrNotFound)
+	render.JSON(w, r, map[string]interface{}{
+		"code":    http.StatusNotFound,
+		"message": ErrNotFound,
+	})
 }
 
 func MethodNotAllowedHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(http.StatusMethodNotAllowed)
-	render.Render(w, r, ErrMethodNotAllowed)
+	render.JSON(w, r, map[string]interface{}{
+		"code":    http.StatusMethodNotAllowed,
+		"message": ErrMethodNotAllowed,
+	})
 }
 
 func UnauthorizedHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(http.StatusUnauthorized)
-	render.Render(w, r, ErrUnauthorized)
+	render.JSON(w, r, map[string]interface{}{
+		"code":    http.StatusUnauthorized,
+		"message": ErrUnauthorized,
+	})
 }

@@ -16,9 +16,9 @@ CREATE TABLE IF NOT EXISTS users (
   metadata TEXT DEFAULT (json_object()),
   email_confirmed_at TEXT,
   banned_until TEXT,
-  created_at TEXT DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc')) NOT NULL,
-  updated_at TEXT,
-  deleted_at TEXT
+  created_at INTEGER DEFAULT (CAST(strftime('%s', 'now', 'utc') AS INTEGER)) NOT NULL,
+  updated_at INTEGER,
+  deleted_at INTEGER
 );
 
 CREATE INDEX idx_users_email ON users(email);
@@ -41,7 +41,7 @@ END;
 -- Trigger function to update updated_at
 CREATE TRIGGER update_users_updated_at AFTER UPDATE ON users FOR EACH ROW
 BEGIN
-  UPDATE users SET updated_at = strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc') WHERE id = NEW.id;
+  UPDATE users SET updated_at = CAST(strftime('%s', 'now', 'utc') AS INTEGER) WHERE id = NEW.id;
 END;
 
 -- Trigger for audit logs
@@ -56,11 +56,11 @@ BEGIN
       'log_type', 'user',
       'action', 'user_data_updated',
       'actor_id', NEW.id,
-      'timestamp', strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc'),
+      'timestamp', CAST(strftime('%s', 'now', 'utc') AS INTEGER),
       'old_data', json_object('email', old.email, 'first_name', old.first_name, 'last_name', old.last_name),
       'new_data', json_object('email', new.email, 'first_name', new.first_name, 'last_name', new.last_name)
     ),
-    'UPDATE', strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc')
+    'UPDATE', CAST(strftime('%s', 'now', 'utc') AS INTEGER)
   );
 END;
 

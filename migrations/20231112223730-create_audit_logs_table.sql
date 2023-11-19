@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS audit_logs (
   payload TEXT DEFAULT (json_object()),
   user_action TEXT(6) DEFAULT '' NOT NULL,
   ip_address TEXT(64) DEFAULT '' NOT NULL,
-  created_at TEXT DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc')) NOT NULL
+  created_at INTEGER DEFAULT (CAST(strftime('%s', 'now', 'utc') AS INTEGER)) NOT NULL
 );
 
 -- +migrate Down

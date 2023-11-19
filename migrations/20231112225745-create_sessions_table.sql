@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS sessions (
   session_token TEXT NOT NULL,
   user_agent_hash TEXT,
   ip_address TEXT,
-  expires_at TEXT DEFAULT (strftime('%Y-%m-%d %H:%M:%S', datetime('now', 'localtime', '+6 hours'), 'utc')) NOT NULL,
-  created_at TEXT DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc')) NOT NULL,
+  expires_at INTEGER DEFAULT (CAST(strftime('%s', 'now', 'utc', '+6 hours') AS INTEGER)) NOT NULL,
+  created_at INTEGER DEFAULT (CAST(strftime('%s', 'now', 'utc') AS INTEGER)) NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON UPDATE NO ACTION ON DELETE CASCADE
 );
 

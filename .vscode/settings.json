@@ -7,6 +7,20 @@
         "source.fixAll": true
     },
     "editor.formatOnSave": true,
+    "[shellscript][ignore]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    },
+    "[go]": {
+        "editor.defaultFormatter": "golang.go",
+        "editor.formatOnSave": true
+    },
+    "[proto3]": {
+        "editor.defaultFormatter": null,
+        "editor.formatOnSave": true
+    },
+    "gopls": {
+        "importShortcut": "Definition"
+    },
     "[yaml]": {
         "editor.formatOnSave": false
     }

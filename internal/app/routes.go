@@ -91,7 +91,8 @@ func apiRoutes(r chi.Router) {
 		r.Use(jwtauth.Authenticator)
 
 		// Register protected routes here
-		// .........
+		r.Get("/users", handler.GetUsersHandler)
+		r.Post("/users", handler.CreateUserHandler)
 	})
 }
 

@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/pingplop/pingplop/pkg/env"
+	"github.com/pingplop/pingplop/pkg/utils"
 
 	_ "github.com/libsql/libsql-client-go/libsql"
 	_ "modernc.org/sqlite"
@@ -17,6 +18,7 @@ import (
 
 type Database struct {
 	Conn *sql.DB
+  Params *DBParams
 }
 
 type DBParams struct {
@@ -72,9 +74,7 @@ func New() (*Database, error) {
 	// Establish a connection to the database
 	log.Printf("connecting to: %s", params.FilePath)
 	conn, err := sql.Open(dialect, ds)
-	if err != nil {
-		return nil, err
-	}
+  utils.CheckErr(err, "sql.Open failed")
 
 	if err := connectionCheck(conn); err != nil {
 		return nil, err
@@ -90,7 +90,10 @@ func New() (*Database, error) {
 
 	Conn = conn
 
-	return &Database{conn}, nil
+	return &Database{
+		Conn:   Conn,
+		Params: params,
+	}, nil
 }
 
 func connectionCheck(conn *sql.DB) error {

@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS incidents (
   status text(4) NOT NULL,
   title text(256) NOT NULL,
   workspace_id integer NOT NULL,
-  created_at TEXT DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc')) NOT NULL,
-  updated_at TEXT,
+  created_at INTEGER DEFAULT (CAST(strftime('%s', 'now', 'utc') AS INTEGER)) NOT NULL,
+  updated_at INTEGER,
   FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON UPDATE no action ON DELETE cascade
 );
 
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS incident_updates (
   status text(4) NOT NULL,
   date integer NOT NULL,
   message TEXT NOT NULL,
-  created_at TEXT DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc')) NOT NULL,
+  created_at TEXT DEFAULT (CAST(strftime('%s', 'now', 'utc') AS INTEGER)) NOT NULL,
   updated_at TEXT,
   incident_id integer NOT NULL,
   FOREIGN KEY (incident_id) REFERENCES incidents(id) ON UPDATE no action ON DELETE cascade

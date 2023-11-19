@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS workspaces (
 	plan TEXT(3),
 	ends_at INTEGER,
 	paid_until INTEGER,
-	created_at TEXT DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc')) NOT NULL
+	created_at INTEGER DEFAULT (CAST(strftime('%s', 'now', 'utc') AS INTEGER)) NOT NULL,
+  updated_at INTEGER
 );
 
 CREATE UNIQUE INDEX workspaces_slug_unique ON workspaces (slug);

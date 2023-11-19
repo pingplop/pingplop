@@ -19,8 +19,8 @@ CREATE TABLE IF NOT EXISTS monitors (
 	body TEXT DEFAULT '',
 	method TEXT(5) DEFAULT 'GET',
   regions TEXT DEFAULT '' NOT NULL,
-	created_at TEXT DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc')) NOT NULL,
-  updated_at TEXT,
+	created_at INTEGER DEFAULT (CAST(strftime('%s', 'now', 'utc') AS INTEGER)) NOT NULL,
+  updated_at INTEGER,
 	FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON UPDATE no action ON DELETE no action
 );
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS monitors_to_pages (
 -- Trigger function to update updated_at
 CREATE TRIGGER update_monitors_updated_at AFTER UPDATE ON monitors FOR EACH ROW
 BEGIN
-  UPDATE monitors SET updated_at = strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc') WHERE id = NEW.id;
+  UPDATE monitors SET updated_at = CAST(strftime('%s', 'now', 'utc') AS INTEGER) WHERE id = NEW.id;
 END;
 
 -- +migrate StatementEnd

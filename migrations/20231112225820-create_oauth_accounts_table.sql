@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS oauth_accounts (
   id_token TEXT,
   session_state TEXT,
   expires_at INTEGER,
-  created_at TEXT DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc')) NOT NULL,
-  updated_at TEXT,
+  created_at INTEGER DEFAULT (CAST(strftime('%s', 'now', 'utc') AS INTEGER)) NOT NULL,
+  updated_at INTEGER,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 

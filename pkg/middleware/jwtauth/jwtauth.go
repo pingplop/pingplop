@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/go-chi/render"
 	"github.com/lestrrat-go/jwx/v2/jwa"
 	"github.com/lestrrat-go/jwx/v2/jwt"
 )
@@ -31,7 +32,7 @@ var (
 	ErrExpired      = errors.New("token is expired")
 	ErrNBFInvalid   = errors.New("token nbf validation failed")
 	ErrIATInvalid   = errors.New("token iat validation failed")
-	ErrNoTokenFound = errors.New("no token found")
+	ErrNoTokenFound = errors.New("no authorization token found")
 	ErrAlgoInvalid  = errors.New("algorithm mismatch")
 )
 
@@ -166,18 +167,23 @@ func Authenticator(next http.Handler) http.Handler {
 		token, _, err := FromContext(r.Context())
 
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusUnauthorized)
-			// w.Header().Set("Content-type", "application/json")
-			// w.WriteHeader(http.StatusUnauthorized)
-			// render.Render(w, r, handler.ErrUnauthorized)
+			w.Header().Set("Content-type", "application/json")
+			w.WriteHeader(http.StatusUnauthorized)
+			render.JSON(w, r, map[string]interface{}{
+				"code":    http.StatusUnauthorized,
+				"message": err.Error(),
+			})
 			return
 		}
 
 		if token == nil || jwt.Validate(token) != nil {
 			http.Error(w, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)
-			// w.Header().Set("Content-type", "application/json")
-			// w.WriteHeader(http.StatusUnauthorized)
-			// render.Render(w, r, handler.ErrUnauthorized)
+			w.Header().Set("Content-type", "application/json")
+			w.WriteHeader(http.StatusUnauthorized)
+			render.JSON(w, r, map[string]interface{}{
+				"code":    http.StatusUnauthorized,
+				"message": http.StatusText(http.StatusUnauthorized),
+			})
 			return
 		}
 

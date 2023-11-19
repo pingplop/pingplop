@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS notifications (
   provider TEXT NOT NULL,
   data TEXT DEFAULT (json_object()),
   workspace_id TEXT(36),
-  created_at TEXT DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc')) NOT NULL,
-  updated_at TEXT,
+  created_at INTEGER DEFAULT (CAST(strftime('%s', 'now', 'utc') AS INTEGER)) NOT NULL,
+  updated_at INTEGER,
   FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS notifications_to_monitors (
 -- Trigger function to update updated_at
 CREATE TRIGGER update_notifications_updated_at AFTER UPDATE ON notifications FOR EACH ROW
 BEGIN
-  UPDATE notifications SET updated_at = strftime('%Y-%m-%d %H:%M:%f', 'now', 'utc') WHERE id = NEW.id;
+  UPDATE notifications SET updated_at = CAST(strftime('%s', 'now', 'utc') AS INTEGER) WHERE id = NEW.id;
 END;
 
 -- +migrate StatementEnd
