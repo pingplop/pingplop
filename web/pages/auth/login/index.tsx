@@ -26,7 +26,7 @@ export default function Page() {
   const navigate = useNavigate()
 
   const resolver = zodResolver(zFormSchema)
-  const { formState, register, ...frm } = useForm<FormSchema>({ resolver })
+  const { setFocus, formState, register, ...frm } = useForm<FormSchema>({ resolver })
   const [errorState, setErrorState] = useState<ErrorState>({ show: false, message: '' })
 
   const onSubmit: SubmitHandler<FormSchema> = ({ email: username, password }) => {
@@ -39,7 +39,10 @@ export default function Page() {
           console.error(err.message)
         }
       })
-      .finally(() => frm.reset())
+      .finally(() => {
+        setFocus('email')
+        frm.reset()
+      })
   }
 
   return (
@@ -93,9 +96,13 @@ export default function Page() {
                   Password
                 </label>
                 <div className='text-sm'>
-                  <a href='#' className='font-semibold text-indigo-600 hover:text-indigo-500'>
+                  <Link
+                    to='/forgot-password'
+                    className='font-semibold text-indigo-600 hover:text-indigo-500'
+                    tabIndex={-1}
+                  >
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className='mt-2'>
