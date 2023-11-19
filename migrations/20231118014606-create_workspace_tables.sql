@@ -17,7 +17,7 @@ CREATE UNIQUE INDEX workspaces_stripe_id_unique ON workspaces (stripe_id);
 
 CREATE TABLE IF NOT EXISTS users_to_workspaces (
 	user_id TEXT(20) NOT NULL,
-	workspace_id INTEGER NOT NULL,
+	workspace_id TEXT(20) NOT NULL,
 	PRIMARY KEY(user_id, workspace_id),
 	FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON UPDATE no action ON DELETE no action

@@ -18,12 +18,6 @@ CREATE TABLE IF NOT EXISTS monitors (
 	FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON UPDATE no action ON DELETE no action
 );
 
-CREATE TABLE IF NOT EXISTS monitors_to_pages (
-	monitor_id INTEGER NOT NULL,
-	page_id INTEGER NOT NULL,
-	PRIMARY KEY(monitor_id, page_id)
-);
-
 -- +migrate StatementBegin
 
 -- Trigger function to update updated_at
@@ -36,5 +30,4 @@ END;
 
 -- +migrate Down
 DROP TRIGGER IF EXISTS update_monitors_updated_at;
-DROP TABLE IF EXISTS monitors_to_pages;
 DROP TABLE IF EXISTS monitors;

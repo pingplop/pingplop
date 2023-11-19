@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS incidents (
   id TEXT(20) PRIMARY KEY DEFAULT '' NOT NULL,
   status text(4) NOT NULL,
   title text(256) NOT NULL,
-  workspace_id integer NOT NULL,
+  workspace_id TEXT(20) NOT NULL,
   created_at INTEGER DEFAULT (CAST(strftime('%s', 'now', 'utc') AS INTEGER)) NOT NULL,
   updated_at INTEGER,
   FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON UPDATE no action ON DELETE cascade
@@ -16,14 +16,16 @@ CREATE TABLE IF NOT EXISTS incident_updates (
   message TEXT NOT NULL,
   created_at TEXT DEFAULT (CAST(strftime('%s', 'now', 'utc') AS INTEGER)) NOT NULL,
   updated_at TEXT,
-  incident_id integer NOT NULL,
+  incident_id TEXT(20) NOT NULL,
   FOREIGN KEY (incident_id) REFERENCES incidents(id) ON UPDATE no action ON DELETE cascade
 );
 
 CREATE TABLE IF NOT EXISTS incidents_to_monitors (
-	monitor_id integer NOT NULL,
-	incident_id integer NOT NULL,
-	PRIMARY KEY(incident_id, monitor_id)
+	monitor_id TEXT(20) NOT NULL,
+	incident_id TEXT(20) NOT NULL,
+	PRIMARY KEY(incident_id, monitor_id),
+	FOREIGN KEY (monitor_id) REFERENCES monitors(id) ON UPDATE no action ON DELETE cascade,
+	FOREIGN KEY (incident_id) REFERENCES incidents(id) ON UPDATE no action ON DELETE cascade
 );
 
 -- +migrate StatementBegin

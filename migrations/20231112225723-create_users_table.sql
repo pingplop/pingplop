@@ -15,6 +15,22 @@ CREATE TABLE IF NOT EXISTS users (
   deleted_at INTEGER
 );
 
+CREATE TABLE IF NOT EXISTS audit_logs (
+  id TEXT(36) PRIMARY KEY DEFAULT (lower(
+    hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
+    substr(hex( randomblob(2)), 2) || '-' ||
+    substr('AB89', 1 + (abs(random()) % 4) , 1)  ||
+    substr(hex(randomblob(2)), 2) || '-' ||
+    hex(randomblob(6))
+  )) NOT NULL,
+  actor_id TEXT(20) NOT NULL,
+  payload TEXT DEFAULT (json_object()),
+  user_action TEXT(6) DEFAULT '' NOT NULL,
+  ip_address TEXT(64) DEFAULT '' NOT NULL,
+  created_at INTEGER DEFAULT (CAST(strftime('%s', 'now', 'utc') AS INTEGER)) NOT NULL,
+  FOREIGN KEY (actor_id) REFERENCES users (id) ON UPDATE NO ACTION ON DELETE CASCADE
+);
+
 CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_users_preferred_username ON users(preferred_username);
 CREATE INDEX idx_users_name ON users (first_name, last_name);
@@ -44,7 +60,7 @@ CREATE TRIGGER log_users_table_after_update AFTER UPDATE ON users
    OR old.first_name <> new.first_name
    OR old.last_name <> new.last_name
 BEGIN
-  INSERT INTO audit_logs (payload, user_action, created_at)
+  INSERT INTO audit_logs (payload, actor_id, user_action, created_at)
   VALUES (
     json_object(
       'log_type', 'user',
@@ -54,7 +70,7 @@ BEGIN
       'old_data', json_object('email', old.email, 'first_name', old.first_name, 'last_name', old.last_name),
       'new_data', json_object('email', new.email, 'first_name', new.first_name, 'last_name', new.last_name)
     ),
-    'UPDATE', CAST(strftime('%s', 'now', 'utc') AS INTEGER)
+    NEW.id, 'UPDATE', CAST(strftime('%s', 'now', 'utc') AS INTEGER)
   );
 END;
 
@@ -68,4 +84,5 @@ DROP INDEX IF EXISTS idx_users_name;
 DROP INDEX IF EXISTS idx_unique_users_email;
 DROP TRIGGER IF EXISTS validate_email_before_insert_users;
 DROP TRIGGER IF EXISTS update_users_updated_at;
+DROP TABLE IF EXISTS audit_logs;
 DROP TABLE IF EXISTS users;
