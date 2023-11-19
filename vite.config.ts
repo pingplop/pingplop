@@ -4,11 +4,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import { join, resolve } from 'node:path'
-import { viteSingleFile } from 'vite-plugin-singlefile'
-import basicSSL from '@vitejs/plugin-basic-ssl'
 
 export default defineConfig({
-  plugins: [react(), basicSSL(), viteSingleFile({ removeViteModuleLoader: true })],
+  plugins: [react()],
   envDir: join(__dirname),
   envPrefix: 'VITE_',
   define: { 'import.meta.env.APP_VERSION': `"${process.env.npm_package_version}"` },
