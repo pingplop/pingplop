@@ -4,7 +4,7 @@
 # how to use this file.
 ##
 
-app = "pingplop-demo"
+app = "pingplop-status"
 primary_region = "sjc"
 kill_signal = "SIGINT"
 kill_timeout = 5

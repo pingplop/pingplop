@@ -11,7 +11,7 @@
 
 This is the open-source core of [Pingplop][pingplop-site], a server and website uptime monitoring solution.
 Pingplop is made in 🇮🇩 and hosted on multiple regions at [Fly.io][fly-regions]. You can find an interactive
-demo of what the status page looks like [here][pingplop-demo].
+demo of what the status page looks like [here][pingplop-status].
 
 ## How does it work?
 
@@ -50,7 +50,7 @@ See the [license file](./LICENSE) for more information.
 
 [pingplop-site]: https://pingplop.com/?ref=github
 [pingplop-docs]: https://pingplop.mintlify.app/introduction
-[pingplop-demo]: https://demo.pingplop.com/
+[pingplop-status]: https://status.pingplop.com/
 [pingplop-godev]: https://pkg.go.dev/github.com/pingplop/pingplop
 [fly-regions]: https://fly.io/docs/reference/regions/
 [agpl-license]: https://choosealicense.com/licenses/agpl-3.0/

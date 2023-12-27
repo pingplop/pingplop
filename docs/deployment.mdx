@@ -8,7 +8,7 @@ description: 'Learn how to deploy Pingplop'
 ## Create app instances
 
 ```sh
-fly apps create pingplop-demo -o pingplop
+fly apps create pingplop-status -o pingplop
 ```
 
 ## Prepare Turso Database
@@ -20,11 +20,11 @@ turso auth login
 ```sh
 # Create new Turso database
 turso group create pingplop --location sjc
-turso db create pingplop-demo --group pingplop
+turso db create pingplop-status --group pingplop
 
 # Get database URL and Token
-turso db show pingplop-demo
-turso db tokens create pingplop-demo
+turso db show pingplop-status
+turso db tokens create pingplop-status
 ```
 
 ### Scaling Turso
@@ -46,7 +46,7 @@ fly deploy --remote-only
 ## Setup custom domain
 
 Point DNS A Record to the assigned IP address.
-Or, if using subdomain you can point `pingplop-demo.fly.dev` CNAME record.
+Or, if using subdomain you can point `pingplop-status.fly.dev` CNAME record.
 
 ```sh
 # Allocate IPs and setup custom domain (optional)
