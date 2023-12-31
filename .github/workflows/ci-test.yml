@@ -47,4 +47,4 @@ jobs:
         run: cargo test --no-default-features
 
       - name: Test build code
-        run: cargo build
+        run: cargo build --release
