@@ -4,7 +4,10 @@ import colors from "tailwindcss/colors";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-    content: ["./crates/handler/**/*.html"],
+    content: [
+        "./crates/handler/**/*.html",
+        // "web/**/*!(*.stories|*.spec).{ts,tsx,html}"
+    ],
     darkMode: "class",
     theme: {
         extend: {
