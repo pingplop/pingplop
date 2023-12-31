@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: CI Test
+
+on:
+  push:
+    branches: ['**']
+    tags-ignore: ['*']
+  pull_request:
+
+permissions: read-all
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    name: Test
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest] # windows-2019
+        rust-toolchain: [stable] # nightly
+      fail-fast: false
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run actions/setup-sdk@local
+        uses: ./.github/setup-sdk
+        with:
+          rustToolChain: ${{ matrix.rust-toolchain }}
+
+      - name: Check code style
+        run: cargo fmt -- --check
+
+      - name: Tests with default feature
+        run: cargo test
+
+      - name: Tests without the default feature
+        run: cargo test --no-default-features
+
+      - name: Test build code
+        run: cargo build

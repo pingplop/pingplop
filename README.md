@@ -2,16 +2,22 @@
 
 # Pingplop
 
-[![CI Actions](https://github.com/pingplop/pingplop/actions/workflows/ci-actions.yml/badge.svg)](https://github.com/pingplop/pingplop/actions/workflows/ci-actions.yml)
-[![Contributions](https://img.shields.io/badge/Contributions-welcome-blue.svg?color=orange)](https://github.com/pingplop/pingplop/graphs/contributors)
-[![License](https://img.shields.io/github/license/pingplop/pingplop?color=informational)](https://github.com/pingplop/pingplop/blob/master/LICENSE)
-[![Go Report Card](https://goreportcard.com/badge/github.com/pingplop/pingplop)](https://goreportcard.com/report/github.com/pingplop/pingplop)
-[![Go Reference](https://pkg.go.dev/badge/github.com/pingplop/pingplop?status.svg)](https://pkg.go.dev/github.com/pingplop/pingplop)
-[![Twitter Badge](https://img.shields.io/badge/-@riipandi-1ca0f1?style=flat&labelColor=gray&logo=x&logoColor=white&link=https://twitter.com/riipandi)](https://twitter.com/riipandi)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/pingplop/pingplop?logo=rust)](https://github.com/pingplop/pingplop/releases)
+[![(Rust)](https://img.shields.io/badge/rust-v1.75-orange.svg?logo=rust)](https://www.rust-lang.org/)
+[![Dependencies](https://deps.rs/repo/github/pingplop/pingplop/status.svg)](https://deps.rs/repo/github/pingplop/pingplop)
+[![CI Test](https://github.com/pingplop/pingplop/actions/workflows/ci-test.yml/badge.svg)](https://github.com/pingplop/pingplop/actions/workflows/ci-test.yml)
+[![CI Build](https://github.com/pingplop/pingplop/actions/workflows/ci-build.yml/badge.svg)](https://github.com/pingplop/pingplop/actions/workflows/ci-build.yml)
+[![Contribution welcome](https://img.shields.io/badge/Contributions-welcome-gray.svg)](https://github.com/pingplop/pingplop/graphs/contributors)
 
-This is the open-source core of [Pingplop][pingplop-site], a server and website uptime monitoring solution.
-Pingplop is made in 🇮🇩 and hosted on multiple regions at [Fly.io][fly-regions]. You can find an interactive
-demo of what the status page looks like [here][pingplop-status].
+---
+
+This is the open-source core of [Pingplop][pingplop-site], a lightweight website uptime monitoring solution.
+Pingplop is made in 🇮🇩 but you can host on multiple regions at [Fly.io][fly-regions] or any cloud providers.
+
+> **WARNING!** This project still in development.
+> Everything is experimental, breaking changes can happen and the long-term purpose of this project is not yet clear, use at your own risk!
+
+You can find an interactive demo of what the status page looks like [here][pingplop-status].
 
 ## How does it work?
 
@@ -27,7 +33,7 @@ The goal is to proactively address issues, preventing downtime and optimizing th
 
 ## Documentation
 
-You can find our documentation [here][pingplop-docs]. The code reference can be found on [go.dev][pingplop-godev].
+You can find our documentation [here][pingplop-docs].
 
 ## Contributions
 
@@ -46,11 +52,13 @@ See the [license file](./LICENSE) for more information.
 
 ---
 
-<sub>🤫 Psst! You can [support my work here](https://github.com/sponsors/riipandi).</sub>
+<sub>🤫 Psst! If you like my work you can support me via [GitHub sponsors](https://github.com/sponsors/riipandi).</sub>
+
+[![Made by](https://badgen.net/badge/icon/Made%20by%20Aris%20Ripandi?icon=bitcoin-lightning&label&color=black&labelColor=black)][riipandi-twitter]
 
 [pingplop-site]: https://pingplop.com/?ref=github
 [pingplop-docs]: https://pingplop.mintlify.app/introduction
 [pingplop-status]: https://status.pingplop.com/
-[pingplop-godev]: https://pkg.go.dev/github.com/pingplop/pingplop
 [fly-regions]: https://fly.io/docs/reference/regions/
 [agpl-license]: https://choosealicense.com/licenses/agpl-3.0/
+[riipandi-twitter]: https://twitter.com/intent/follow?original_referer=https://ripandis.com&screen_name=riipandi

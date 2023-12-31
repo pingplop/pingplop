@@ -3,7 +3,8 @@
 /tmp
 /dist
 /docs
-/vendor
+/target
+/bruno
 .next
 .fleet
 .github
@@ -20,4 +21,4 @@ DEPLOY.md
 .env*
 compose-*.yml
 docker-compose*.yml
-web/dist/
+crates/**/styles.css

@@ -4,37 +4,69 @@ Please open an issue to discuss the contribution you wish to make before submitt
 
 ## 🏁 Quick Start
 
-You will need `Go >=1.21.3`, `Node.js >=18.17.1`, `Docker >= 20.10`, and some toolchain installed on your machine.
+You will need `Rust >=1.75` and `Docker >= 20.10` installed on your machine.
 
 ### Up and Running
 
-1. Install the required toolchain & SDK: [Go](https://go.dev/doc/install), [Node.js](https://nodejs.org/en/download), [sql-migrate][sql-migrate], [Docker][docker], and [Taskfile][taskfile].
+1. Install the required toolchain & SDK: [Rust][install-rust], [Docker][docker], and [cargo-watch][cargo-watch].
 2. Create `.env` file or copy from `.env.example`, then configure required variables.
-3. Run project in development mode: `task dev`
+3. Generate application secret key, use [Generate Secret](#generate-secret) command.
+4. Run database migration and create default user: `cargo run -q -- migrate --create-admin`
+5. Run project in development mode: `cargo run`
 
-Type `task --list-all` on your terminal and see the available commands.
+Type `cargo --help` on your terminal and see the available `cargo` commands.
 
 ### Generate Secret
 
-You need to set the `JWT secret key` with some random string.
-To generate a secret key, use the following command:
+You need to set the `secret key` with a random string. Use built-in command to generate a secret key:
 
 ```sh
-openssl rand -base64 500 | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1
+cargo run -q -- secret-key
 ```
 
+### Auto Reload
+
+Whenever the source code changes, the app is recompiled and restarted.
+
+Optionally you can pass additional args to the server, example:
+
+```sh
+cargo watch -cx 'run -- --address 127.0.0.1'
+```
+
+That command equivalent to: `pingplop --address 127.0.0.1` in release build.
+
+## 🔰 Database Migration
+
+This project does not use an ORM, we use [libsql-client][libsql-client] to interact
+with the Database.
+
+> TODO: add more information here
+
 ## 🐳 Docker Container
+
+### Development Server
+
+```sh
+# Start development server
+docker-compose -f docker-compose.yml up -d
+
+# Stop development server
+docker-compose -f docker-compose.yml down --remove-orphans
+```
 
 ### Build Container
 
 ```sh
-task docker-build
+docker build -f Dockerfile . -t pingplop
+
+docker image list | grep pingplop
 ```
 
 ### Testing Container
 
 ```sh
-task docker-run
+docker run --rm -it -p 3080:3080 --env-file .env.docker --name pingplop pingplop
 ```
 
 ### Push Images
@@ -42,24 +74,14 @@ task docker-run
 Sign in to container registry:
 
 ```sh
-echo $REGISTRY_TOKEN | docker login REGISTRY_URL --username YOUR_USERNAME --password-stdin
+echo $REGISTRY_TOKEN | docker login ghcr.io --username YOUR_USERNAME --password-stdin
 ```
-
-Replace `REGISTRY_URL` with your container registry, ie: `ghcr.io` or `docker.io`
 
 Push docker image:
 
 ```sh
-task docker-push
+docker push ghcr.io/pingplop/pingplop:latest
 ```
-
-## 🧑🏻‍💻 Development
-
-This project uses TypeScript for type checking, [eslint](https://eslint.org/) for linting,
-and [Prettier](https://prettier.io/) for auto-formatting in this project. It's recommended to get
-TypeScript set up for your editor and install an editor plugin (like the [VSCode Prettier plugin](https://s.id/vscode-prettier))
-to get auto-formatting on saving and get a really great in-editor experience with type checking
-and auto-complete.
 
 ## 🚀 Deployment
 
@@ -69,9 +91,7 @@ Read [Deployment Guide](https://pingplop.mintlify.app/deployment) for detailed d
 
 This project is GNU AGPL licensed. If you make a contribution, you agree to transfer ownership of your contribution to us.
 
-[cobra]: https://cobra.dev/
-[viper]: https://github.com/spf13/viper
-[go-chi]: https://github.com/go-chi/chi
-[docker]: https://docs.docker.com/engine/install/
-[taskfile]: https://taskfile.dev/installation
-[sql-migrate]: https://github.com/rubenv/sql-migrate
+[docker]: https://docs.docker.com/engine/install
+[libsql-client]: https://docs.turso.tech/libsql/client-access/rust-sdk
+[install-rust]: https://www.rust-lang.org/tools/install
+[cargo-watch]: https://github.com/watchexec/cargo-watch

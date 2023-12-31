@@ -4,21 +4,28 @@
 # @reference: https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
 
 name: setup-sdk
-description: Prepare Nodejs environment with pnpm enabled
+description: Prepare Rust development environment
 
 inputs:
   nodeVersion:
     description: 'Specify Nodejs version'
     required: false
-    default: '18'
+    default: '20'
   pnpmVersion:
     description: 'Specify pnpm version'
     required: false
     default: '8'
-  goVersion:
-    description: 'Specify Golang version'
+  rustToolChain:
+    description: 'Rust toolchain version'
     required: false
-    default: '>=1.21.0'
+    default: 'stable'
+  rustTargets:
+    description: 'Make Rust compile to our target'
+    required: true
+  workspacePath:
+    description: 'Specify workspaces path'
+    required: false
+    default: ''
 
 runs:
   using: composite
@@ -43,9 +50,26 @@ runs:
         key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
         restore-keys: ${{ runner.os }}-pnpm-store-
 
-    - uses: actions/setup-go@v4
+    - name: Setup Rust Toolchan
+      uses: dtolnay/rust-toolchain@stable
       with:
-        go-version: ${{ inputs.goVersion }}
-        cache: true
+        toolchain: ${{ inputs.rustToolChain }}
+        targets: ${{ inputs.rustTargets }}
+        components: clippy, rustfmt
 
-    - uses: superfly/flyctl-actions/setup-flyctl@master
+    - name: Setup Rust cache
+      uses: swatinem/rust-cache@v2
+      with:
+        workspaces: ${{ inputs.workspacePath }}
+        prefix-key: ${{ runner.os }}-rust
+        cache-targets: true
+        cache-all-crates: false
+        save-if: true
+        cache-provider: github
+
+    - name: Verify SDK versions
+      shell: bash
+      run: |
+        rustc --version
+        rustup --version
+        cargo --version

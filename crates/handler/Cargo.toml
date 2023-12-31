@@ -1,0 +1,29 @@
+[package]
+name = "handler"
+authors.workspace = true
+version.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+edition.workspace = true
+publish = false
+
+[lib]
+name = "handler"
+
+[dependencies]
+corelib = { path = "../corelib" }
+
+anyhow = { workspace = true }
+async-trait = { workspace = true }
+axum = { workspace = true }
+axum-extra = { workspace = true }
+once_cell = { workspace = true }
+rand = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+xid = { workspace = true }
+
+askama = { version = "0.12.1", features = ["serde", "with-axum"] }
+askama_axum = { version = "0.4" }

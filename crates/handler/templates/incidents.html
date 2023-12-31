@@ -1,0 +1,24 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}{{ title }} - Pingplop{% endblock %}
+
+{% block content %}
+    <div class="mx-auto flex h-full w-full w-full max-w-screen-lg grow flex-col px-4 md:px-8">
+        {% include "layouts/_header.html" %}
+        <main class="grow">
+            <div class="py-5 sm:py-7 lg:py-9">
+                <div class="mx-auto max-w-2xl lg:max-w-none">
+                    <div class="text-center">
+                        <p class="text-tremor-title text-black text-3xl font-bold tracking-tight sm:text-4xl">{{ title }}</p>
+                        <div class="mt-6 text-sm font-medium">
+                            <p class="text-tremor-default dark:text-dark-tremor-content leading-7 text-gray-600">
+                                No incidents reported
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        {% include "layouts/_footer.html" %}
+    </div>
+{% endblock %}
