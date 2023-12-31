@@ -32,6 +32,7 @@ rand = { version = "0.8" }
 reqwest = { version = "^0.11", default-features = false, features = ["rustls-tls", "json", "blocking"] }
 serde = { version = "^1.0", features = ["derive"] }
 serde_json = { version = "^1.0" }
+thiserror = { version = "1.0" }
 tokio = { version = "^1.34", features = ["full"] }
 tracing = { version = "0.1" }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
@@ -46,3 +47,7 @@ codegen-units = 1  # Reduce number of codegen units to increase optimizations.
 panic = "abort"    # Abort on panic
 strip = true       # Automatically strip symbols from the binary.
 debug = false      # Disable debug on production build.
+
+# @ref: https://djc.github.io/askama/performance.html
+[profile.dev.package.askama_derive]
+opt-level = 3

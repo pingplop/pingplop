@@ -1,0 +1,37 @@
+{
+    "name": "pingplop",
+    "version": "0.0.1",
+    "author": "Aris Ripandi <pingplop@skiff.com> (https://github.com/pingplop)",
+    "license": "AGPL-3.0-or-later",
+    "scripts": {
+        "build": "tailwindcss -m -i ./crates/handler/templates/assets/main.css -o ./crates/handler/templates/assets/styles.css",
+        "preinstall": "pnpm dlx only-allow pnpm",
+        "prepare": "husky install",
+        "check": "biome check --apply .",
+        "format": "biome format . --write",
+        "lint": "biome lint --apply .",
+        "test": "echo \"Error: no test specified\" && exit 0"
+    },
+    "dependencies": {
+        "htmx.org": "^1.9.10"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "1.4.1",
+        "@egoist/tailwindcss-icons": "^1.7.1",
+        "@iconify-json/lucide": "^1.1.150",
+        "@tailwindcss/aspect-ratio": "^0.4.2",
+        "@tailwindcss/forms": "^0.5.7",
+        "@tailwindcss/typography": "^0.5.10",
+        "autoprefixer": "^10.4.16",
+        "husky": "^8.0.3",
+        "postcss": "^8.4.32",
+        "postcss-import": "^15.1.0",
+        "postcss-load-config": "^5.0.2",
+        "tailwindcss": "^3.4.0",
+        "tailwindcss-animate": "^1.0.7"
+    },
+    "browserslist": [
+        "> 0.5%",
+        "not IE 11"
+    ]
+}

@@ -37,6 +37,9 @@ dist-ssr
 target/
 data*.db
 
+# Web app
+crates/**/styles.css
+
 # fly.toml
 fly*.toml*
 !fly*.example.toml

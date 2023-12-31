@@ -16,6 +16,8 @@ console_command = "/bin/sh"
 
 [build.args]
   RUST_VERSION = "1.75"
+  NODE_VERSION = "20"
+  NODE_ENV = "production"
 
 [deploy]
   strategy = "immediate"

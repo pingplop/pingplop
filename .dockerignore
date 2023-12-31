@@ -4,6 +4,7 @@
 /dist
 /docs
 /target
+/bruno
 .next
 .fleet
 .github
@@ -20,4 +21,4 @@ DEPLOY.md
 .env*
 compose-*.yml
 docker-compose*.yml
-api-specs/
+crates/**/styles.css

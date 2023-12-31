@@ -2,13 +2,33 @@
 
 # Args value for build
 ARG RUST_VERSION=1.75
+ARG NODE_VERSION=20
+ARG NODE_ENV=production
+
+# -----------------------------------------------------------------------------
+# This is base image with `pnpm` package manager
+# -----------------------------------------------------------------------------
+FROM node:${NODE_VERSION}-alpine AS base_web
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN apk update && apk add --no-cache libc6-compat
+RUN corepack enable && corepack prepare pnpm@latest-8 --activate
+
+# -----------------------------------------------------------------------------
+# Build the web application
+# -----------------------------------------------------------------------------
+FROM base_web AS builder_web
+WORKDIR /app
+COPY --chown=node:node . .
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install && pnpm build
 
 # ------------------------------------------------------------------------------
 # Build the application binaries on latest Debian
 # ------------------------------------------------------------------------------
 FROM rust:${RUST_VERSION}-bookworm AS builder
 WORKDIR /usr/src
-COPY . .
+
+COPY --from=builder_web /app .
 
 RUN apt-get update && apt-get -y install tini && update-ca-certificates
 RUN adduser --disabled-password --no-create-home --gecos "" --uid 10001 --home "/nonexistent" --shell "/sbin/nologin" nonroot

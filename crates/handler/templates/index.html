@@ -1,0 +1,24 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+    <div class="px-4 py-10 text-center sm:px-6 lg:px-8">
+        <h1 class="block text-7xl font-bold text-gray-800 dark:text-white sm:text-8xl">
+            {{ name }}
+        </h1>
+        <div class="mt-6 text-lg text-gray-700 dark:text-gray-400 sm:mt-8 space-y-2">
+            <p class="leading-8 dark:text-gray-300">This is the default page when you working on it.</p>
+            <p class="leading-8 dark:text-gray-300">
+                <span>This file located at</span>
+                <code class="text-sm px-2 py-1.5 bg-gray-200 dark:bg-gray-800 rounded">crates/handler/templates/index.html</code>
+            </p>
+        </div>
+        <div class="mt-8 flex flex-col items-center justify-center">
+            <a href="https://twitter.com/intent/follow?original_referer=https://ripandis.com&screen_name=riipandi" target="_blank" rel="noopener"
+                class="inline-flex w-full items-center justify-center gap-2 rounded-md border border-transparent px-3 py-2 font-semibold text-blue-500 ring-offset-white transition-all hover:text-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:ring-offset-2 dark:ring-offset-slate-900 sm:w-auto"
+            >
+                <span>Follow me</span>
+                <span class="i-lucide-external-link h-5 w-5"></span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
