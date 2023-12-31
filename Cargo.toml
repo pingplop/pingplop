@@ -2,7 +2,11 @@
 
 [workspace]
 resolver = "2"
-members = ["crates/*"]
+members = [
+  "crates/corelib",
+  "crates/handler",
+  "crates/server",
+]
 
 [workspace.package]
 version = "0.0.1"

@@ -3,6 +3,7 @@
 
 pub mod dbx;
 pub mod http;
+pub mod migrate;
 pub mod prelude;
 pub mod repository;
 pub mod schema;

@@ -27,9 +27,9 @@ pub async fn run(bind_addr: String, db: Client) -> anyhow::Result<()> {
         base_url: f!("http://localhost:3080"),
     });
 
-    // Test database client
-    match db.execute("SELECT sqlite_version();").await {
-        Ok(result) => trace_debug!("{result:?}"),
+    // Test database client connection
+    match db.execute("SELECT sqlite_version() AS version;").await {
+        Ok(result) => trace_debug!("{:?}", result),
         Err(err) => trace_error!("Error {err:?}"),
     }
 
