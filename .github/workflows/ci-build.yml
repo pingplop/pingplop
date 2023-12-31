@@ -1,0 +1,140 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+# git tag --delete v0.1.1
+# git tag v0.1.1 -m "version bump"
+# git push origin --tags
+
+name: CI Build
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+  packages: write
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-release:
+    name: Build release
+    strategy:
+      matrix:
+        include:
+          - build: linux
+            os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+
+          - build: macos
+            os: macos-latest
+            target: x86_64-apple-darwin
+
+          - build: macos
+            os: macos-latest
+            target: aarch64-apple-darwin
+
+          - build: windows-gnu
+            os: windows-latest
+            target: x86_64-pc-windows-msvc
+      fail-fast: false
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run actions/setup-sdk@local
+        uses: ./.github/setup-sdk
+        with:
+          rustTargets: ${{ matrix.target }}
+
+      - name: Get current tag
+        id: current_tag
+        shell: bash
+        run: echo "PKG_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Compile binaries
+        run: cargo build --target ${{ matrix.target }} --release
+
+      - name: Build archive
+        shell: bash
+        run: |
+          binary_name="pingplop"
+          dirname="$binary_name-${{ env.PKG_VERSION }}-${{ matrix.target }}"
+          mkdir -p "$dirname"
+
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            mv "target/${{ matrix.target }}/release/$binary_name.exe" "$dirname"
+          else
+            mv "target/${{ matrix.target }}/release/$binary_name" "$dirname"
+          fi
+
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            7z a "$dirname.zip" "$dirname"
+            echo "BUILD_ARTIFACT=$dirname.zip" >> $GITHUB_ENV
+          else
+            tar -czf "$dirname.tar.gz" "$dirname"
+            echo "BUILD_ARTIFACT=$dirname.tar.gz" >> $GITHUB_ENV
+          fi
+
+      - name: Release new version
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          name: Pingplop ${{ env.PKG_VERSION }}
+          tag_name: ${{ env.PKG_VERSION }}
+          files: ${{ env.BUILD_ARTIFACT }}
+          body: "⚠️ Changelog not yet provided."
+          prerelease: true
+          draft: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  release-to-ghcr:
+    needs: [build-release]
+    name: Release Docker container
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: docker/setup-qemu-action@v2
+      - uses: docker/setup-buildx-action@v2
+
+      - name: Get current tag
+        id: current_tag
+        shell: bash
+        run: echo "PKG_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Log in to ghcr.io
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/pingplop/pingplop
+          tags: |
+            type=semver,pattern={{version}},value=${{ env.PKG_VERSION }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ env.PKG_VERSION }}
+            type=semver,pattern={{major}},value=${{ env.PKG_VERSION }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          build-args: PKG_VERSION=${{ env.PKG_VERSION }}
+          platforms: linux/amd64,linux/arm64/v8
+          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

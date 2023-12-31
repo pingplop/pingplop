@@ -1,0 +1,13 @@
+# This file used by cargo watch
+
+._ignore
+_.md
+_.yml
+_.toml
+!Cargo.toml
+.editorconfig
+.env.\*
+!.env
+LICENSE
+target/
+bruno/

@@ -3,19 +3,8 @@
 version: '3.8'
 
 services:
-  keydb:
-    # drop-in replacement for Redis
-    image: eqalpha/keydb:latest
-    container_name: pingplop_keydb
-    restart: always
-    ports:
-      - '6379:6379'
-    volumes:
-      - 'keydb_data:/data'
-    command: 'keydb-server /etc/keydb/redis.conf --server-threads 2'
-
   mailpit:
-    image: axllent/mailpit:v1.8
+    image: axllent/mailpit:v1.10
     container_name: pingplop_mailpit
     restart: unless-stopped
     volumes:
@@ -28,7 +17,5 @@ services:
       TZ: 'Asia/Jakarta'
 
 volumes:
-  keydb_data:
-    driver: local
   mailpit_data:
     driver: local

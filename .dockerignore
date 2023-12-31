@@ -3,7 +3,7 @@
 /tmp
 /dist
 /docs
-/vendor
+/target
 .next
 .fleet
 .github
@@ -20,4 +20,4 @@ DEPLOY.md
 .env*
 compose-*.yml
 docker-compose*.yml
-web/dist/
+api-specs/
