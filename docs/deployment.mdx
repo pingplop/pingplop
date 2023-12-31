@@ -1,0 +1,56 @@
+---
+title: 'Deployment'
+description: 'Learn how to deploy Pingplop'
+---
+
+<Info>**Prerequisite** You should have installed Fly.io cli.</Info>
+
+## Create app instances
+
+```sh
+fly apps create pingplop-status -o pingplop
+```
+
+## Prepare Turso Database
+
+```sh
+turso auth login
+```
+
+```sh
+# Create new Turso database
+turso group create pingplop --location sjc
+turso db create pingplop-status --group pingplop
+
+# Get database URL and Token
+turso db show pingplop-status
+turso db tokens create pingplop-status
+```
+
+### Scaling Turso
+
+```sh
+turso group locations add pingplop sin
+```
+
+## Launch and deploy
+
+```sh
+# Load secrets from dotenv file then initialize deployment
+fly secrets set $(cat .env.demo | xargs -I %s echo %s)
+
+# Deploy the app
+fly deploy --remote-only
+```
+
+## Setup custom domain
+
+Point DNS A Record to the assigned IP address.
+Or, if using subdomain you can point `pingplop-status.fly.dev` CNAME record.
+
+```sh
+# Allocate IPs and setup custom domain (optional)
+fly ips allocate-v4 -a pingplop
+fly ips allocate-v6 -a pingplop
+fly certs create api.pingplop.com -a pingplop
+```
