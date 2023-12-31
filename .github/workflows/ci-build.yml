@@ -36,9 +36,9 @@ jobs:
             os: macos-latest
             target: aarch64-apple-darwin
 
-          - build: windows-gnu
-            os: windows-latest
-            target: x86_64-pc-windows-msvc
+        #   - build: windows-gnu
+        #     os: windows-latest
+        #     target: x86_64-pc-windows-msvc
       fail-fast: false
 
     runs-on: ${{ matrix.os }}

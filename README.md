@@ -57,7 +57,7 @@ See the [license file](./LICENSE) for more information.
 [![Made by](https://badgen.net/badge/icon/Made%20by%20Aris%20Ripandi?icon=bitcoin-lightning&label&color=black&labelColor=black)][riipandi-twitter]
 
 [pingplop-site]: https://pingplop.com/?ref=github
-[pingplop-docs]: https://pingplop.mintlify.app/introduction
+[pingplop-docs]: https://docs.pingplop.com/introduction
 [pingplop-status]: https://status.pingplop.com/
 [fly-regions]: https://fly.io/docs/reference/regions/
 [agpl-license]: https://choosealicense.com/licenses/agpl-3.0/

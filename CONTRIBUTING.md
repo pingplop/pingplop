@@ -85,7 +85,7 @@ docker push ghcr.io/pingplop/pingplop:latest
 
 ## 🚀 Deployment
 
-Read [Deployment Guide](https://pingplop.mintlify.app/deployment) for detailed documentation.
+Read [Deployment Guide](https://docs.pingplop.com/deployment) for detailed documentation.
 
 ## 🪪 Licensing
 
