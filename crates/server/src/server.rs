@@ -8,6 +8,7 @@ use std::sync::Arc;
 use std::time::Duration;
 
 use axum::Extension;
+use libsql_client::Client;
 use serde::{Deserialize, Serialize};
 use tokio::{net::TcpListener, signal};
 use tower_http::timeout::TimeoutLayer;
@@ -20,11 +21,17 @@ pub struct ServerState {
     pub base_url: String,
 }
 
-pub async fn run(bind_addr: String) -> anyhow::Result<()> {
+pub async fn run(bind_addr: String, db: Client) -> anyhow::Result<()> {
     // Initialize the application server states
     let server_state = Arc::new(ServerState {
         base_url: f!("http://localhost:3080"),
     });
+
+    // Test database client
+    match db.execute("SELECT sqlite_version();").await {
+        Ok(result) => trace_debug!("{result:?}"),
+        Err(err) => trace_error!("Error {err:?}"),
+    }
 
     // Add a timeout so requests don't hang forever.
     let timeout_layer = TimeoutLayer::new(Duration::from_secs(10));

@@ -19,10 +19,10 @@ console_command = "/bin/sh"
 
 [deploy]
   strategy = "immediate"
-  # release_command = "/app/pingplop migrate"
+  release_command = "/app/pingplop migrate --force"
 
 [env]
-  BIND_ADDR = "0.0.0.0:3080"
+  BASE_URL = "https://CHANGEME_APP_NAME.fly.dev"
 
 [http_service]
   internal_port = 3080

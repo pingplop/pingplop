@@ -1,6 +1,8 @@
 // Copyright 2023-current Aris Ripandi <pingplop@skiff.com>
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+use corelib::dbx;
+
 use clap::{Parser, Subcommand};
 use std::env::consts::{ARCH, OS};
 use tracing_subscriber::util::SubscriberInitExt;
@@ -31,7 +33,7 @@ struct Args {
 #[derive(Subcommand)]
 enum Commands {
     /// Generate application secret key
-    GenerateSecret {},
+    SecretKey {},
     /// Run database migration
     Migrate {
         /// Force run, disable confirmation prompt
@@ -56,18 +58,21 @@ async fn main() -> anyhow::Result<()> {
         .with(tracing_subscriber::fmt::layer().with_target(DISPLAY_TARGET))
         .init();
 
+    // Initialize database connection
+    let db = dbx::init("http://localhost:8080", None).await?;
+
     // You can check for the existence of subcommands, and if found
     // use their matches just as you would the top level command.
     let args = Args::parse();
 
     match args.command {
-        Some(Commands::GenerateSecret {}) => println!("Not yet implemeted!"),
+        Some(Commands::SecretKey {}) => println!("Not yet implemeted!"),
         Some(Commands::Version { short }) => print_version(short),
         Some(Commands::Migrate { force }) => println!("Not yet implemeted: {force}"),
         None => {
             // After all, run the application server
             let addr = [args.address, args.port.to_string()].join(":");
-            pingplop::server::run(addr).await?;
+            pingplop::server::run(addr, db).await?;
         }
     }
 
