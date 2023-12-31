@@ -27,12 +27,14 @@ pub async fn styles() -> impl IntoResponse {
 #[derive(Template)]
 #[template(path = "index.html")]
 struct HomeTemplate<'a> {
-    name: &'a str,
+    title: &'a str,
 }
 
 #[axum::debug_handler]
 pub async fn index() -> impl IntoResponse {
-    HomeTemplate { name: "Pingplop" }
+    HomeTemplate {
+        title: "All system operational",
+    }
 }
 
 #[derive(Template)]

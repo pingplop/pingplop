@@ -1,18 +1,24 @@
 {% extends "layouts/base.html" %}
 
+{% block title %}{{ title }} - Pingplop{% endblock %}
+
 {% block content %}
-    <div class="px-4 py-10 text-center sm:px-6 lg:px-8">
-        <h1 class="block text-5xl font-bold text-gray-800 dark:text-white sm:text-6xl">
-            {{ title }}
-        </h1>
-        <div class="mt-6 text-lg text-gray-700 dark:text-gray-400 sm:mt-8 space-y-2">
-            <p class="leading-8 dark:text-gray-300">Not yet implemented, still working on it.</p>
-        </div>
-        <div class="mt-8 flex flex-col items-center justify-center">
-            <a href="/" class="inline-flex w-full items-center justify-center gap-2 rounded-md border border-transparent px-3 py-2 font-semibold text-blue-500 ring-offset-white transition-all hover:text-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:ring-offset-2 dark:ring-offset-slate-900 sm:w-auto">
-                <span class="i-lucide-arrow-left-to-line h-5 w-5"></span>
-                <span>Back to home</span>
-            </a>
-        </div>
+    <div class="mx-auto flex h-full w-full w-full max-w-screen-lg grow flex-col px-4 md:px-8">
+        {% include "layouts/_header.html" %}
+        <main class="grow">
+            <div class="py-5 sm:py-7 lg:py-9">
+                <div class="mx-auto max-w-2xl lg:max-w-none">
+                    <div class="text-center">
+                        <p class="text-tremor-title text-black text-3xl font-bold tracking-tight sm:text-4xl">{{ title }}</p>
+                        <div class="mt-6 text-sm font-medium">
+                            <p class="text-tremor-default dark:text-dark-tremor-content leading-7 text-gray-600">
+                                No incidents reported
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        {% include "layouts/_footer.html" %}
     </div>
 {% endblock %}
