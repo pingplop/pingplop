@@ -33,6 +33,10 @@ jobs:
         with:
           rustToolChain: ${{ matrix.rust-toolchain }}
 
+      - if: ${{ steps.pnpm-cache.outputs.cache-hit != 'true' }}
+        name: Build frontend
+        run: pnpm install && pnpm build
+
       - name: Check code style
         run: cargo fmt -- --check
 
