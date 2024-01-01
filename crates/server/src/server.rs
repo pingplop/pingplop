@@ -28,8 +28,12 @@ pub async fn run(bind_addr: String, db: Client) -> anyhow::Result<()> {
     });
 
     // Test database client connection
-    match db.execute("SELECT sqlite_version() AS version;").await {
-        Ok(result) => trace_debug!("{:?}", result),
+    let stmt = "SELECT sqlites_version() AS sqlite_version;";
+    match db.execute(stmt).await {
+        Ok(result) => {
+            let row_data = result.rows.get(0);
+            trace_debug!("{:?}", row_data)
+        }
         Err(err) => trace_error!("Error {err:?}"),
     }
 

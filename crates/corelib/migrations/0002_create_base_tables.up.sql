@@ -35,9 +35,9 @@ CREATE TABLE IF NOT EXISTS users_to_workspaces (
 --------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS invitations (
 	id INTEGER PRIMARY KEY NOT NULL,
+	workspace_id INTEGER NOT NULL,
 	email TEXT NOT NULL,
 	role TEXT DEFAULT 'member' NOT NULL,
-	workspace_id INTEGER NOT NULL,
 	token TEXT NOT NULL,
 	expires_at INTEGER NOT NULL,
 	created_at INTEGER DEFAULT (strftime('%s', 'now')),
@@ -70,11 +70,11 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_unique_pages_slug ON pages (slug);
 --------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS status_reports (
   id INTEGER PRIMARY KEY NOT NULL,
+  workspace_id INTEGER NOT NULL,
   status TEXT(4) NOT NULL,
   title TEXT(256) NOT NULL,
   created_at INTEGER DEFAULT (strftime('%s', 'now')),
   updated_at INTEGER,
-  workspace_id INTEGER NOT NULL,
   FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON UPDATE no action ON DELETE cascade
 );
 
@@ -102,6 +102,7 @@ CREATE TABLE IF NOT EXISTS status_reports_to_pages (
 --------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS monitors (
 	id INTEGER PRIMARY KEY NOT NULL,
+	workspace_id INTEGER,
 	job_type TEXT(3) DEFAULT 'other' NOT NULL,
 	periodicity TEXT(6) DEFAULT 'other' NOT NULL,
     status TEXT(20) DEFAULT 'active' NOT NULL,
@@ -109,7 +110,6 @@ CREATE TABLE IF NOT EXISTS monitors (
 	url TEXT(512) NOT NULL,
 	name TEXT(256) DEFAULT '' NOT NULL,
 	description TEXT DEFAULT '' NOT NULL,
-	workspace_id INTEGER,
 	headers TEXT DEFAULT '',
 	body TEXT DEFAULT '',
 	method TEXT(5) DEFAULT 'GET',
@@ -143,8 +143,8 @@ CREATE TABLE IF NOT EXISTS status_report_to_monitors (
 --------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS integrations (
 	id INTEGER PRIMARY KEY NOT NULL,
-	name TEXT(256) NOT NULL,
 	workspace_id INTEGER,
+	name TEXT(256) NOT NULL,
 	credential TEXT,
 	external_id TEXT NOT NULL,
 	created_at INTEGER DEFAULT (strftime('%s', 'now')),
@@ -158,10 +158,10 @@ CREATE TABLE IF NOT EXISTS integrations (
 --------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS notifications (
 	id INTEGER PRIMARY KEY NOT NULL,
+	workspace_id INTEGER,
 	name TEXT NOT NULL,
 	provider TEXT NOT NULL,
 	data TEXT DEFAULT '{}',
-	workspace_id INTEGER,
 	created_at INTEGER DEFAULT (strftime('%s', 'now')),
 	updated_at INTEGER,
 	FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON UPDATE no action ON DELETE no action
@@ -196,8 +196,8 @@ CREATE INDEX IF NOT EXISTS idx_monitor_status ON monitor_status (monitor_id,regi
 --------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS page_subscribers (
 	id INTEGER PRIMARY KEY NOT NULL,
-	email TEXT NOT NULL,
 	page_id INTEGER NOT NULL,
+	email TEXT NOT NULL,
 	token TEXT,
 	accepted_at INTEGER,
 	expires_at INTEGER,

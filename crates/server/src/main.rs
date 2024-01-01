@@ -60,7 +60,8 @@ async fn main() -> anyhow::Result<()> {
 
     // Initialize database connection
     let db_url = std::env::var("DATABASE_URL").unwrap();
-    let db = dbx::init(db_url.as_str(), None).await?;
+    let db_token = std::env::var("DATABASE_TOKEN").unwrap();
+    let db = dbx::init(db_url.as_str(), Some(db_token)).await?;
 
     // You can check for the existence of subcommands, and if found
     // use their matches just as you would the top level command.
