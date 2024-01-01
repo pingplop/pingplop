@@ -14,7 +14,7 @@ pub async fn styles() -> impl IntoResponse {
     Response::builder()
         .status(StatusCode::OK)
         .header("Content-Type", "text/css")
-        .body(include_str!("../static/css/styles.css").to_owned())
+        .body(include_str!("../static/styles.css").to_owned())
         .map_err(|err| {
             // Handle the error in a way that makes sense for your application.
             // Here, we'll log the error and return a generic response.
@@ -29,7 +29,7 @@ pub async fn mainjs() -> impl IntoResponse {
     Response::builder()
         .status(StatusCode::OK)
         .header("Content-Type", "application/javascript")
-        .body(include_str!("../static/js/main.js").to_owned())
+        .body(include_str!("../static/main.js").to_owned())
         .map_err(|err| {
             // Handle the error in a way that makes sense for your application.
             // Here, we'll log the error and return a generic response.

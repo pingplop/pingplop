@@ -1,3 +1,10 @@
+import Alpine from "alpinejs";
+import "htmx.org";
+
+// Instantiate Alpine.js
+window.Alpine = Alpine;
+Alpine.start();
+
 const logHello = (enable = false) => {
     if (enable) {
         console.log(

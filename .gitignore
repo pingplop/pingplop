@@ -40,7 +40,6 @@ data*.db
 # Web app
 crates/handler/static/*
 !crates/handler/static/.gitkeep
-!crates/handler/static/js/
 
 # fly.toml
 fly*.toml*
