@@ -39,8 +39,8 @@ target/
 data*.db
 
 # Web app
-crates/handler/static/*
-!crates/handler/static/favicon.svg
+crates/server/static/css/
+crates/server/static/js/
 
 # fly.toml
 fly*.toml*

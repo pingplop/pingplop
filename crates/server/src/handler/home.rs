@@ -14,7 +14,7 @@ pub async fn favicon() -> impl IntoResponse {
     Response::builder()
         .status(StatusCode::OK)
         .header("Content-Type", "image/svg+xml")
-        .body(include_str!("../static/favicon.svg").to_owned())
+        .body(include_str!("../../static/favicon.svg").to_owned())
         .map_err(|err| {
             // Handle the error in a way that makes sense for your application.
             // Here, we'll log the error and return a generic response.
@@ -29,7 +29,7 @@ pub async fn styles() -> impl IntoResponse {
     Response::builder()
         .status(StatusCode::OK)
         .header("Content-Type", "text/css")
-        .body(include_str!("../static/css/styles.css").to_owned())
+        .body(include_str!("../../static/css/styles.css").to_owned())
         .map_err(|err| {
             // Handle the error in a way that makes sense for your application.
             // Here, we'll log the error and return a generic response.
@@ -44,7 +44,7 @@ pub async fn mainjs() -> impl IntoResponse {
     Response::builder()
         .status(StatusCode::OK)
         .header("Content-Type", "application/javascript")
-        .body(include_str!("../static/js/app.js").to_owned())
+        .body(include_str!("../../static/js/app.js").to_owned())
         .map_err(|err| {
             // Handle the error in a way that makes sense for your application.
             // Here, we'll log the error and return a generic response.
@@ -89,4 +89,13 @@ struct IncidentsTemplate<'a> {
 pub async fn incidents() -> impl IntoResponse {
     let title = "Previous incidents";
     IncidentsTemplate { title }
+}
+
+#[derive(Template)]
+#[template(path = "not-found.html")]
+struct NotFoundTemplate {}
+
+#[axum::debug_handler]
+pub async fn fallback_404_web() -> impl IntoResponse {
+    NotFoundTemplate {}
 }

@@ -1,0 +1,24 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}404 - Page not found{% endblock %}
+
+{% block content %}
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <img class="mx-auto h-10 w-auto" src="https://demo.pingplop.com/assets/logo-light-LoNmiN8X.svg" alt="Pingplop">
+    <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight dark:text-white">404 - Page not found!</h1>
+  </div>
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <p className='mt-8 text-center text-base font-medium leading-6 text-gray-700 md:text-xl md:leading-8'>
+        Sorry, we can&apos;t find that page. <br className='block md:hidden' /> Check that you
+        typed the address correctly, or try using our site search to find something specific.
+    </p>
+    <p className='mx-auto mt-16 flex items-center justify-center lg:mt-20'>
+        <a href="/" class="inline-flex w-full items-center justify-center gap-2 rounded-md border border-transparent px-3 py-2 font-semibold text-primary-500 ring-offset-white transition-all hover:text-primary-700 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:ring-offset-2 dark:ring-offset-slate-900 sm:w-auto">
+            <span class="i-lucide-arrow-left-to-line h-5 w-5"></span>
+            <span>Back to home</span>
+        </a>
+    </p>
+  </div>
+</div>
+{% endblock %}

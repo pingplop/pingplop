@@ -5,6 +5,7 @@
     height: 1px;
     clip: rect(1px, 1px, 1px, 1px);
 }
+
 .skiplink:focus {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;

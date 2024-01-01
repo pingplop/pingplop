@@ -9,8 +9,8 @@ import postcssImport from "postcss-import";
 
 esbuild
     .build({
-        entryPoints: ["crates/handler/assets/js/app.js", "crates/handler/assets/css/styles.css"],
-        outdir: "crates/handler/static",
+        entryPoints: ["crates/server/assets/js/app.js", "crates/server/assets/css/styles.css"],
+        outdir: "crates/server/static",
         bundle: true,
         minify: true,
         plugins: [

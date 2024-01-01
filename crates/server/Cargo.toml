@@ -13,16 +13,17 @@ publish = false
 [dependencies]
 # Internal crates
 corelib = { path = "../corelib" }
-handler = { path = "../handler" }
 
 # Shared crates
 anyhow = { workspace = true }
+async-trait = { workspace = true }
 axum = { workspace = true }
 axum-extra = { workspace = true }
 chrono = { workspace = true }
 hyper = { workspace = true }
 libsql-client = { workspace = true }
 once_cell = { workspace = true }
+rand = { workspace = true }
 reqwest = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
@@ -33,6 +34,8 @@ tracing-subscriber = { workspace = true }
 xid = { workspace = true }
 
 # Private crates
+askama = { version = "0.12.1", features = ["serde", "with-axum"] }
+askama_axum = { version = "0.4" }
 build-time = { version = "0.1.3" }
 dotenvy = { version = "^0.15" }
 http-body-util = { version = "0.1.0" }

@@ -3,11 +3,12 @@
 
 use axum::{routing::get, Router};
 
+use crate::handler::{admin, api, auth, home};
 use corelib::http::response;
-use handler::{admin, api, auth, home};
 
 pub fn init() -> Router {
     Router::new()
+        // .route_layer(middleware::from_fn(fallback_on_none))
         .route("/", get(home::index))
         .route("/assets/favicon.svg", get(home::favicon))
         .route("/assets/css/styles.css", get(home::styles))
@@ -17,6 +18,7 @@ pub fn init() -> Router {
         .merge(auth_routes())
         .nest_service("/-", admin_routes())
         .nest_service("/api", api_routes())
+        .fallback(home::fallback_404_web)
 }
 
 fn api_routes() -> Router {
@@ -41,4 +43,5 @@ fn admin_routes() -> Router {
         .route("/incidents", get(admin::incidents))
         .route("/pages", get(admin::pages))
         .route("/settings", get(admin::settings))
+        .fallback(home::fallback_404_web)
 }

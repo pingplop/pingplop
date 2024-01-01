@@ -1065,25 +1065,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "handler"
-version = "0.0.3"
-dependencies = [
- "anyhow",
- "askama",
- "askama_axum",
- "async-trait",
- "axum 0.7.3",
- "axum-extra",
- "corelib",
- "once_cell",
- "rand",
- "serde",
- "serde_json",
- "tokio",
- "xid",
-]
-
-[[package]]
 name = "hashbrown"
 version = "0.12.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2031,6 +2012,9 @@ name = "pingplop"
 version = "0.0.3"
 dependencies = [
  "anyhow",
+ "askama",
+ "askama_axum",
+ "async-trait",
  "axum 0.7.3",
  "axum-extra",
  "build-time",
@@ -2038,7 +2022,6 @@ dependencies = [
  "clap",
  "corelib",
  "dotenvy",
- "handler",
  "http-body-util",
  "hyper 1.1.0",
  "hyper-util",
@@ -2046,6 +2029,7 @@ dependencies = [
  "libsql-client",
  "mrml",
  "once_cell",
+ "rand",
  "reqwest",
  "serde",
  "serde_json",
