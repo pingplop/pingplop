@@ -10,6 +10,7 @@ pub fn init() -> Router {
     Router::new()
         .route("/", get(home::index))
         .route("/assets/styles.css", get(home::styles))
+        .route("/assets/main.js", get(home::mainjs))
         .route("/maintenance", get(home::maintenance))
         .route("/incidents", get(home::incidents))
         .merge(auth_routes())

@@ -11,3 +11,5 @@ _.toml
 LICENSE
 target/
 bruno/
+_.css
+_.js

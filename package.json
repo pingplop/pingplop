@@ -5,8 +5,8 @@
     "license": "AGPL-3.0-or-later",
     "type": "module",
     "scripts": {
+        "build": "tailwindcss -m -i ./crates/handler/templates/assets/css/styles.css -o ./crates/handler/static/css/styles.css",
         "docs:dev": "(cd docs && mintlify dev)",
-        "build": "tailwindcss -m -i ./crates/handler/templates/assets/main.css -o ./crates/handler/templates/assets/styles.css",
         "update-deps": "npm-check-updates --configFileName .ncurc.json",
         "preinstall": "pnpm dlx only-allow pnpm",
         "prepare": "husky install",

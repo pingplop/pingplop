@@ -38,7 +38,9 @@ target/
 data*.db
 
 # Web app
-crates/**/styles.css
+crates/handler/static/*
+!crates/handler/static/.gitkeep
+!crates/handler/static/js/
 
 # fly.toml
 fly*.toml*
