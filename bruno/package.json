@@ -1,0 +1,12 @@
+{
+    "name": "pingplop-api",
+    "version": "0.0.5",
+    "private": true,
+    "homepage": "https://github.com/pingplop/pingplop",
+    "scripts": {
+        "preinstall": "pnpm dlx only-allow pnpm"
+    },
+    "dependencies": {
+        "@faker-js/faker": "^8.3.1"
+    }
+}

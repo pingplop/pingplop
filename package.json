@@ -1,6 +1,6 @@
 {
     "name": "pingplop",
-    "version": "0.0.3",
+    "version": "0.0.5",
     "author": "Aris Ripandi <pingplop@skiff.com> (https://github.com/pingplop)",
     "license": "AGPL-3.0-or-later",
     "type": "module",
@@ -10,6 +10,7 @@
         "docs:dev": "(cd docs && mintlify dev)",
         "update-deps": "npm-check-updates --configFileName .ncurc.json",
         "preinstall": "pnpm dlx only-allow pnpm",
+        "postinstall": "(cd bruno && pnpm install)",
         "prepare": "husky install",
         "check": "biome check --apply .",
         "format": "biome format . --write",

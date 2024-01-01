@@ -1,0 +1,18 @@
+meta {
+  name: Identify User
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{BASE_URL}}/api/auth/whoami
+  body: none
+  auth: none
+}
+
+body:json {
+  {
+    "username": "{{USERNAME}}",
+    "password": "{{PASSWORD}}"
+  }
+}

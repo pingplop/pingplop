@@ -1,0 +1,9 @@
+{
+    "version": "1",
+    "name": "Pingplop API",
+    "type": "collection",
+    "presets": {
+        "requestType": "http",
+        "requestUrl": "{{BASE_URL}}/api"
+    }
+}
