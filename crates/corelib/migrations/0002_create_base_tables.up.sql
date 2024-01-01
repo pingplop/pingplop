@@ -7,9 +7,9 @@ CREATE TABLE IF NOT EXISTS workspaces (
 	name TEXT,
 	billable_id TEXT(256), -- Customer ID from Payment Gateway (Stripe, LemonSqueezy, etc)
 	subscription_id TEXT,
-	plan TEXT(3),
-    ends_at INTEGER,
-    paid_until INTEGER,
+    billing_plan TEXT DEFAULT 'free' NOT NULL,
+    billing_ends_at INTEGER,
+    billing_paid_until INTEGER,
 	created_at INTEGER DEFAULT (strftime('%s', 'now')),
     updated_at INTEGER
 );
@@ -52,9 +52,9 @@ CREATE TABLE IF NOT EXISTS pages (
 	id INTEGER PRIMARY KEY NOT NULL,
 	workspace_id INTEGER NOT NULL,
 	title TEXT NOT NULL,
+	slug TEXT(256) NOT NULL,
 	description TEXT NOT NULL,
 	icon TEXT(256),
-	slug TEXT(256) NOT NULL,
 	custom_domain TEXT(256) NOT NULL,
 	published INTEGER DEFAULT false,
 	created_at INTEGER DEFAULT (strftime('%s', 'now')),
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS status_reports (
   status TEXT(4) NOT NULL,
   title TEXT(256) NOT NULL,
   created_at INTEGER DEFAULT (strftime('%s', 'now')),
-  updated_at INTEGER DEFAULT (strftime('%s', 'now')),
+  updated_at INTEGER,
   workspace_id INTEGER NOT NULL,
   FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON UPDATE no action ON DELETE cascade
 );
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS status_report_updates (
   date INTEGER NOT NULL,
   message TEXT NOT NULL,
   created_at INTEGER DEFAULT (strftime('%s', 'now')),
-  updated_at INTEGER DEFAULT (strftime('%s', 'now')),
+  updated_at INTEGER,
   FOREIGN KEY (status_report_id) REFERENCES status_reports(id) ON UPDATE no action ON DELETE cascade
 );
 
@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS integrations (
 	credential TEXT,
 	external_id TEXT NOT NULL,
 	created_at INTEGER DEFAULT (strftime('%s', 'now')),
-	updated_at INTEGER DEFAULT (strftime('%s', 'now')),
+	updated_at INTEGER,
 	data TEXT NOT NULL,
 	FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON UPDATE no action ON DELETE no action
 );
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS notifications (
 	data TEXT DEFAULT '{}',
 	workspace_id INTEGER,
 	created_at INTEGER DEFAULT (strftime('%s', 'now')),
-	updated_at INTEGER DEFAULT (strftime('%s', 'now')),
+	updated_at INTEGER,
 	FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON UPDATE no action ON DELETE no action
 );
 
@@ -183,7 +183,7 @@ CREATE TABLE IF NOT EXISTS monitor_status (
 	region TEXT DEFAULT '' NOT NULL,
 	status TEXT DEFAULT 'active' NOT NULL,
 	created_at INTEGER DEFAULT (strftime('%s', 'now')),
-	updated_at INTEGER DEFAULT (strftime('%s', 'now')),
+	updated_at INTEGER,
 	PRIMARY KEY(monitor_id, region),
 	FOREIGN KEY (monitor_id) REFERENCES monitors (id) ON UPDATE no action ON DELETE cascade
 );
@@ -202,6 +202,6 @@ CREATE TABLE IF NOT EXISTS page_subscribers (
 	accepted_at INTEGER,
 	expires_at INTEGER,
 	created_at INTEGER DEFAULT (strftime('%s', 'now')),
-	updated_at INTEGER DEFAULT (strftime('%s', 'now')),
+	updated_at INTEGER,
 	FOREIGN KEY (page_id) REFERENCES pages(id) ON UPDATE no action ON DELETE no action
 );
