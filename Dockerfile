@@ -3,7 +3,6 @@
 # Args value for build
 ARG RUST_VERSION=1.75
 ARG NODE_VERSION=20
-ARG NODE_ENV=production
 
 # -----------------------------------------------------------------------------
 # This is base image with `pnpm` package manager
@@ -20,7 +19,8 @@ RUN corepack enable && corepack prepare pnpm@latest-8 --activate
 FROM base_web AS builder_web
 WORKDIR /app
 COPY --chown=node:node . .
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install && pnpm build:web
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store NODE_ENV=production pnpm build:web
 
 # ------------------------------------------------------------------------------
 # Build the application binaries on latest Debian
