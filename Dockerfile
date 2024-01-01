@@ -30,9 +30,24 @@ WORKDIR /usr/src
 
 COPY --from=builder_web /app .
 
-RUN apt-get update && apt-get -y install tini && update-ca-certificates
+ENV RUSTC_WRAPPER=/usr/local/bin/sccache
+# ENV AWS_ACCESS_KEY_ID=changeme
+# ENV AWS_SECRET_ACCESS_KEY=changeme
+# ENV SCCACHE_BUCKET=sccache
+# ENV SCCACHE_ENDPOINT=cdn.example.org
+# ENV SCCACHE_S3_USE_SSL=true
+ENV SCCACHE_DIRECT=true
+
+RUN apt-get update && apt-get -y install tini libpq-dev && update-ca-certificates
 RUN adduser --disabled-password --no-create-home --gecos "" --uid 10001 --home "/nonexistent" --shell "/sbin/nologin" nonroot
 RUN mkdir -p data && chmod -R 755 data && chown -R nonroot:nonroot data
+
+# Install sccache to greatly speedup builds in the CI
+# @ref: https://www.dermitch.de/post/rust-docker-sccache/
+RUN wget https://github.com/mozilla/sccache/releases/download/v0.7.4/sccache-v0.7.4-x86_64-unknown-linux-musl.tar.gz \
+    && tar xzf sccache-v0.7.4-x86_64-unknown-linux-musl.tar.gz \
+    && mv sccache-v0.7.4-x86_64-unknown-linux-musl/sccache /usr/local/bin/sccache \
+    && chmod +x /usr/local/bin/sccache
 
 # ARG LIBSQL_VERSION="0.22.11"
 # ENV LIBSQL_VERSION $LIBSQL_VERSION
