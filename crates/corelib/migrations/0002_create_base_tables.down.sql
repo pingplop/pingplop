@@ -1,0 +1,22 @@
+-- Drop base tables indexes
+DROP INDEX IF EXISTS idx_unique_workspaces_slug;
+DROP INDEX IF EXISTS idx_unique_workspaces_stripe_id;
+DROP INDEX IF EXISTS idx_unique_pages_slug;
+DROP INDEX IF EXISTS idx_monitor_status;
+
+-- Drop base tables schema
+DROP TABLE IF EXISTS workspaces;
+DROP TABLE IF EXISTS users_to_workspaces;
+DROP TABLE IF EXISTS invitations;
+DROP TABLE IF EXISTS pages;
+DROP TABLE IF EXISTS status_reports;
+DROP TABLE IF EXISTS status_report_updates;
+DROP TABLE IF EXISTS status_reports_to_pages;
+DROP TABLE IF EXISTS monitors;
+DROP TABLE IF EXISTS monitors_to_pages;
+DROP TABLE IF EXISTS status_report_to_monitors;
+DROP TABLE IF EXISTS integrations;
+DROP TABLE IF EXISTS notifications;
+DROP TABLE IF EXISTS notifications_to_monitors;
+DROP TABLE IF EXISTS monitor_status;
+DROP TABLE IF EXISTS page_subscribers;

@@ -3,6 +3,7 @@
 --------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS users (
   id TEXT(20) PRIMARY KEY NOT NULL,
+  tenant_id text(256),
   email TEXT(256) NOT NULL,
   username TEXT(256) NOT NULL,
   first_name TEXT(200),
@@ -15,6 +16,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 -- Create indexes for users table
+CREATE UNIQUE INDEX IF NOT EXISTS idx_unique_users_tenant_id ON users (tenant_id);
 CREATE UNIQUE INDEX IF NOT EXISTS idx_unique_users_id ON users (id);
 CREATE UNIQUE INDEX IF NOT EXISTS idx_unique_users_email ON users (email);
 CREATE UNIQUE INDEX IF NOT EXISTS idx_unique_users_username ON users (username);
@@ -29,8 +31,11 @@ CREATE TABLE IF NOT EXISTS passwords (
     password_hash TEXT NOT NULL,
     created_at INTEGER DEFAULT (strftime('%s', 'now')),
     updated_at INTEGER,
-	  PRIMARY KEY(user_id),
-	  FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE no action ON DELETE no action
+    PRIMARY KEY(user_id),
+    FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON UPDATE no action
+        ON DELETE no action
 );
 
 -- Create indexes for passwords table
