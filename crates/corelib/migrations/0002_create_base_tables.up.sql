@@ -80,12 +80,12 @@ CREATE TABLE IF NOT EXISTS status_reports (
 
 CREATE TABLE IF NOT EXISTS status_report_updates (
   id INTEGER PRIMARY KEY NOT NULL,
+  status_report_id INTEGER NOT NULL,
   status TEXT(4) NOT NULL,
   date INTEGER NOT NULL,
   message TEXT NOT NULL,
   created_at INTEGER DEFAULT (strftime('%s', 'now')),
   updated_at INTEGER DEFAULT (strftime('%s', 'now')),
-  status_report_id INTEGER NOT NULL,
   FOREIGN KEY (status_report_id) REFERENCES status_reports(id) ON UPDATE no action ON DELETE cascade
 );
 
@@ -122,7 +122,9 @@ CREATE TABLE IF NOT EXISTS monitors (
 CREATE TABLE IF NOT EXISTS monitors_to_pages (
 	monitor_id INTEGER NOT NULL,
 	page_id INTEGER NOT NULL,
-	PRIMARY KEY(monitor_id, page_id)
+	PRIMARY KEY(monitor_id, page_id),
+	FOREIGN KEY (monitor_id) REFERENCES monitors(id) ON UPDATE no action ON DELETE cascade,
+    FOREIGN KEY (page_id) REFERENCES pages(id) ON UPDATE no action ON DELETE cascade
 );
 
 --------------------------------------------------------------------------------
@@ -131,7 +133,9 @@ CREATE TABLE IF NOT EXISTS monitors_to_pages (
 CREATE TABLE IF NOT EXISTS status_report_to_monitors (
 	monitor_id INTEGER NOT NULL,
 	status_report_id INTEGER NOT NULL,
-	PRIMARY KEY(status_report_id, monitor_id)
+	PRIMARY KEY(status_report_id, monitor_id),
+    FOREIGN KEY (monitor_id) REFERENCES monitors(id) ON UPDATE no action ON DELETE cascade,
+    FOREIGN KEY (status_report_id) REFERENCES status_reports(id) ON UPDATE no action ON DELETE cascade
 );
 
 --------------------------------------------------------------------------------
