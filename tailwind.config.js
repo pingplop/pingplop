@@ -31,7 +31,12 @@ export default {
             },
         },
     },
+    daisyui: {
+        themes: ["light", "dark", "coffee"],
+    },
+    safelist: [{ pattern: /.*/ }],
     plugins: [
+        require("daisyui"),
         require("@tailwindcss/aspect-ratio"),
         require("@tailwindcss/forms"),
         require("@tailwindcss/typography"),

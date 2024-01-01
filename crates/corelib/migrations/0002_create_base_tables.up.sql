@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS workspaces (
 	name TEXT,
 	billable_id TEXT(256), -- Customer ID from Payment Gateway (Stripe, LemonSqueezy, etc)
 	subscription_id TEXT,
-    billing_plan TEXT DEFAULT 'free' NOT NULL,
+    billing_plan TEXT DEFAULT 'hobby' NOT NULL,
     billing_ends_at INTEGER,
     billing_paid_until INTEGER,
 	created_at INTEGER DEFAULT (strftime('%s', 'now')),
