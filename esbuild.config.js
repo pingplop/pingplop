@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import postCssPlugin from "esbuild-style-plugin";
 import esbuild from "esbuild";
 
