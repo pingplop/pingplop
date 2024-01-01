@@ -2061,6 +2061,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "pingplop-worker"
+version = "0.0.3"
+dependencies = [
+ "anyhow",
+ "corelib",
+ "tokio",
+]
+
+[[package]]
 name = "polyval"
 version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"

@@ -1,0 +1,15 @@
+[package]
+name = "pingplop-worker"
+description = "Worker for monitoring check"
+authors.workspace = true
+version.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+edition.workspace = true
+publish = false
+
+[dependencies]
+corelib = { path = "../corelib" }
+anyhow = { workspace = true }
+tokio = { workspace = true }
