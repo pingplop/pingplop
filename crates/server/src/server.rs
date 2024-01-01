@@ -28,7 +28,7 @@ pub async fn run(bind_addr: String, db: Client) -> anyhow::Result<()> {
     });
 
     // Test database client connection
-    let stmt = "SELECT sqlites_version() AS sqlite_version;";
+    let stmt = "SELECT sqlite_version() AS sqlite_version;";
     match db.execute(stmt).await {
         Ok(result) => {
             let row_data = result.rows.get(0);
