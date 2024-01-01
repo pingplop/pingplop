@@ -15,9 +15,10 @@ This is the open-source core of [Pingplop][pingplop-site], a lightweight website
 Pingplop is made in 🇮🇩 but you can host on multiple regions at [Fly.io][fly-regions] or any cloud providers.
 
 > **WARNING!** This project still in development.
-> Everything is experimental, breaking changes can happen and the long-term purpose of this project is not yet clear, use at your own risk!
+> Everything is experimental, breaking changes can happen and the long-term purpose of this project is not yet
+> clear, use at your own risk!
 
-You can find an interactive demo of what the status page looks like [here][pingplop-status].
+Curious what the status page looks like? [See status page in action][pingplop-status].
 
 ## How does it work?
 
