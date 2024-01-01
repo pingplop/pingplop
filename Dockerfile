@@ -20,7 +20,7 @@ RUN corepack enable && corepack prepare pnpm@latest-8 --activate
 FROM base_web AS builder_web
 WORKDIR /app
 COPY --chown=node:node . .
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install && pnpm build
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install && pnpm build:web
 
 # ------------------------------------------------------------------------------
 # Build the application binaries on latest Debian
@@ -33,6 +33,12 @@ COPY --from=builder_web /app .
 RUN apt-get update && apt-get -y install tini && update-ca-certificates
 RUN adduser --disabled-password --no-create-home --gecos "" --uid 10001 --home "/nonexistent" --shell "/sbin/nologin" nonroot
 RUN mkdir -p data && chmod -R 755 data && chown -R nonroot:nonroot data
+
+# ARG LIBSQL_VERSION="0.22.11"
+# ENV LIBSQL_VERSION $LIBSQL_VERSION
+# ENV LIBSQL_FILE="libsql-server-x86_64-unknown-linux-gnu.tar.xz"
+# ADD https://github.com/tursodatabase/libsql/releases/download/libsql-server-v${LIBSQL_VERSION}/${LIBSQL_FILE} /tmp/libsql-server.tar.xz
+# RUN tar xf /tmp/libsql-server.tar.xz --strip-components 1 -C /tmp && chmod +x /tmp/sqld
 
 RUN --mount=type=cache,target=/usr/local/cargo/registry \
   --mount=type=cache,target=/usr/src/target cargo build \
@@ -76,9 +82,11 @@ COPY --from=builder /etc/group /etc/group
 # Copy required application packages from builder step.
 COPY --from=builder --chown=nonroot:nonroot /usr/src/data /app/data
 COPY --from=builder --chown=nonroot:nonroot /usr/src/pingplop /app
+# COPY --from=builder /tmp/sqld /usr/bin/
 
 USER nonroot
 EXPOSE 5080
+# EXPOSE 8080
 
 ENTRYPOINT ["/usr/bin/tini", "-s", "--"]
 CMD ["/app/pingplop", "--port", "5080"]

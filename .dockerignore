@@ -21,4 +21,3 @@ DEPLOY.md
 .env*
 compose-*.yml
 docker-compose*.yml
-crates/**/styles.css
