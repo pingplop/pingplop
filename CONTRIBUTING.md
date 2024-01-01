@@ -4,7 +4,7 @@ Please open an issue to discuss the contribution you wish to make before submitt
 
 ## 🏁 Quick Start
 
-You will need `Rust >=1.75` and `Docker >= 20.10` installed on your machine.
+You will need `Rust >=1.75`, `Node.js >=20.9.0` and `Docker >= 20.10` installed on your machine.
 
 ### Up and Running
 

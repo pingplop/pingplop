@@ -10,11 +10,26 @@ use axum::response::{IntoResponse, Response};
 use corelib::http::error::HttpError;
 
 #[axum::debug_handler]
+pub async fn favicon() -> impl IntoResponse {
+    Response::builder()
+        .status(StatusCode::OK)
+        .header("Content-Type", "image/svg+xml")
+        .body(include_str!("../static/favicon.svg").to_owned())
+        .map_err(|err| {
+            // Handle the error in a way that makes sense for your application.
+            // Here, we'll log the error and return a generic response.
+            trace_error!("Failed to render template: {}", err.to_string());
+            return HttpError::InternalServerError;
+        })
+        .unwrap() // Safe unwrap since we're providing a known value.
+}
+
+#[axum::debug_handler]
 pub async fn styles() -> impl IntoResponse {
     Response::builder()
         .status(StatusCode::OK)
         .header("Content-Type", "text/css")
-        .body(include_str!("../static/styles.css").to_owned())
+        .body(include_str!("../static/css/styles.css").to_owned())
         .map_err(|err| {
             // Handle the error in a way that makes sense for your application.
             // Here, we'll log the error and return a generic response.
@@ -29,7 +44,7 @@ pub async fn mainjs() -> impl IntoResponse {
     Response::builder()
         .status(StatusCode::OK)
         .header("Content-Type", "application/javascript")
-        .body(include_str!("../static/main.js").to_owned())
+        .body(include_str!("../static/js/app.js").to_owned())
         .map_err(|err| {
             // Handle the error in a way that makes sense for your application.
             // Here, we'll log the error and return a generic response.

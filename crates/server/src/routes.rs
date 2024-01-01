@@ -9,8 +9,9 @@ use handler::{admin, api, auth, home};
 pub fn init() -> Router {
     Router::new()
         .route("/", get(home::index))
-        .route("/assets/styles.css", get(home::styles))
-        .route("/assets/main.js", get(home::mainjs))
+        .route("/assets/favicon.svg", get(home::favicon))
+        .route("/assets/css/styles.css", get(home::styles))
+        .route("/assets/js/app.js", get(home::mainjs))
         .route("/maintenance", get(home::maintenance))
         .route("/incidents", get(home::incidents))
         .merge(auth_routes())

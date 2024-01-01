@@ -1,4 +1,4 @@
-<img src="./static/favicon.svg" alt="Pingplop Logo" width="26" />
+<img src="./crates/handler/static/favicon.svg" alt="Pingplop Logo" width="26" />
 
 # Pingplop
 

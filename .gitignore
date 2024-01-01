@@ -12,6 +12,7 @@ node_modules
 dist
 dist-ssr
 *.local
+.wireit
 
 # Editor directories and files
 .vscode/*
@@ -39,7 +40,7 @@ data*.db
 
 # Web app
 crates/handler/static/*
-!crates/handler/static/.gitkeep
+!crates/handler/static/favicon.svg
 
 # fly.toml
 fly*.toml*
