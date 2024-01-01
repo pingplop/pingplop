@@ -66,7 +66,7 @@ docker image list | grep pingplop
 ### Testing Container
 
 ```sh
-docker run --rm -it -p 3080:3080 --env-file .env.docker --name pingplop pingplop
+docker run --rm -it -p 5080:5080 --env-file .env.docker --name pingplop pingplop
 ```
 
 ### Push Images

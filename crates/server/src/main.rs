@@ -24,7 +24,7 @@ struct Args {
     #[arg(short = 'a', long = "address", default_value = "0.0.0.0")]
     address: String,
     /// Port to listen
-    #[arg(short = 'p', long = "port", default_value = "3080")]
+    #[arg(short = 'p', long = "port", default_value = "5080")]
     port: String,
     #[command(subcommand)]
     command: Option<Commands>,

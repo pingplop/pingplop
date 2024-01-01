@@ -24,7 +24,7 @@ pub struct ServerState {
 pub async fn run(bind_addr: String, db: Client) -> anyhow::Result<()> {
     // Initialize the application server states
     let server_state = Arc::new(ServerState {
-        base_url: f!("http://localhost:3080"),
+        base_url: f!("http://localhost:5080"),
     });
 
     // Test database client connection

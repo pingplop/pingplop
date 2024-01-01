@@ -78,7 +78,7 @@ COPY --from=builder --chown=nonroot:nonroot /usr/src/data /app/data
 COPY --from=builder --chown=nonroot:nonroot /usr/src/pingplop /app
 
 USER nonroot
-EXPOSE 3080
+EXPOSE 5080
 
 ENTRYPOINT ["/usr/bin/tini", "-s", "--"]
-CMD ["/app/pingplop", "--port", "3080"]
+CMD ["/app/pingplop", "--port", "5080"]
