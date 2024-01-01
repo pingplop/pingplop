@@ -42,6 +42,8 @@ fn admin_routes() -> Router {
         .route("/heartbeat", get(admin::heartbeat))
         .route("/incidents", get(admin::incidents))
         .route("/pages", get(admin::pages))
-        .route("/settings", get(admin::settings))
+        .route("/settings", get(admin::settings_index))
+        .route("/settings/account", get(admin::settings_account))
+        .route("/settings/integrations", get(admin::settings_integrations))
         .fallback(home::fallback_404_web)
 }

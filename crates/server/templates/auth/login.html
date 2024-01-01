@@ -3,14 +3,16 @@
 {% block title %}Signin - Pingplop{% endblock %}
 
 {% block content %}
-<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-gray-100">
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-    <img class="mx-auto h-10 w-auto" src="https://demo.pingplop.com/assets/logo-light-LoNmiN8X.svg" alt="Pingplop">
-    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight dark:text-white">Sign in to your account</h2>
+    <a href="/">
+        <img class="mx-auto h-10 w-auto" src="https://demo.pingplop.com/assets/logo-light-LoNmiN8X.svg" alt="Pingplop">
+    </a>
+    <h2 class="mt-8 text-center text-2xl font-bold leading-9 tracking-tight dark:text-white">Sign in to your account</h2>
   </div>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form class="space-y-6" method="POST" hx-post="/api/auth/login">
+    <form class="space-y-6" method="POST" action="">
     <div hx-target="this" hx-swap="outerHTML">
         <label for="email" class="block text-sm font-medium leading-6 dark:text-white">Email address</label>
         <div class="mt-2">

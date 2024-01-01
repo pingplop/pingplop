@@ -642,7 +642,7 @@ checksum = "06ea2b9bc92be3c2baa9334a323ebca2d6f074ff852cd1d7b11064035cd3868f"
 
 [[package]]
 name = "corelib"
-version = "0.0.5"
+version = "0.0.6"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -2009,7 +2009,7 @@ checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
 
 [[package]]
 name = "pingplop"
-version = "0.0.5"
+version = "0.0.6"
 dependencies = [
  "anyhow",
  "askama",
@@ -2046,7 +2046,7 @@ dependencies = [
 
 [[package]]
 name = "pingplop-worker"
-version = "0.0.5"
+version = "0.0.6"
 dependencies = [
  "anyhow",
  "corelib",

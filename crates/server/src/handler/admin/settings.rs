@@ -9,6 +9,24 @@ use axum::response::IntoResponse;
 struct SettingsTemplate {}
 
 #[axum::debug_handler]
-pub async fn settings() -> impl IntoResponse {
+pub async fn settings_index() -> impl IntoResponse {
     SettingsTemplate {}
+}
+
+#[derive(Template)]
+#[template(path = "admin/settings.html")]
+struct SettingsAccountTemplate {}
+
+#[axum::debug_handler]
+pub async fn settings_account() -> impl IntoResponse {
+    SettingsAccountTemplate {}
+}
+
+#[derive(Template)]
+#[template(path = "admin/settings.html")]
+struct SettingsIntegrationTemplate {}
+
+#[axum::debug_handler]
+pub async fn settings_integrations() -> impl IntoResponse {
+    SettingsIntegrationTemplate {}
 }
