@@ -1,0 +1,35 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Create account - Pingplop{% endblock %}
+
+{% block content %}
+    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+        <main>
+            <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+                <img src="https://demo.pingplop.com/assets/logo-light-LoNmiN8X.svg" class="mx-auto h-10 w-auto" alt="Pingplop" />
+                <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                    Create new account
+                </h1>
+            </div>
+
+            <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+                <div id="callout" class="my-4 hidden">
+                    <!-- Do something -->
+                </div>
+
+                <div id="card">
+                    <form class="space-y-6">
+                        <!-- Do something -->
+                    </form>
+                </div>
+
+                <div class="mt-10 text-center text-gray-500">
+                    <span>Already a member?</span>
+                    <a href="/login" class="font-medium leading-6 text-primary-600 hover:text-primary-500">
+                        Sign in
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}

@@ -1,6 +1,6 @@
 {
     "name": "pingplop",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "author": "Aris Ripandi <pingplop@skiff.com> (https://github.com/pingplop)",
     "license": "AGPL-3.0-or-later",
     "type": "module",

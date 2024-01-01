@@ -25,10 +25,10 @@
 
 html,
 body {
-    @apply scroll-smooth font-sans antialiased;
+    @apply h-full scroll-smooth font-sans antialiased;
 }
 body {
-    @apply h-screen w-screen bg-gray-50 text-black dark:bg-black dark:text-gray-50;
+    @apply h-full bg-gray-50 text-black dark:bg-black dark:text-gray-50;
 }
 body * {
     @apply transition-colors duration-150;

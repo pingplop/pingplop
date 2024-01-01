@@ -4,9 +4,7 @@
 use axum::{routing::get, Router};
 
 use corelib::http::response;
-use handler::{api, home};
-
-const NOT_YET: &'static str = "Not yet implemented!";
+use handler::{admin, api, auth, home};
 
 pub fn init() -> Router {
     Router::new()
@@ -15,7 +13,7 @@ pub fn init() -> Router {
         .route("/maintenance", get(home::maintenance))
         .route("/incidents", get(home::incidents))
         .merge(auth_routes())
-        .nest_service("/admin", admin_routes())
+        .nest_service("/-", admin_routes())
         .nest_service("/api", api_routes())
 }
 
@@ -28,17 +26,17 @@ fn api_routes() -> Router {
 
 fn auth_routes() -> Router {
     Router::new()
-        .route("/login", get(|| async move { NOT_YET }))
-        .route("/register", get(|| async move { NOT_YET }))
-        .route("/forgot-password", get(|| async move { NOT_YET }))
+        .route("/login", get(auth::login))
+        .route("/register", get(auth::register))
+        .route("/forgot-password", get(auth::forgot_password))
 }
 
 fn admin_routes() -> Router {
     Router::new()
-        .route("/", get(|| async move { NOT_YET }))
-        .route("/monitors", get(|| async move { NOT_YET }))
-        .route("/heartbeat", get(|| async move { NOT_YET }))
-        .route("/incidents", get(|| async move { NOT_YET }))
-        .route("/pages", get(|| async move { NOT_YET }))
-        .route("/settings", get(|| async move { NOT_YET }))
+        .route("/", get(admin::index))
+        .route("/monitors", get(admin::monitors))
+        .route("/heartbeat", get(admin::heartbeat))
+        .route("/incidents", get(admin::incidents))
+        .route("/pages", get(admin::pages))
+        .route("/settings", get(admin::settings))
 }
