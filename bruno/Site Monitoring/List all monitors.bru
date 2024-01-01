@@ -1,11 +1,11 @@
 meta {
-  name: List all users
+  name: List all monitors
   type: http
   seq: 1
 }
 
 get {
-  url: {{BASE_URL}}/api/users?sort=-created_at&page=1&size=10
+  url: {{BASE_URL}}/api/monitors?sort=-created_at&page=1&size=10
   body: none
   auth: bearer
 }
