@@ -11,7 +11,7 @@
 
 ---
 
-This is the open-source core of [Pingplop][pingplop-site], a lightweight website uptime monitoring solution.
+This is the open-source core of [Pingplop][pingplop-site], a lightweight infrastructure monitoring platform.
 
 > [!WARNING]
 > Pingplop is currently in development so bugs may be present.
