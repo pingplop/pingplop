@@ -13,9 +13,10 @@
 
 This is the open-source core of [Pingplop][pingplop-site], a lightweight website uptime monitoring solution.
 
-> **WARNING!** This project still in development.
-> Everything is experimental, breaking changes can happen and the long-term purpose of this project is not yet
-> clear, use at your own risk!
+> [!WARNING]
+> Pingplop is currently in development so bugs may be present.
+>
+> Breaking changes can happen, use at your own risk!
 
 Curious what the status page looks like? [See status page in action][pingplop-status].
 
@@ -41,11 +42,13 @@ I'm building the lightweight, portable, and easy-to-use site monitoring tool for
 webmaster, agency, and enterprises, all on my own. I'd love for you to jump into the discussions about
 our upcoming features. Your input is super valuable! 🚀
 
-| Feature      | What it does             | Status |
-| ------------ | ------------------------ | ------ |
-| Cloud        | ....                     | ✅     |
-| Self-hosting | ....                     | ✅     |
-| ...          | more description here... | 🕝     |
+| Feature              | What it does             | Status |
+| -------------------- | ------------------------ | ------ |
+| Cloud SaaS           | ....                     | ✅     |
+| Self-hosting         | ....                     | ✅     |
+| Container + libsql   | ....                     | 🕝     |
+| Container standalone | ....                     | ✅     |
+| ...                  | more description here... | 🕝     |
 
 ## Self-host
 

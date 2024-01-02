@@ -34,9 +34,10 @@ dist-ssr
 !.env*.example
 !.env.docker
 
-# Rust
+# Project
 target/
 data*.db
+pingplop*.db
 
 # Web app
 crates/server/static/css/
