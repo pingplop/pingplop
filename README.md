@@ -31,7 +31,7 @@ The goal is to proactively address issues, preventing downtime and optimizing th
 
 [Learn more about Pingplop on our documentation.][pingplop-docs]
 
-## Documentation
+## Getting Started
 
 You can find our documentation [here][pingplop-docs].
 
