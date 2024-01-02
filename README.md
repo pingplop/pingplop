@@ -15,8 +15,7 @@ This is the open-source core of [Pingplop][pingplop-site], a lightweight website
 
 > [!WARNING]
 > Pingplop is currently in development so bugs may be present.
->
-> Breaking changes can happen, use at your own risk!
+> <br/> Breaking changes can happen, use at your own risk!
 
 Curious what the status page looks like? [See status page in action][pingplop-status].
 
