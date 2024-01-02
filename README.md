@@ -37,14 +37,15 @@ You can find our documentation [here][pingplop-docs].
 
 ## Progress
 
-I'm building the most easy-to-use site monitoring tool for developers, freelancer, webmaster, agency, and enterprises.
-Join the discussions about our upcoming features.
+I'm building the lightweight, portable, and easy-to-use site monitoring tool for developers, freelancer,
+webmaster, agency, and enterprises, all on my own. I'd love for you to jump into the discussions about
+our upcoming features. Your input is super valuable! 🚀
 
-| Feature      | What it does                          | Status |
-| ------------ | ------------------------------------- | ------ |
-| Cloud        | SaaS platform, no deployment required | ✅     |
-| Self-hosting | Host the platform yourself            | ✅     |
-| Add more...  | Add more description here...          | 🕝     |
+| Feature      | What it does             | Status |
+| ------------ | ------------------------ | ------ |
+| Cloud        | ....                     | ✅     |
+| Self-hosting | ....                     | ✅     |
+| ...          | more description here... | 🕝     |
 
 ## Self-host
 
