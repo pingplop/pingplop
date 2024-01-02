@@ -10,7 +10,7 @@ members = [
 ]
 
 [workspace.package]
-version = "0.0.6"
+version = "0.0.7"
 authors = ["Aris Ripandi <pingplop@skiff.com>"]
 repository = "http://github.com/pingplop/pingplop"
 documentation = "https://github.com/pingplop/pingplop"
