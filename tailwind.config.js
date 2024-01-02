@@ -4,7 +4,7 @@ import colors from "tailwindcss/colors";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-    content: ["./crates/server/**/*.html"],
+    content: ["./crates/server/**/*.html", "node_modules/preline/dist/*.js"],
     darkMode: "class",
     theme: {
         extend: {
@@ -31,23 +31,13 @@ export default {
             },
         },
     },
-    daisyui: {
-        themes: false, // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
-        darkTheme: "dark", // name of one of the included themes for dark mode
-        base: true, // applies background color and foreground color for root element by default
-        styled: true, // include daisyUI colors and design decisions for all components
-        utils: true, // adds responsive and modifier utility classes
-        prefix: "", // prefix for daisyUI classnames (components, modifiers and responsive class names. Not colors)
-        logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
-        themeRoot: ":root", // The element that receives theme color CSS variables
-    },
     safelist: process.env.NODE_ENV !== "production" ? [{ pattern: /.*/ }] : "",
     plugins: [
-        require("daisyui"),
-        require("@tailwindcss/aspect-ratio"),
         require("@tailwindcss/forms"),
+        require("@tailwindcss/aspect-ratio"),
         require("@tailwindcss/typography"),
         require("tailwindcss-animate"),
+        require("preline/plugin"),
         iconsPlugin({ collections: getIconCollections(["lucide"]) }),
     ],
 };

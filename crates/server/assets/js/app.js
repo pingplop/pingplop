@@ -1,5 +1,6 @@
 import Alpine from "alpinejs";
 import "htmx.org";
+import "preline";
 
 // Instantiate Alpine.js
 window.Alpine = Alpine;
