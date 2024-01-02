@@ -12,7 +12,6 @@
 ---
 
 This is the open-source core of [Pingplop][pingplop-site], a lightweight website uptime monitoring solution.
-Pingplop is made in 🇮🇩 but you can host on multiple regions at [Fly.io][fly-regions] or any cloud providers.
 
 > **WARNING!** This project still in development.
 > Everything is experimental, breaking changes can happen and the long-term purpose of this project is not yet
@@ -35,6 +34,23 @@ The goal is to proactively address issues, preventing downtime and optimizing th
 ## Documentation
 
 You can find our documentation [here][pingplop-docs].
+
+## Progress
+
+I'm building the most easy-to-use site monitoring tool for developers, freelancer, webmaster, agency, and enterprises.
+Join the discussions about our upcoming features.
+
+| Feature      | What it does                          | Status |
+| ------------ | ------------------------------------- | ------ |
+| Cloud        | SaaS platform, no deployment required | ✅     |
+| Self-hosting | Host the platform yourself            | ✅     |
+| Add more...  | Add more description here...          | 🕝     |
+
+## Self-host
+
+I offer an official [Pingplop docker image][pingplop-docker] that enables you to effortlessly self-host the platform.
+You have the flexibility to host Pingplop across multiple regions on [Fly.io](https://fly.io) or any other cloud
+providers of your choice. For detailed instructions, please read the [documentation page][pingplop-docs].
 
 ## Contributions
 
@@ -59,6 +75,7 @@ See the [license file](./LICENSE) for more information.
 
 [pingplop-site]: https://pingplop.com/?ref=github
 [pingplop-docs]: https://docs.pingplop.com/introduction
+[pingplop-docker]: https://github.com/pingplop/pingplop/pkgs/container/pingplop
 [pingplop-status]: https://status.pingplop.com/
 [fly-regions]: https://fly.io/docs/reference/regions/
 [agpl-license]: https://choosealicense.com/licenses/agpl-3.0/
