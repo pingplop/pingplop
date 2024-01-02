@@ -1,0 +1,20 @@
+[package]
+name = "migrator"
+authors.workspace = true
+version.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+edition.workspace = true
+publish = false
+
+[lib]
+name = "migrator"
+
+[dependencies]
+anyhow = { workspace = true }
+chrono = { workspace = true }
+libsql-client = { workspace = true }
+serde = { workspace = true }
+tracing = { workspace = true }
+url = { workspace = true }

@@ -1659,6 +1659,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "migrator"
+version = "0.0.6"
+dependencies = [
+ "anyhow",
+ "chrono",
+ "libsql-client",
+ "serde",
+ "tracing",
+ "url",
+]
+
+[[package]]
 name = "mime"
 version = "0.3.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2027,6 +2039,7 @@ dependencies = [
  "hyper-util",
  "jsonwebtoken",
  "libsql-client",
+ "migrator",
  "mrml",
  "once_cell",
  "rand",

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 use corelib::dbx;
+use migrator::migrate;
 
 use clap::{Parser, Subcommand};
 use std::env::consts::{ARCH, OS};
@@ -12,9 +13,9 @@ use pingplop::{APP_NAME, APP_VERSION, BUILD_TIME};
 
 const DISPLAY_TARGET: bool = cfg!(debug_assertions);
 const LOG_LEVEL: &str = if cfg!(debug_assertions) {
-    "pingplop=debug,corelib=debug,tower_http=info"
+    "pingplop=debug,corelib=debug,migrator=debug,tower_http=info"
 } else {
-    "pingplop=info,corelib=info,tower_http=info"
+    "pingplop=info,corelib=info,migrator=info,tower_http=info"
 };
 
 #[derive(Parser)]
@@ -62,6 +63,13 @@ async fn main() -> anyhow::Result<()> {
     let db_url = std::env::var("DATABASE_URL").unwrap();
     let db_token = std::env::var("DATABASE_TOKEN").unwrap();
     let db = dbx::init(db_url.as_str(), Some(db_token)).await?;
+
+    match migrate::up().await {
+        Err(err) => {
+            tracing::debug!("Database migration skipped: {:?}", err)
+        }
+        Ok(_) => tracing::info!("Database migration success!"),
+    };
 
     // You can check for the existence of subcommands, and if found
     // use their matches just as you would the top level command.

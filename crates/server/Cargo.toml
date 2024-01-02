@@ -13,6 +13,7 @@ publish = false
 [dependencies]
 # Internal crates
 corelib = { path = "../corelib" }
+migrator = { path = "../migrator" }
 
 # Shared crates
 anyhow = { workspace = true }

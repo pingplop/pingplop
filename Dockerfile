@@ -95,6 +95,7 @@ COPY --from=builder /etc/passwd /etc/passwd
 COPY --from=builder /etc/group /etc/group
 
 # Copy required application packages from builder step.
+COPY --from=builder --chown=nonroot:nonroot /usr/src/migrations /app/migrations
 COPY --from=builder --chown=nonroot:nonroot /usr/src/data /app/data
 COPY --from=builder --chown=nonroot:nonroot /usr/src/pingplop /app
 # COPY --from=builder /tmp/sqld /usr/bin/
