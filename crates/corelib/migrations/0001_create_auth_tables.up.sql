@@ -3,7 +3,7 @@
 --------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS users (
   id TEXT(20) PRIMARY KEY NOT NULL,
-  tenant_id text(256),
+  tenant_id TEXT(256),
   email TEXT(256) NOT NULL,
   username TEXT(256) NOT NULL,
   first_name TEXT(200),
@@ -81,3 +81,38 @@ CREATE TABLE IF NOT EXISTS tokens (
 CREATE UNIQUE INDEX IF NOT EXISTS idx_unique_tokens_id ON tokens(id);
 CREATE INDEX IF NOT EXISTS idx_tokens_user_id ON tokens(user_id);
 CREATE INDEX IF NOT EXISTS idx_tokens_token ON tokens(token);
+
+--------------------------------------------------------------------------------
+-- Create oauth tables
+--------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS oauth_states (
+    id INTEGER PRIMARY KEY NOT NULL,
+    csrf_state TEXT NOT NULL,
+    pkce_code_verifier TEXT NOT NULL,
+    return_url TEXT NOT NULL,
+    created_at INTEGER DEFAULT (strftime('%s', 'now'))
+);
+
+-- Create index for oauth_states table
+CREATE INDEX IF NOT EXISTS idx_oauth_states_csrf_state ON oauth_states(csrf_state);
+
+CREATE TABLE IF NOT EXISTS oauth_accounts (
+    id INTEGER PRIMARY KEY NOT NULL,
+    user_id TEXT(20) NOT NULL,
+    account_type TEXT NOT NULL,
+    provider TEXT NOT NULL,
+    provider_account_id TEXT NOT NULL,
+    access_token TEXT,
+    refresh_token TEXT,
+    token_type TEXT,
+    scope TEXT,
+    id_token TEXT,
+    session_state TEXT,
+    expires_at INTEGER,
+    created_at INTEGER DEFAULT (strftime('%s', 'now')),
+    updated_at INTEGER,
+    FOREIGN KEY (user_id) REFERENCES users (id) ON UPDATE no action ON DELETE cascade
+);
+
+-- Create index for oauth_accounts table
+CREATE INDEX IF NOT EXISTS idx_oauth_accounts_user_id ON oauth_accounts(user_id);

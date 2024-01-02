@@ -4,25 +4,24 @@
 CREATE TABLE IF NOT EXISTS workspaces (
 	id INTEGER PRIMARY KEY NOT NULL,
 	slug TEXT NOT NULL,
-	name TEXT,
-	billable_id TEXT(256), -- Customer ID from Payment Gateway (Stripe, LemonSqueezy, etc)
-	subscription_id TEXT,
+	name TEXT NOT NULL,
+	ls_customer_id TEXT(256), -- LemonSqueezy
+	ls_subscription_id TEXT(256), -- LemonSqueezy
+    ls_billing_renew_at INTEGER, -- LemonSqueezy
     billing_plan TEXT DEFAULT 'hobby' NOT NULL,
-    billing_ends_at INTEGER,
-    billing_paid_until INTEGER,
 	created_at INTEGER DEFAULT (strftime('%s', 'now')),
     updated_at INTEGER
 );
 
 -- Create indexes for workspaces table
 CREATE UNIQUE INDEX IF NOT EXISTS idx_unique_workspaces_slug ON workspaces (slug);
-CREATE UNIQUE INDEX IF NOT EXISTS idx_unique_workspaces_billable_id ON workspaces (billable_id);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_unique_workspaces_ls_customer_id ON workspaces (ls_customer_id);
 
 --------------------------------------------------------------------------------
 -- Create users_to_workspaces table
 --------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS users_to_workspaces (
-	user_id INTEGER NOT NULL,
+	user_id TEXT(20) NOT NULL,
 	workspace_id INTEGER NOT NULL,
     role TEXT DEFAULT 'owner' NOT NULL,
 	PRIMARY KEY(user_id, workspace_id),

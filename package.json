@@ -14,8 +14,7 @@
         "prepare": "husky install",
         "check": "biome check --apply .",
         "format": "biome format . --write",
-        "lint": "biome lint --apply .",
-        "test": "echo \"Error: no test specified\" && exit 0"
+        "lint": "biome lint --apply ."
     },
     "wireit": {
         "build": {

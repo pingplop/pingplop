@@ -49,9 +49,11 @@ our upcoming features. Your input is super valuable! 🚀
 
 ## Self-host
 
-I offer an official [Pingplop docker image][pingplop-docker] that enables you to effortlessly self-host the platform.
+I offer official [Pingplop docker image][pingplop-docker] that enables you to effortlessly self-host the platform.
 You have the flexibility to host Pingplop across multiple regions on [Fly.io](https://fly.io) or any other cloud
-providers of your choice. For detailed instructions, please read the [documentation page][pingplop-docs].
+providers of your choice.
+
+For detailed instructions, please read the [documentation page][pingplop-docs].
 
 ## Contributions
 

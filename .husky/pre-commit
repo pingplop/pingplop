@@ -5,4 +5,3 @@ git fetch origin main
 
 pnpm format
 pnpm lint
-pnpm test

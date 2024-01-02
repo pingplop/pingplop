@@ -22,3 +22,9 @@ DROP INDEX IF EXISTS idx_unique_tokens_id;
 DROP INDEX IF EXISTS idx_tokens_user_id;
 DROP INDEX IF EXISTS idx_tokens_token;
 DROP TABLE IF EXISTS tokens;
+
+-- Drop oauth related schemas
+DROP INDEX IF EXISTS idx_oauth_states_csrf_state;
+DROP INDEX IF EXISTS idx_oauth_accounts_user_id;
+DROP TABLE IF EXISTS oauth_states;
+DROP TABLE IF EXISTS oauth_accounts;
