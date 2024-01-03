@@ -54,11 +54,12 @@ impl DatabaseDriver for LibSQLDriver {
         &mut self,
     ) -> Pin<Box<dyn Future<Output = Result<Vec<String>, anyhow::Error>> + '_>> {
         let fut = async move {
-            let query = "CREATE TABLE IF NOT EXISTS _migrations (id INTEGER PRIMARY KEY NOT NULL, name TEXT NOT NULL, created_at TEXT NOT NULL);";
-            self.db.execute(query).await?;
+            let ddl = "CREATE TABLE IF NOT EXISTS _migrations (id INTEGER PRIMARY KEY NOT NULL, name TEXT NOT NULL, created_at TEXT NOT NULL);";
+
+            self.db.execute(ddl).await?;
+
             let query = "SELECT id FROM _migrations ORDER BY id DESC;";
             let result = self.db.execute(query).await?;
-
             let rows = result.rows.iter().map(de::from_row);
 
             let res = rows.collect::<Result<Vec<SchemaMigration>>>();
@@ -74,6 +75,7 @@ impl DatabaseDriver for LibSQLDriver {
         name: &'a str,
     ) -> Pin<Box<dyn Future<Output = Result<(), anyhow::Error>> + '_>> {
         let now: DateTime<Utc> = Utc::now();
+
         let query =
             format!("INSERT INTO _migrations (name, created_at) VALUES ('{name}', '{now}');");
         let fut = async move {

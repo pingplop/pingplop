@@ -59,6 +59,13 @@ async fn main() -> anyhow::Result<()> {
         .with(tracing_subscriber::fmt::layer().with_target(DISPLAY_TARGET))
         .init();
 
+    // Get current executable path
+    let mut cwd = std::env::current_dir()?;
+    cwd.push("pingplop.db");
+    let db_path = cwd.display();
+
+    tracing::debug!("Local database path: {db_path}");
+
     // Initialize database connection
     let db_url = std::env::var("DATABASE_URL").unwrap();
     let db_token = std::env::var("DATABASE_TOKEN").unwrap();

@@ -16,7 +16,7 @@ anyhow = { workspace = true }
 async-trait = { workspace = true }
 axum = { workspace = true }
 axum-extra = { workspace = true }
-libsql-client = { workspace = true }
+libsql-client = { workspace = true, features = ["http"] }
 once_cell = { workspace = true }
 rand = { workspace = true }
 serde = { workspace = true }
