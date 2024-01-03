@@ -5,9 +5,9 @@ CREATE TABLE IF NOT EXISTS workspaces (
 	id INTEGER PRIMARY KEY NOT NULL,
 	slug TEXT NOT NULL,
 	name TEXT NOT NULL,
-	ls_customer_id TEXT(256), -- LemonSqueezy
-	ls_subscription_id TEXT(256), -- LemonSqueezy
-    ls_billing_renew_at INTEGER, -- LemonSqueezy
+	lms_customer_id TEXT(256), -- LemonSqueezy
+	lms_subscription_id TEXT(256), -- LemonSqueezy
+    lms_billing_renew_at INTEGER, -- LemonSqueezy
     billing_plan TEXT DEFAULT 'hobby' NOT NULL,
 	created_at INTEGER DEFAULT (strftime('%s', 'now')),
     updated_at INTEGER
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS workspaces (
 
 -- Create indexes for workspaces table
 CREATE UNIQUE INDEX IF NOT EXISTS idx_unique_workspaces_slug ON workspaces (slug);
-CREATE UNIQUE INDEX IF NOT EXISTS idx_unique_workspaces_ls_customer_id ON workspaces (ls_customer_id);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_unique_workspaces_lms_customer_id ON workspaces (lms_customer_id);
 
 --------------------------------------------------------------------------------
 -- Create users_to_workspaces table
